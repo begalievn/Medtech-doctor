@@ -1,0 +1,24 @@
+.home {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f8f7f3;
+}
+
+.header {
+  width: 100vw;
+  height: 130px;
+}
+
+.header__logoContainer {
+  width: 100vw;
+  height: 60px;
+  background-color: #bdf5d7;
+  display: flex;
+  align-items: center;
+}
+
+.header__nav {
+  width: 100vw;
+  height: 70px;
+  background-color: #ffffff;
+}

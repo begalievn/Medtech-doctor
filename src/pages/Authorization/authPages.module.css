@@ -1,0 +1,22 @@
+.auth__container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background-image: url('../../assets/images/auth-background-image.png');
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: cover;
+  background-position: top;
+}
+
+.auth__container_layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}

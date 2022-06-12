@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Quicksand:wght@400;500&family=Raleway:wght@600&family=Roboto:ital,wght@0,100;0,400;0,500;1,400;1,500&family=Rubik:wght@300;600&display=swap');
+
+.container {
+  width: 600px;
+  height: 614px;
+  background: #ffffff;
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  margin-bottom: 30px;
+}
+
+.content form {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 39px;
+}
+
+.title_h4 {
+  margin: 0;
+  padding: 0;
+  color: #5cc78d;
+}
+
+.forgot_password {
+  text-align: center;
+  margin-top: 37px;
+}
+
+.forgot_password p {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  color: #17b8cb;
+}
+
+.forgot_password p:hover {
+  cursor: pointer;
+}
