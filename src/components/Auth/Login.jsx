@@ -17,7 +17,7 @@ function Login() {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    navigate('/home');
+    navigate('/main');
     console.log(data);
   };
 

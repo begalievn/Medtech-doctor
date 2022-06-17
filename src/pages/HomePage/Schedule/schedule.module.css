@@ -1,0 +1,43 @@
+.schedule {
+  width: 1340px;
+  height: 820px;
+  background-color: rgb(186, 222, 186);
+  display: flex;
+  justify-content: space-between;
+}
+
+.list_section {
+  width: 887px;
+  height: 820px;
+  background: #ffffff;
+  padding: 30px 25px 0 20px;
+  border: 1px solid #f1f0f3;
+  border-radius: 10px;
+}
+
+.list_section h3 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #4c464b;
+}
+
+.options {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.roles_options {
+  width: 420px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar_section {
+  width: 433px;
+  height: 820px;
+  background-color: bisque;
+}

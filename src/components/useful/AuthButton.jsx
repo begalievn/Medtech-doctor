@@ -16,6 +16,9 @@ const AuthButton = ({ text }) => {
         type="submit"
         variant="contained"
         sx={{
+          '&:hover': {
+            backgroundColor: '#5CC78D',
+          },
           width: '100%',
           height: '50px',
           fontSize: '16px',

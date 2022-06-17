@@ -16,13 +16,15 @@ function PassRecEmail() {
   const navigate = useNavigate();
 
   const onSubmit = (e) => {
+    e.preventDefault();
     navigate('code');
+    console.log('submit button clicked');
   };
 
   return (
     <div className={classes.container}>
       <div className={classes.content}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className={classes.form__upper}>
             <div className={classes.title}>
               <h4 className={classes.title_h4}>Восстановление пароля</h4>

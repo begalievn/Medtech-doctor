@@ -1,6 +1,6 @@
 .home {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f8f7f3;
 }
 
@@ -15,10 +15,76 @@
   background-color: #bdf5d7;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.header__nav {
+.header__logo {
+  width: 100%;
+  max-width: 1340px;
+  display: flex;
+  align-items: center;
+}
+
+.header__logo h3 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+.navContainer {
   width: 100vw;
   height: 70px;
   background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav {
+  width: 100%;
+  max-width: 1340px;
+}
+
+.nav__options {
+  width: 100%;
+  display: flex;
+}
+
+.nav__option {
+  width: 156px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11.25px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  border-radius: 4px;
+}
+
+.nav__option:hover {
+  cursor: pointer;
+}
+
+.nav_checklist {
+  width: 140px;
+}
+
+.nav_icon {
+  margin-right: 11.25px;
+}
+
+.active_option {
+  background: #5cc78d;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.content {
+  padding: 30px 50px 0 50px;
 }

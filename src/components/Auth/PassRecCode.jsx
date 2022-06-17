@@ -16,7 +16,7 @@ function PassRecCode() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    navigate('/auth/forgot-password/new-password');
+    navigate('/forgot-password/new-password');
   };
 
   return (
@@ -35,7 +35,7 @@ function PassRecCode() {
                   fontSize: '16px',
                 }}
               >
-                Пароль
+                Код
               </InputLabel>
               <IconTextField
                 fullWidth

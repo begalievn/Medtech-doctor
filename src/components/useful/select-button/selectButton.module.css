@@ -1,0 +1,27 @@
+.button {
+  width: 200px;
+  height: 44px;
+  background: #f7f3f7;
+  border: 1px solid #f1f0f3;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #4c464b;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  margin-left: 10px;
+}
+
+.button img {
+  margin-right: 15.25px;
+}

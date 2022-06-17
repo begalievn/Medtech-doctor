@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { InputLabel } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import IconTextField from '../useful/IconTextField';
 
@@ -12,9 +13,11 @@ import AuthButton from '../useful/AuthButton';
 function PassRecNewPassword() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPassVisible, setConfirmPassVisible] = useState(false);
+  const navigate = useNavigate();
 
   function onSubmit(e) {
     e.preventDefault();
+    navigate('/main');
     console.log('Submit button clicked');
   }
 

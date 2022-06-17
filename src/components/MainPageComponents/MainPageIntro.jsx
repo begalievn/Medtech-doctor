@@ -9,7 +9,7 @@ const MainPageIntro = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/auth');
+    navigate('/home');
   };
   return (
     <div className={classes.main_page_intro}>
