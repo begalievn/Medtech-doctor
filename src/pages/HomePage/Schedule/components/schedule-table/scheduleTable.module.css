@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&family=Quicksand:wght@400;500&display=swap');
+
+.container {
+  width: 842px;
+  height: 644px;
+  position: relative;
+}
+
+.container_bg_layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container table {
+  width: 97%;
+  border-collapse: collapse;
+}
+
+.container th {
+  text-align: start;
+  border-bottom: solid 1px black;
+  padding: 10px 5px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: #4c464b;
+}

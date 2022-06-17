@@ -1,6 +1,8 @@
 import React from 'react';
 import SelectButton from '../../../components/useful/select-button/SelectButton';
+import ScheduleTable from './components/schedule-table/ScheduleTable';
 import TimeScheduleButton from './components/time-schedule-button/TimeScheduleButton';
+import calendarBackground from '../../../assets/images/calendar-background.png';
 
 import classes from './schedule.module.css';
 
@@ -15,12 +17,20 @@ function Schedule() {
             <SelectButton text="Пациент" />
           </div>
           <div className={classes.time_option}>
-            <TimeScheduleButton />
+            <TimeScheduleButton text="Время приема" />
           </div>
+        </div>
+        <div className={classes.schedule_table}>
+          <ScheduleTable />
         </div>
       </div>
 
-      <div className={classes.calendar_section}></div>
+      <div className={classes.calendar_section}>
+        <div className={classes.calendar_image_container}>
+          <p>Выберите врача</p>
+          <img src={calendarBackground} alt="" />
+        </div>
+      </div>
     </div>
   );
 }

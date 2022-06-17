@@ -36,8 +36,37 @@
   justify-content: space-between;
 }
 
+.time_option {
+  margin-right: 32px;
+}
+
+.schedule_table {
+  margin-top: 34.5px;
+}
+
 .calendar_section {
   width: 433px;
   height: 820px;
   background-color: bisque;
+  position: relative;
+}
+
+.calendar_image_container {
+  width: 320px;
+  height: 248px;
+  position: absolute;
+  bottom: 58px;
+  left: 57px;
+}
+
+.calendar_image_container p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 0.24379px;
+
+  color: #a8a8a8;
 }
