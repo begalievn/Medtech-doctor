@@ -3,6 +3,7 @@ import SelectButton from '../../../components/useful/select-button/SelectButton'
 import ScheduleTable from './components/schedule-table/ScheduleTable';
 import TimeScheduleButton from './components/time-schedule-button/TimeScheduleButton';
 import calendarBackground from '../../../assets/images/calendar-background.png';
+import calendarImage from '../../../assets/images/calendar-image.png';
 
 import classes from './schedule.module.css';
 
@@ -26,6 +27,9 @@ function Schedule() {
       </div>
 
       <div className={classes.calendar_section}>
+        <div className={classes.calendar_container}>
+          <img src={calendarImage} alt="" />
+        </div>
         <div className={classes.calendar_image_container}>
           <p>Выберите врача</p>
           <img src={calendarBackground} alt="" />
