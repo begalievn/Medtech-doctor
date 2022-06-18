@@ -6,6 +6,7 @@ import calendarBackground from '../../../assets/images/calendar-background.png';
 import calendarImage from '../../../assets/images/calendar-image.png';
 
 import classes from './schedule.module.css';
+import CalendarComp from './components/calendar/CalendarComp';
 
 function Schedule() {
   return (
@@ -28,7 +29,7 @@ function Schedule() {
 
       <div className={classes.calendar_section}>
         <div className={classes.calendar_container}>
-          <img src={calendarImage} alt="" />
+          <CalendarComp />
         </div>
         <div className={classes.calendar_image_container}>
           <p>Выберите врача</p>

@@ -57,3 +57,20 @@
 .forgot_password p:hover {
   cursor: pointer;
 }
+
+.email_sent_to {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 120%;
+  color: #cdc5cb;
+  margin-bottom: 2px;
+}
+
+.email_sent_to_email {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+  color: rgb(35, 34, 34);
+}

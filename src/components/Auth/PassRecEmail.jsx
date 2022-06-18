@@ -31,7 +31,7 @@ function PassRecEmail() {
             </div>
             <Box>
               <InputLabel sx={{ marginLeft: '8px', color: '#A8A8A8' }}>
-                Логин
+                Почта
               </InputLabel>
               <Controller
                 name="login"

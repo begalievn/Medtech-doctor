@@ -27,6 +27,12 @@ function PassRecCode() {
             <div className={classes.title}>
               <h4 className={classes.title_h4}>Восстановление пароля</h4>
             </div>
+            <Box sx={{ marginBottom: '39px' }}>
+              <p className={classes.email_sent_to}>
+                Новый пароль был отправлен на вашу почту
+              </p>
+              <p className={classes.email_sent_to_email}>doctor@gmail.com</p>
+            </Box>
             <Box sx={{ marginBottom: '120px' }}>
               <InputLabel
                 sx={{
@@ -37,6 +43,7 @@ function PassRecCode() {
               >
                 Код
               </InputLabel>
+
               <IconTextField
                 fullWidth
                 type={passwordVisible ? 'password' : 'text'}

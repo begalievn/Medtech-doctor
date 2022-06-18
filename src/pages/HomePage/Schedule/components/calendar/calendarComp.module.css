@@ -1,0 +1,17 @@
+.calendar_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 393px;
+  height: 374px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.calendar {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  border-style: none;
+  font-family: Roboto;
+}
