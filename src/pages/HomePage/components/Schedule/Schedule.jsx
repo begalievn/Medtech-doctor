@@ -1,12 +1,13 @@
 import React from 'react';
-import SelectButton from '../../../components/useful/select-button/SelectButton';
-import ScheduleTable from './components/schedule-table/ScheduleTable';
-import TimeScheduleButton from './components/time-schedule-button/TimeScheduleButton';
-import calendarBackground from '../../../assets/images/calendar-background.png';
-import calendarImage from '../../../assets/images/calendar-image.png';
+import SelectButton from '../../../../components/useful/select-button/SelectButton';
 
-import classes from './schedule.module.css';
+import { calendarBackground } from '../../../../assets/images/images';
+
 import CalendarComp from './components/calendar/CalendarComp';
+import TimeScheduleButton from './components/time-schedule-button/TimeScheduleButton';
+import classes from './schedule.module.css';
+import PageContainer from '../../../../components/Home/body/page-container/PageContainer';
+import { HomeBodyTable } from '../../../../components/Home/body/home-table/HomeBodyTable';
 
 function Schedule() {
   return (
@@ -23,7 +24,7 @@ function Schedule() {
           </div>
         </div>
         <div className={classes.schedule_table}>
-          <ScheduleTable />
+          <HomeBodyTable />
         </div>
       </div>
 

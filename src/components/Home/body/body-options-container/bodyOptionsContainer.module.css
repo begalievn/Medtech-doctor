@@ -1,0 +1,7 @@
+.container {
+  width: 1237px;
+  max-width: 1237px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+}

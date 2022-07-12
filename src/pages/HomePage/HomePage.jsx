@@ -2,59 +2,49 @@ import React, { useState } from 'react';
 
 import { Routes, Route } from 'react-router-dom';
 import logo from '../../assets/images/logo-white.svg';
-import scheduleIcon from '../../assets/icons/nav-schedule-icon.svg';
-import checklistIcon from '../../assets/icons/nav-checklist-icon.svg';
-import usersIcon from '../../assets/icons/nav-users-icon.svg';
+
+import { navOptions } from '../../utils/consts/homeConsts';
+
+import Schedule from './components/Schedule/Schedule';
+import NavOptionButton from '../../components/Home/header/nav-option-button/NavOptionButton';
+import NavContainer from '../../components/Home/header/nav-container/NavContainer';
+import CheckList from './components/CheckList/CheckList';
+import Users from './components/Users/Users';
 import classes from './homePage.module.css';
-import Schedule from './Schedule/Schedule';
 
 const HomePage = () => {
   return (
     <div className={classes.home}>
       <div className={classes.header}>
-        <div className={classes.header__logoContainer}>
+        <NavContainer style={{ backgroundColor: '#BDF5D7' }}>
           <div className={classes.header__logo}>
             <img src={logo} alt="logo" />
             <h3>MedTech</h3>
           </div>
-        </div>
-        <nav className={classes.navContainer}>
-          <div className={classes.nav}>
-            <div className={classes.nav__options}>
-              <div
-                className={[classes.nav__option, classes.active_option].join(
-                  ' '
-                )}
-              >
-                <img
-                  className={classes.nav_icon}
-                  src={scheduleIcon}
-                  alt="schedule"
-                />
-                Расписание
-              </div>
-              <div className={classes.nav__option}>
-                <img
-                  className={classes.nav_icon}
-                  src={checklistIcon}
-                  alt="checklist"
-                />
-                Чек лист
-              </div>
-              <div className={classes.nav__option}>
-                <img
-                  className={classes.nav_icon}
-                  src={usersIcon}
-                  alt="users icon"
-                />
-                Пользователи
+        </NavContainer>
+        <NavContainer style={{ backgroundColor: '#FFFFFF' }}>
+          <nav className={classes.navContainer}>
+            <div className={classes.nav}>
+              <div className={classes.nav__options}>
+                {navOptions.map((option, index) => (
+                  <NavOptionButton
+                    key={index}
+                    path={option.path}
+                    icon={option.icon}
+                    text={option.text}
+                  />
+                ))}
               </div>
             </div>
-          </div>
-        </nav>
+          </nav>
+        </NavContainer>
       </div>
       <div className={classes.content}>
-        <Schedule />
+        <Routes>
+          <Route index path="/schedule" element={<Schedule />} />
+          <Route path="/check-list" element={<CheckList />} />
+          <Route path="/users" element={<Users />} />
+        </Routes>
       </div>
     </div>
   );

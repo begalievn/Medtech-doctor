@@ -9,15 +9,37 @@ import { Link, useNavigate } from 'react-router-dom';
 import classes from './auth.module.css';
 import TextFieldComponent from '../useful/TextFieldComponent';
 import AuthButton from '../useful/AuthButton';
+import { loginAuth } from '../../api/auth-api/auth';
 
 function Login() {
   const { control, handleSubmit } = useForm();
   const { errors } = useFormState({ control });
+  const [isLoading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    navigate('/main');
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const response = loginAuth(data)
+        .then((data) => {
+          console.log('data', data.status);
+          if (data.status === 200) {
+            setLoading(false);
+            navigate('/main');
+          }
+        })
+        .catch((err) => {
+          console.log('error', err);
+          setLoading(false);
+        });
+    } catch (err) {
+      if (err.response?.status === 403) {
+        console.log('Error');
+      }
+      setLoading(false);
+      console.log('error', err);
+    }
     console.log(data);
   };
 
@@ -29,12 +51,12 @@ function Login() {
             <div className={classes.title}>
               <h4 className={classes.title_h4}>Вход</h4>
             </div>
-            <Box sx={{ marginBottom: '70px' }}>
+            <Box sx={{ marginBottom: '40px' }}>
               <InputLabel sx={{ marginLeft: '8px', color: '#A8A8A8' }}>
                 Логин
               </InputLabel>
               <Controller
-                name="login"
+                name="email"
                 control={control}
                 rules={loginValidation}
                 render={({ field }) => (
@@ -87,8 +109,10 @@ function Login() {
               />
             </Box>
           </div>
+
           <div className={classes.form__lower}>
-            <AuthButton text={'Войти'} />
+            {/* <p>Incorrect Fields</p> */}
+            <AuthButton text={isLoading ? 'Loading...' : 'Войти'} />
           </div>
         </form>
         <div className={classes.forgot_password}>

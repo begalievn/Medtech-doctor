@@ -1,0 +1,35 @@
+.option_container {
+  width: 100%;
+  display: flex;
+}
+
+.option {
+  width: 156px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11.25px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  border-radius: 4px;
+}
+
+.option:hover {
+  cursor: pointer;
+}
+
+.active {
+  background-color: #5cc78d;
+  color: white;
+}
+
+.active img {
+  filter: brightness(0) invert(1);
+}
+
+.icon {
+  margin-right: 11.25px;
+}

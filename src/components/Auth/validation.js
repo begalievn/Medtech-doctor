@@ -1,4 +1,4 @@
-const REQUIRED_FIELD = 'Required *';
+const REQUIRED_FIELD = 'Необходимо заполнить поле *';
 
 export const loginValidation = {
   required: REQUIRED_FIELD,

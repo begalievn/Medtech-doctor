@@ -29,7 +29,7 @@ function PassRecEmail() {
             <div className={classes.title}>
               <h4 className={classes.title_h4}>Восстановление пароля</h4>
             </div>
-            <Box>
+            <Box sx={{ marginTop: '80px' }}>
               <InputLabel sx={{ marginLeft: '8px', color: '#A8A8A8' }}>
                 Почта
               </InputLabel>

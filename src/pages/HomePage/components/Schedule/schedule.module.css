@@ -1,7 +1,9 @@
 .schedule {
   width: 1340px;
+  max-width: 1340px;
   height: 820px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
