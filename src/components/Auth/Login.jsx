@@ -16,6 +16,7 @@ function Login() {
   const { errors } = useFormState({ control });
   const [isLoading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -32,7 +33,12 @@ function Login() {
         .catch((err) => {
           console.log('error', err);
           setLoading(false);
+          setErrorMessageVisible(true);
+          setTimeout(() => {
+            setErrorMessageVisible(false);
+          }, 3000);
         });
+      console.log(response);
     } catch (err) {
       if (err.response?.status === 403) {
         console.log('Error');
@@ -50,6 +56,15 @@ function Login() {
           <div className={classes.form__upper}>
             <div className={classes.title}>
               <h4 className={classes.title_h4}>Вход</h4>
+            </div>
+            <div
+              className={
+                errorMessageVisible
+                  ? classes.error_message
+                  : classes.error_message_invisible
+              }
+            >
+              <p>Не верный Логин или Пароль</p>
             </div>
             <Box sx={{ marginBottom: '40px' }}>
               <InputLabel sx={{ marginLeft: '8px', color: '#A8A8A8' }}>

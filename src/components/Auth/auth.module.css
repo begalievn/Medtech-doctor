@@ -74,3 +74,17 @@
   line-height: 120%;
   color: rgb(35, 34, 34);
 }
+
+.error_message {
+  margin-bottom: 15px;
+}
+
+.error_message {
+  font-family: 'SF Pro Display';
+  font-weight: 500;
+  color: rgb(244, 57, 57);
+}
+
+.error_message_invisible {
+  display: none;
+}
