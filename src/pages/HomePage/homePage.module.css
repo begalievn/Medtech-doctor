@@ -49,6 +49,8 @@
 .nav {
   width: 100%;
   max-width: 1340px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav__options {
@@ -65,6 +67,8 @@
   margin-right: 11.25px;
 }
 
+
+
 .active_option {
   background: #5cc78d;
   border-radius: 4px;
@@ -77,4 +81,46 @@
   justify-content: center;
   align-items: center;
   padding: 30px 50px 40px 50px;
+}
+
+.nav_user {
+  width: 340px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #4C464B;
+}
+
+.user_div {
+  display: flex;
+  align-items: center;
+}
+
+.user_icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.user_icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav_log {
+  width: 102px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #F7F3F7;
+  border-radius: 4px
 }

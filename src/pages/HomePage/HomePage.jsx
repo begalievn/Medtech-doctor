@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Routes, Route } from 'react-router-dom';
-import logo from '../../assets/images/logo-white.svg';
+import { Routes, Route, useLocation } from "react-router-dom";
 
-import { navOptions } from '../../utils/consts/homeConsts';
+import { navOptions } from "../../utils/consts/homeConsts";
 
-import Schedule from './components/Schedule/Schedule';
-import NavOptionButton from '../../components/Home/header/nav-option-button/NavOptionButton';
-import NavContainer from '../../components/Home/header/nav-container/NavContainer';
-import CheckList from './components/CheckList/CheckList';
-import Users from './components/Users/Users';
-import classes from './homePage.module.css';
+import { logoWhite, doctorsAva } from "../../assets/images/images";
+import { logoutIcon } from "../../assets/icons/icons";
+
+import Schedule from "./components/Schedule/Schedule";
+import NavOptionButton from "../../components/Home/header/nav-option-button/NavOptionButton";
+import NavContainer from "../../components/Home/header/nav-container/NavContainer";
+import CheckList from "./components/CheckList/CheckList";
+import Users from "./components/Users/Users";
+import classes from "./homePage.module.css";
 
 const HomePage = () => {
+  const location = useLocation();
+
   return (
     <div className={classes.home}>
       <div className={classes.header}>
-        <NavContainer style={{ backgroundColor: '#BDF5D7' }}>
+        <NavContainer style={{ backgroundColor: "#BDF5D7" }}>
           <div className={classes.header__logo}>
-            <img src={logo} alt="logo" />
+            <img src={logoWhite} alt="logo" />
             <h3>MedTech</h3>
           </div>
         </NavContainer>
-        <NavContainer style={{ backgroundColor: '#FFFFFF' }}>
+        <NavContainer style={{ backgroundColor: "#FFFFFF" }}>
           <nav className={classes.navContainer}>
             <div className={classes.nav}>
               <div className={classes.nav__options}>
@@ -35,13 +39,28 @@ const HomePage = () => {
                   />
                 ))}
               </div>
+
+              {/* Doctor */}
+              <div className={classes.nav_user}>
+                <div className={classes.user_div}>
+                  <div className={classes.user_icon}>
+                    <img src={doctorsAva} />
+                  </div>
+                  <p>{`Бегалиев Н.`}</p>
+                </div>
+                <div className={classes.nav_log}>
+                  <p>Выйти</p>
+                  <img src={logoutIcon} />
+                </div>
+              </div>
             </div>
           </nav>
         </NavContainer>
       </div>
       <div className={classes.content}>
         <Routes>
-          <Route index path="/schedule" element={<Schedule />} />
+          <Route exact path="/" element={<Schedule />} />
+          <Route path="/schedule" element={<Schedule />} />
           <Route path="/check-list" element={<CheckList />} />
           <Route path="/users" element={<Users />} />
         </Routes>

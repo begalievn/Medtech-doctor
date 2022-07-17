@@ -5,7 +5,9 @@ export const scheduleSlice = createSlice({
   initialState: {
     meetings: [],
   },
-  reducers: {},
+  reducers: {
+
+  },
 });
 
 // Action creators are generated for each case reducer function

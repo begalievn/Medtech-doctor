@@ -26,6 +26,15 @@
   color: white;
 }
 
+.home:nth-child(1) {
+  background-color: #5cc78d;
+  color: white;
+}
+
+.home:nth-child(1) img {
+  filter: brightness(0) invert(1);
+}
+
 .active img {
   filter: brightness(0) invert(1);
 }

@@ -10,6 +10,7 @@ import classes from './auth.module.css';
 import TextFieldComponent from '../useful/TextFieldComponent';
 import AuthButton from '../useful/AuthButton';
 import { loginAuth } from '../../api/auth-api/auth';
+import AuthService from '../../services/AuthService';
 
 function Login() {
   const { control, handleSubmit } = useForm();
@@ -39,6 +40,8 @@ function Login() {
           }, 3000);
         });
       console.log(response);
+      //   const response = await AuthService.login(data.email, data.password);
+      //   console.log(response);
     } catch (err) {
       if (err.response?.status === 403) {
         console.log('Error');
@@ -53,7 +56,7 @@ function Login() {
     <div className={classes.container}>
       <div className={classes.content}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={classes.form__upper}>
+          <div className="">
             <div className={classes.title}>
               <h4 className={classes.title_h4}>Вход</h4>
             </div>
@@ -66,7 +69,7 @@ function Login() {
             >
               <p>Не верный Логин или Пароль</p>
             </div>
-            <Box sx={{ marginBottom: '40px' }}>
+            <Box sx={{ marginBottom: '30px' }}>
               <InputLabel sx={{ marginLeft: '8px', color: '#A8A8A8' }}>
                 Логин
               </InputLabel>
@@ -125,7 +128,7 @@ function Login() {
             </Box>
           </div>
 
-          <div className={classes.form__lower}>
+          <div className={classes.submit_button}>
             {/* <p>Incorrect Fields</p> */}
             <AuthButton text={isLoading ? 'Loading...' : 'Войти'} />
           </div>

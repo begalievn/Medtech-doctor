@@ -7,18 +7,18 @@ import {
 export const navOptions = [
   {
     icon: navScheduleIcon,
-    text: 'Schedule',
+    text: 'Расписание',
     path: 'schedule',
   },
   {
     icon: navCheckListIcon,
-    text: 'CheckList',
+    text: 'Чек-Лист',
     path: 'check-list',
   },
 
   {
     icon: navUsersIcon,
-    text: 'Users',
+    text: 'Пользователи',
     path: 'users',
   },
 ];

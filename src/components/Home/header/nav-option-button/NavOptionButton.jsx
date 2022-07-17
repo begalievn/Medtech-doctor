@@ -6,8 +6,9 @@ import classes from './navOptionButton.module.css';
 
 const NavOptionButton = ({ text, icon, path }) => {
   const [isActive, setActive] = useState(false);
+  const [isHome, setIsHome] = useState(false);
   const location = useLocation();
-  console.log();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname === '/home/' + path) {
@@ -15,9 +16,14 @@ const NavOptionButton = ({ text, icon, path }) => {
     } else {
       setActive(false);
     }
-  }, [location]);
 
-  const navigate = useNavigate();
+    location.pathname === '/home/' ? setIsHome(true) : setIsHome(false);
+  }, [location, path]);
+
+  console.log(location.pathname);
+  if (isHome) {
+    console.log('We are at home');
+  }
 
   const handleClick = () => {
     navigate('/home/' + path);
@@ -26,11 +32,15 @@ const NavOptionButton = ({ text, icon, path }) => {
   return (
     <div
       className={
-        !isActive ? classes.option : [classes.option, classes.active].join(' ')
+        isHome
+          ? [classes.option, classes.home].join(' ')
+          : !isActive
+          ? classes.option
+          : [classes.option, classes.active].join(' ')
       }
       onClick={handleClick}
     >
-      <img className={classes.icon} src={icon} alt="schedule" />
+      <img className={classes.icon} src={icon} alt="icon" />
       {text}
     </div>
   );
