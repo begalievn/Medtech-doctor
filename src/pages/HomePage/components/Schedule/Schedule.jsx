@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SelectButton from "../../../../components/useful/select-button/SelectButton";
 
 import { calendarBackground } from "../../../../assets/images/images";
@@ -8,12 +8,28 @@ import TimeScheduleButton from "./components/time-schedule-button/TimeScheduleBu
 import classes from "./schedule.module.css";
 import PageContainer from "../../../../components/Home/body/page-container/PageContainer";
 import { HomeBodyTable } from "../../../../components/Home/body/home-table/HomeBodyTable";
-import UserSearch from "./components/user-search/UserSearch";
+import UserSearch from "../../../../components/Home/body/user-search/UserSearch";
 import ScheduleTable from "./components/schedule-table/ScheduleTable";
+import ModalAppointment from "./components/modal-appointment/ModalAppointment";
+import MakeAppointmentModal from "./components/make-appointment-modal/MakeAppointmentModal";
 
 function Schedule() {
+  const [openAppointmentModal, setOpenAppointmentModal] = useState(false);
+  const [appointmentModalData, setAppointmentModalData] = useState({});
+
+  console.log("Schedule", appointmentModalData);
+  const handleAppointmentClick = (data) => {
+    setOpenAppointmentModal(true);
+  };
+
   return (
     <div className={classes.schedule}>
+      <ModalAppointment
+        appointmentModalData={appointmentModalData}
+        openAppointmentModal={openAppointmentModal}
+        setOpenAppointmentModal={setOpenAppointmentModal}
+      />
+      <MakeAppointmentModal />
       <div className={classes.list_section}>
         <h3>Список запланированных встреч</h3>
         <div className={classes.options}>
@@ -26,7 +42,10 @@ function Schedule() {
           </div>
         </div>
         <div className={classes.schedule_table}>
-          <ScheduleTable />
+          <ScheduleTable
+            setOpenAppointmentModal={setOpenAppointmentModal}
+            setAppointmentModalData={setAppointmentModalData}
+          />
         </div>
       </div>
 

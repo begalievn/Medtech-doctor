@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { InputLabel, Box } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -11,51 +11,43 @@ import TextFieldComponent from '../useful/TextFieldComponent';
 import AuthButton from '../useful/AuthButton';
 import { loginAuth } from '../../api/auth-api/auth';
 import AuthService from '../../services/AuthService';
+import { useEffect } from 'react';
 
 function Login() {
-  const { control, handleSubmit } = useForm();
-  const { errors } = useFormState({ control });
+  const loginRef = useRef();
+  const errRef = useRef();
+
+  const [login, setLogin] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [errMsg, setErrMsg] = useState('');
+
   const [isLoading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
+  useEffect(() => {
+    loginRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    setErrMsg('');
+  }, [login, pwd]);
+
+  const handleSubmit = async (e) => {
     setLoading(true);
+
     try {
-      const response = loginAuth(data)
-        .then((data) => {
-          console.log('data', data.status);
-          if (data.status === 200) {
-            setLoading(false);
-            navigate('/main');
-          }
-        })
-        .catch((err) => {
-          console.log('error', err);
-          setLoading(false);
-          setErrorMessageVisible(true);
-          setTimeout(() => {
-            setErrorMessageVisible(false);
-          }, 3000);
-        });
-      console.log(response);
-      //   const response = await AuthService.login(data.email, data.password);
-      //   console.log(response);
-    } catch (err) {
-      if (err.response?.status === 403) {
-        console.log('Error');
-      }
-      setLoading(false);
-      console.log('error', err);
-    }
-    console.log(data);
+    } catch (err) {}
   };
+
+  console.log(login);
+  console.log(pwd);
 
   return (
     <div className={classes.container}>
       <div className={classes.content}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit}>
           <div className="">
             <div className={classes.title}>
               <h4 className={classes.title_h4}>Вход</h4>
@@ -73,17 +65,12 @@ function Login() {
               <InputLabel sx={{ marginLeft: '8px', color: '#A8A8A8' }}>
                 Логин
               </InputLabel>
-              <Controller
-                name="email"
-                control={control}
-                rules={loginValidation}
-                render={({ field }) => (
-                  <TextFieldComponent
-                    errors={errors}
-                    styles={{ marginBottom: '21px' }}
-                    {...field}
-                  />
-                )}
+              <TextFieldComponent
+                styles={{ marginBottom: '21px' }}
+                value={login}
+                inputRef={loginRef}
+                onChange={(e) => setLogin(e.target.value)}
+                id
               />
 
               <InputLabel
@@ -95,35 +82,30 @@ function Login() {
               >
                 Пароль
               </InputLabel>
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <IconTextField
-                    {...field}
-                    fullWidth
-                    type={passwordVisible ? 'text' : 'password'}
-                    sx={{
-                      height: '50px',
-                      fontSize: '16px',
-                    }}
-                    iconEnd={
-                      passwordVisible ? (
-                        <VisibilityIcon
-                          onClick={() => {
-                            setPasswordVisible(!passwordVisible);
-                          }}
-                        />
-                      ) : (
-                        <VisibilityOffIcon
-                          onClick={() => {
-                            setPasswordVisible(!passwordVisible);
-                          }}
-                        />
-                      )
-                    }
-                  />
-                )}
+              <IconTextField
+                fullWidth
+                value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
+                type={passwordVisible ? 'text' : 'password'}
+                sx={{
+                  height: '50px',
+                  fontSize: '16px',
+                }}
+                iconEnd={
+                  passwordVisible ? (
+                    <VisibilityIcon
+                      onClick={() => {
+                        setPasswordVisible(!passwordVisible);
+                      }}
+                    />
+                  ) : (
+                    <VisibilityOffIcon
+                      onClick={() => {
+                        setPasswordVisible(!passwordVisible);
+                      }}
+                    />
+                  )
+                }
               />
             </Box>
           </div>

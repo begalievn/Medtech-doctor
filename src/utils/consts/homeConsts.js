@@ -1,24 +1,24 @@
 import {
-  navCheckListIcon,
   navScheduleIcon,
-  navUsersIcon,
-} from '../../assets/icons/icons';
+  navColleaguesIcon,
+  navPatientsIcon,
+} from "../../assets/icons/icons";
 
 export const navOptions = [
   {
     icon: navScheduleIcon,
-    text: 'Расписание',
-    path: 'schedule',
+    text: "Расписание",
+    path: "schedule",
   },
   {
-    icon: navCheckListIcon,
-    text: 'Чек-Лист',
-    path: 'check-list',
+    icon: navColleaguesIcon,
+    text: "Сотрудники",
+    path: "colleagues",
   },
 
   {
-    icon: navUsersIcon,
-    text: 'Пользователи',
-    path: 'users',
+    icon: navPatientsIcon,
+    text: "Пациентки",
+    path: "patients",
   },
 ];

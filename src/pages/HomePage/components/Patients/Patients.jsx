@@ -9,27 +9,32 @@ import { HomeBodyTable } from "../../../../components/Home/body/home-table/HomeB
 import PageContainer from "../../../../components/Home/body/page-container/PageContainer";
 import SelectButton from "../../../../components/useful/select-button/SelectButton";
 
-import classes from "./users.module.css";
+import classes from "./patients.module.css";
+import DoctorsTable from "../Colleagues/components/doctors-table/DoctorsTable";
+import UserSearch from "../../../../components/Home/body/user-search/UserSearch";
+import PatientsTable from "./components/patients-table/PatientsTable";
 
-const Users = () => {
+const Patients = () => {
   return (
     <PageContainer>
       <BodyHeaderContainer>
-        <BodyTitle title={`Список пользователей`} />
+        <BodyTitle title={`Список пациенток`} />
         <BodyOptionsContainer>
-          <SelectButton text={`Врач`} />
+          {/*<SelectButton text={`Врач`} />*/}
+          <UserSearch />
           <div className={classes.options_right}>
-            <DownloadButton text={`Скачать список`} />
+            {/*<DownloadButton text={`Скачать список`} />*/}
             {/*<AddUserButton text={`Добавить пользователя`} />*/}
           </div>
         </BodyOptionsContainer>
       </BodyHeaderContainer>
       <div className={classes.space_between}></div>
       <BodyContentContainer>
-        <HomeBodyTable />
+        {/*<HomeBodyTable />*/}
+        <PatientsTable />
       </BodyContentContainer>
     </PageContainer>
   );
 };
 
-export default Users;
+export default Patients;

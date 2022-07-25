@@ -6,6 +6,11 @@ import downloadIcon from "./downloadIcon.svg";
 import whiteDownArrow from "./whiteDownArrow.svg";
 import logoutIcon from "./logout-icon.svg";
 import dotsThreeVertical from "./dotsThreeVertical.svg";
+import navColleaguesIcon from "./colleguesIcon.svg";
+import navPatientsIcon from "./patientsIcon.svg";
+import searchIcon from "./searchIcon.svg";
+import infoIcon from "./infoIcon.svg";
+import cardIcon from "./cardIcon.svg";
 
 export {
   navCheckListIcon,
@@ -16,4 +21,9 @@ export {
   whiteDownArrow,
   logoutIcon,
   dotsThreeVertical,
+  navColleaguesIcon,
+  navPatientsIcon,
+  searchIcon,
+  infoIcon,
+  cardIcon,
 };

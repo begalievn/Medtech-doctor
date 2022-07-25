@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 
-import classes from './navOptionButton.module.css';
+import classes from "./navOptionButton.module.css";
 
 const NavOptionButton = ({ text, icon, path }) => {
   const [isActive, setActive] = useState(false);
@@ -11,32 +11,29 @@ const NavOptionButton = ({ text, icon, path }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.pathname === '/home/' + path) {
+    if (location.pathname === "/home/" + path) {
       setActive(true);
     } else {
       setActive(false);
     }
 
-    location.pathname === '/home/' ? setIsHome(true) : setIsHome(false);
+    location.pathname === "/home/" || location.pathname === "/home"
+      ? setIsHome(true)
+      : setIsHome(false);
   }, [location, path]);
 
-  console.log(location.pathname);
-  if (isHome) {
-    console.log('We are at home');
-  }
-
   const handleClick = () => {
-    navigate('/home/' + path);
+    navigate("/home/" + path);
   };
 
   return (
     <div
       className={
         isHome
-          ? [classes.option, classes.home].join(' ')
+          ? [classes.option, classes.home].join(" ")
           : !isActive
           ? classes.option
-          : [classes.option, classes.active].join(' ')
+          : [classes.option, classes.active].join(" ")
       }
       onClick={handleClick}
     >

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { dotsThreeVertical } from "../../../../../../assets/icons/icons";
+import { infoIcon } from "../../../../../../assets/icons/icons";
 import { scheduleTableBackground } from "../../../../../../assets/images/images";
 import classes from "./scheduleTable.module.css";
 import {
@@ -10,7 +10,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import TableCell from "@mui/material/TableCell";
+import TableDataCell from "../../../../../../components/Home/body/table-data-cell/TableDataCell";
+import { makeNumberWithZeros } from "../../../../../../utils/helpers/MakeNumberWithZeros";
 
 const data = [
   {
@@ -57,7 +58,17 @@ const data = [
   },
 ];
 
-const ScheduleTable = () => {
+const ScheduleTable = ({
+  setOpenAppointmentModal,
+  setAppointmentModalData,
+}) => {
+  const handleAppointmentClick = (data) => {
+    setOpenAppointmentModal(true);
+    setAppointmentModalData(data);
+    console.log(data);
+    console.log("Hello, World!");
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.container_bg_layer}>
@@ -77,15 +88,19 @@ const ScheduleTable = () => {
           </TableHead>
           <TableBody>
             {data.map((item, index) => (
-              <TableRow>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{item.doctorNameSurname}</TableCell>
-                <TableCell>{item.patientNameSurname}</TableCell>
-                <TableCell>{item.date}</TableCell>
-                <TableCell>{item.time}</TableCell>
-                <TableCell>
-                  <img src={dotsThreeVertical} />
-                </TableCell>
+              <TableRow key={index}>
+                <TableDataCell>{makeNumberWithZeros(index + 1)}</TableDataCell>
+                <TableDataCell>{item.doctorNameSurname}</TableDataCell>
+                <TableDataCell>{item.patientNameSurname}</TableDataCell>
+                <TableDataCell>{item.date}</TableDataCell>
+                <TableDataCell>{item.time}</TableDataCell>
+                <TableDataCell>
+                  <img
+                    onClick={() => handleAppointmentClick(item)}
+                    className={classes.option_button}
+                    src={infoIcon}
+                  />
+                </TableDataCell>
               </TableRow>
             ))}
           </TableBody>

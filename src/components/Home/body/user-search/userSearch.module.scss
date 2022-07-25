@@ -1,11 +1,18 @@
+@use '../../../../utils/styles/styles';
+
 .input_container {
     position: relative;
 }
 
 .icon {
     position: absolute;
-    top: 6px;
-    left: 5px;
+    top: 11px;
+    left: 8px;
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 .input {
@@ -29,4 +36,15 @@
 
     border: 1px solid #F1F0F3;
     border-radius: 4px;
+}
+
+::placeholder {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    display: flex;
+    align-items: flex-end;
+    color: styles.$gray_color;
 }

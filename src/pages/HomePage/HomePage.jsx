@@ -10,9 +10,10 @@ import { logoutIcon } from "../../assets/icons/icons";
 import Schedule from "./components/Schedule/Schedule";
 import NavOptionButton from "../../components/Home/header/nav-option-button/NavOptionButton";
 import NavContainer from "../../components/Home/header/nav-container/NavContainer";
-import CheckList from "./components/CheckList/CheckList";
-import Users from "./components/Users/Users";
+import Colleagues from "./components/Colleagues/Colleagues";
+import Patients from "./components/Patients/Patients";
 import classes from "./homePage.module.css";
+import PatientPage from "./components/PatientPage/PatientPage";
 
 const HomePage = () => {
   const location = useLocation();
@@ -61,8 +62,9 @@ const HomePage = () => {
         <Routes>
           <Route exact path="/" element={<Schedule />} />
           <Route path="/schedule" element={<Schedule />} />
-          <Route path="/check-list" element={<CheckList />} />
-          <Route path="/users" element={<Users />} />
+          <Route path="/colleagues" element={<Colleagues />} />
+          <Route path="/patients" element={<Patients />} />
+          <Route path="/patients/:patientId" element={<PatientPage />} />
         </Routes>
       </div>
     </div>

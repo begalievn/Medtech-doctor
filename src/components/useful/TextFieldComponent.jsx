@@ -1,14 +1,14 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 
-function TextFieldComponent({ errors, styles, ...field }) {
+function TextFieldComponent({ styles, inputRef, value, onChange }) {
   return (
     <TextField
-      {...field}
+      inputRef={inputRef}
       fullWidth
+      value={value}
+      onChange={onChange}
       sx={styles}
-      error={!!errors.login?.message}
-      helperText={errors.login?.message}
       InputProps={{
         autoComplete: 'off',
         style: {

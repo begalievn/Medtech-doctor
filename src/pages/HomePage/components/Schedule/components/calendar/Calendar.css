@@ -1,8 +1,7 @@
 .react-calendar {
-  width: 350px;
+  width: 400px;
   max-width: 100%;
   background: white;
-  font-family: Roboto;
   line-height: 1.125em;
 }
 .react-calendar--doubleView {

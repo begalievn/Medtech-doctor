@@ -1,4 +1,5 @@
 @import './assets/fonts/SF\ Dispaly\ Font/stylesheet.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Quicksand:wght@400;500&display=swap');
 
 body {
   margin: 0;
