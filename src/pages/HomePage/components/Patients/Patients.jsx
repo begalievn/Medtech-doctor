@@ -30,7 +30,6 @@ const Patients = () => {
       </BodyHeaderContainer>
       <div className={classes.space_between}></div>
       <BodyContentContainer>
-        {/*<HomeBodyTable />*/}
         <PatientsTable />
       </BodyContentContainer>
     </PageContainer>

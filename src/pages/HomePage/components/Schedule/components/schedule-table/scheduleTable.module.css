@@ -4,6 +4,7 @@
   width: 842px;
   height: 644px;
   position: relative;
+  overflow: scroll;
 }
 
 .container_bg_layer {

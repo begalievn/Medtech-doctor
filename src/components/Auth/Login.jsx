@@ -1,48 +1,103 @@
-import React, { useState, useRef } from 'react';
-import { InputLabel, Box } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import IconTextField from '../useful/IconTextField';
-import { useForm, Controller, useFormState } from 'react-hook-form';
-import { loginValidation } from './validation';
-import { Link, useNavigate } from 'react-router-dom';
-import classes from './auth.module.css';
-import TextFieldComponent from '../useful/TextFieldComponent';
-import AuthButton from '../useful/AuthButton';
-import { loginAuth } from '../../api/auth-api/auth';
-import AuthService from '../../services/AuthService';
-import { useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
+import { InputLabel, Box } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import IconTextField from "../useful/IconTextField";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import classes from "./auth.module.css";
+import TextFieldComponent from "../useful/TextFieldComponent";
+import AuthButton from "../useful/AuthButton";
+import { LOGIN_REGEX, PWD_REGEX } from "../../utils/consts/homeConsts";
+import axios from "../../api/axios";
+import { LOGIN_URL } from "../../utils/consts/apiConsts";
+import { useDispatch } from "react-redux";
+import {
+  setAccessToken,
+  setRefreshToken,
+  setUserData,
+} from "../../store/features/auth/authSlice";
 
 function Login() {
   const loginRef = useRef();
   const errRef = useRef();
 
-  const [login, setLogin] = useState('');
-  const [pwd, setPwd] = useState('');
-  const [errMsg, setErrMsg] = useState('');
+  const [login, setLogin] = useState("");
+  const [validLogin, setValidLogin] = useState(false);
+
+  const [pwd, setPwd] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+
+  const [errMsg, setErrMsg] = useState("");
 
   const [isLoading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     loginRef.current.focus();
   }, []);
 
   useEffect(() => {
-    setErrMsg('');
+    setValidLogin(LOGIN_REGEX.test(login));
+  }, [login]);
+
+  useEffect(() => {
+    setValidPwd(PWD_REGEX.test(pwd));
+  }, [pwd]);
+
+  useEffect(() => {
+    setErrMsg("");
   }, [login, pwd]);
 
   const handleSubmit = async (e) => {
-    setLoading(true);
-
+    e.preventDefault();
     try {
-    } catch (err) {}
-  };
+      setLoading(true);
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ email: login, password: pwd }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // "Access-Control-Allow-Origin": "*",
+          },
+          // crossdomain: true,
+          // withCredentials: true,
+        }
+      );
 
-  console.log(login);
-  console.log(pwd);
+      console.log(response); // log
+      dispatch(setUserData(response?.data));
+      dispatch(setAccessToken(response?.data.accessToken));
+      dispatch(setRefreshToken(response?.data.refreshToken));
+      // Setting loading to false
+      setLoading(false);
+
+      // Navigating
+      if (response?.data?.role === "SUPERADMIN") {
+        console.log("SUPERADMIN in the mansion");
+        navigate("/home");
+      } else if (response?.data?.role === "DOCTOR") {
+        console.log("DOCTOR started working");
+        navigate("/main");
+      }
+
+      // Setting values of input fields to empty strings
+      setLogin("");
+      setPwd("");
+    } catch (err) {
+      setLoading(false);
+      if (!err?.response) {
+        console.log("No Server response");
+      } else {
+        console.log("Login failed");
+      }
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -61,12 +116,12 @@ function Login() {
             >
               <p>Не верный Логин или Пароль</p>
             </div>
-            <Box sx={{ marginBottom: '30px' }}>
-              <InputLabel sx={{ marginLeft: '8px', color: '#A8A8A8' }}>
+            <Box sx={{ marginBottom: "30px" }}>
+              <InputLabel sx={{ marginLeft: "8px", color: "#A8A8A8" }}>
                 Логин
               </InputLabel>
               <TextFieldComponent
-                styles={{ marginBottom: '21px' }}
+                styles={{ marginBottom: "25px" }}
                 value={login}
                 inputRef={loginRef}
                 onChange={(e) => setLogin(e.target.value)}
@@ -75,9 +130,9 @@ function Login() {
 
               <InputLabel
                 sx={{
-                  marginLeft: '8px',
-                  color: '#A8A8A8',
-                  fontSize: '16px',
+                  marginLeft: "8px",
+                  color: "#A8A8A8",
+                  fontSize: "16px",
                 }}
               >
                 Пароль
@@ -86,10 +141,10 @@ function Login() {
                 fullWidth
                 value={pwd}
                 onChange={(e) => setPwd(e.target.value)}
-                type={passwordVisible ? 'text' : 'password'}
+                type={passwordVisible ? "text" : "password"}
                 sx={{
-                  height: '50px',
-                  fontSize: '16px',
+                  height: "50px",
+                  fontSize: "16px",
                 }}
                 iconEnd={
                   passwordVisible ? (
@@ -112,11 +167,14 @@ function Login() {
 
           <div className={classes.submit_button}>
             {/* <p>Incorrect Fields</p> */}
-            <AuthButton text={isLoading ? 'Loading...' : 'Войти'} />
+            <AuthButton
+              text={isLoading ? "Loading..." : "Войти"}
+              disabled={!validLogin || !validPwd || isLoading}
+            />
           </div>
         </form>
         <div className={classes.forgot_password}>
-          <Link style={{ textDecoration: 'none' }} to="forgot-password">
+          <Link style={{ textDecoration: "none" }} to="forgot-password">
             <p>Забыли пароль?</p>
           </Link>
         </div>

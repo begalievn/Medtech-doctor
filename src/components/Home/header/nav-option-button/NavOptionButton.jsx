@@ -10,8 +10,9 @@ const NavOptionButton = ({ text, icon, path }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // console.log(location.pathname.split("/"));
   useEffect(() => {
-    if (location.pathname === "/home/" + path) {
+    if (location.pathname.split("/").includes(path)) {
       setActive(true);
     } else {
       setActive(false);

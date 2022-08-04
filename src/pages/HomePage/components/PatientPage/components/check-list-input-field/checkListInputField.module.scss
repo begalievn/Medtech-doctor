@@ -1,0 +1,10 @@
+@import "./src/utils/styles/styles";
+
+.input_field {
+  border-style: none;
+  background-color: $violet_like_bg;
+}
+
+.input_field:focus {
+  outline-width: 0;
+}

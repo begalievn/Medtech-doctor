@@ -19,17 +19,25 @@ const boxStyle = {
   alignItems: "center",
 };
 
-const MakeAppointmentModal = () => {
+const MakeAppointmentModal = ({
+  openMakeAppointmentModal,
+  setOpenMakeAppointmentModal,
+}) => {
+  const handleClose = () => {
+    setOpenMakeAppointmentModal(false);
+  };
+
   return (
     <div>
       <Modal
-        open={false}
+        open={openMakeAppointmentModal}
+        onClose={handleClose}
         disableAutoFocus={true}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={boxStyle}>
-          <div className={classes.close}></div>
+          <div className={classes.close} onClick={handleClose}></div>
           <div className={classes.content}>
             <h3>Запись на прием</h3>
             <div className={classes.date_time}>

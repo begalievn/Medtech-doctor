@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { Routes, Route, useLocation } from "react-router-dom";
+import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
 
 import { navOptions } from "../../utils/consts/homeConsts";
 
@@ -14,9 +14,44 @@ import Colleagues from "./components/Colleagues/Colleagues";
 import Patients from "./components/Patients/Patients";
 import classes from "./homePage.module.css";
 import PatientPage from "./components/PatientPage/PatientPage";
+import DoctorsPage from "./components/DoctorsPage/DoctorsPage";
+import DoctorsAvatar from "../../components/Home/header/doctors-avatar/DoctorsAvatar";
+import NavLogout from "../../components/Home/header/nav-logout/NavLogout";
+import { useSelector } from "react-redux";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const HomePage = () => {
   const location = useLocation();
+  const userData = useSelector((state) => state.auth.userData);
+  const axiosPrivate = useAxiosPrivate()
+  const navigate = useNavigate();
+
+  // console.log("userData", userData);
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    const getUsers = async () => {
+      try {
+        const response = await axiosPrivate.get('/user', {
+          signal: controller.signal
+        });
+        console.log(response);
+        console.log("Some request sent");
+      }catch (err) {
+        console.log(err);
+        navigate('/', {state: {from: location}, replace: true})
+      }
+    }
+
+    getUsers();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    }
+  }, [])
 
   return (
     <div className={classes.home}>
@@ -43,15 +78,9 @@ const HomePage = () => {
 
               {/* Doctor */}
               <div className={classes.nav_user}>
-                <div className={classes.user_div}>
-                  <div className={classes.user_icon}>
-                    <img src={doctorsAva} />
-                  </div>
-                  <p>{`Бегалиев Н.`}</p>
-                </div>
+                <DoctorsAvatar />
                 <div className={classes.nav_log}>
-                  <p>Выйти</p>
-                  <img src={logoutIcon} />
+                  <NavLogout />
                 </div>
               </div>
             </div>
@@ -63,8 +92,9 @@ const HomePage = () => {
           <Route exact path="/" element={<Schedule />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/colleagues" element={<Colleagues />} />
+          <Route path="/profile" element={<DoctorsPage />} />
           <Route path="/patients" element={<Patients />} />
-          <Route path="/patients/:patientId" element={<PatientPage />} />
+          <Route path="/patients/:patientId/*" element={<PatientPage />} />
         </Routes>
       </div>
     </div>

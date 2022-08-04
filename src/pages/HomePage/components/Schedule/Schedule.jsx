@@ -15,21 +15,21 @@ import MakeAppointmentModal from "./components/make-appointment-modal/MakeAppoin
 
 function Schedule() {
   const [openAppointmentModal, setOpenAppointmentModal] = useState(false);
+  const [openMakeAppointmentModal, setOpenMakeAppointmentModal] =
+    useState(false);
   const [appointmentModalData, setAppointmentModalData] = useState({});
 
-  console.log("Schedule", appointmentModalData);
+  // console.log("Schedule", appointmentModalData);
   const handleAppointmentClick = (data) => {
     setOpenAppointmentModal(true);
   };
 
+  const handeMakeAppointmentClick = () => {
+    setOpenMakeAppointmentModal(true);
+  };
+
   return (
     <div className={classes.schedule}>
-      <ModalAppointment
-        appointmentModalData={appointmentModalData}
-        openAppointmentModal={openAppointmentModal}
-        setOpenAppointmentModal={setOpenAppointmentModal}
-      />
-      <MakeAppointmentModal />
       <div className={classes.list_section}>
         <h3>Список запланированных встреч</h3>
         <div className={classes.options}>
@@ -38,7 +38,10 @@ function Schedule() {
             <SelectButton text="Врач" />
           </div>
           <div className={classes.time_option}>
-            <TimeScheduleButton text="Записать на прием" />
+            <TimeScheduleButton
+              onClick={handeMakeAppointmentClick}
+              text="Записать на прием"
+            />
           </div>
         </div>
         <div className={classes.schedule_table}>
@@ -48,7 +51,15 @@ function Schedule() {
           />
         </div>
       </div>
-
+      <ModalAppointment
+        appointmentModalData={appointmentModalData}
+        openAppointmentModal={openAppointmentModal}
+        setOpenAppointmentModal={setOpenAppointmentModal}
+      />
+      <MakeAppointmentModal
+        openMakeAppointmentModal={openMakeAppointmentModal}
+        setOpenMakeAppointmentModal={setOpenMakeAppointmentModal}
+      />
       <div className={classes.calendar_section}>
         <div className={classes.calendar_container}>
           <CalendarComp />

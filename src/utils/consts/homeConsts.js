@@ -22,3 +22,6 @@ export const navOptions = [
     path: "patients",
   },
 ];
+
+export const LOGIN_REGEX = /\S+@\S+\.\S+/;
+export const PWD_REGEX = /^.{6,}$/;

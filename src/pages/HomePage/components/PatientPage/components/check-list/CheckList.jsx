@@ -2,6 +2,7 @@ import React from "react";
 
 import classes from "./checkList.module.scss";
 import { Switch } from "@mui/material";
+import CheckListTable from "../check-list-table/CheckListTable";
 
 const CheckList = () => {
   return (
@@ -16,6 +17,11 @@ const CheckList = () => {
           <div>
             <button className={classes.save_button}>Сохранить</button>
           </div>
+        </div>
+      </div>
+      <div className={classes.content}>
+        <div>
+          <CheckListTable />
         </div>
       </div>
     </div>

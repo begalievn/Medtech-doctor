@@ -6,8 +6,21 @@ import { cardIcon } from "../../../../../../assets/icons/icons";
 import classes from "./patientPageAside.module.scss";
 import CardTextField from "../card-text-field/CardTextField";
 import { Card } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const PatientPageAside = () => {
+  const navigate = useNavigate();
+
+  const handleMedCardClick = () => {
+    navigate("med-card");
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+
+  const handleCheckListClick = () => {
+    navigate("check-list");
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>
@@ -43,13 +56,15 @@ const PatientPageAside = () => {
         </div>
       </div>
 
-      <div className={classes.med_card}>
+      <div onClick={handleMedCardClick} className={classes.med_card}>
         <h4>Медицинская карта</h4>
         <CardTextField text={"Мед карта"} />
       </div>
       <div className={classes.check_lists}>
-        <h4>Чек лист</h4>
-        <CardTextField text={"Чек лист N#1"} />
+        <div onClick={handleCheckListClick} className={classes.check_list_item}>
+          <h4>Чек лист</h4>
+          <CardTextField text={"Чек лист N#1"} />
+        </div>
       </div>
     </div>
   );

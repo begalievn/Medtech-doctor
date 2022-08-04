@@ -63,6 +63,70 @@ const data = [
     doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
     doctorsStatus: true,
   },
+  {
+    doctorsNameSurname: "Ташболот И.Р",
+    doctorsNumber: "+996 778 890 900",
+    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
+    patientsQuantity: 45,
+    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
+    doctorsStatus: true,
+  },
+  {
+    doctorsNameSurname: "Ташболот И.Р",
+    doctorsNumber: "+996 778 890 900",
+    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
+    patientsQuantity: 45,
+    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
+    doctorsStatus: true,
+  },
+  {
+    doctorsNameSurname: "Ташболот И.Р",
+    doctorsNumber: "+996 778 890 900",
+    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
+    patientsQuantity: 45,
+    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
+    doctorsStatus: true,
+  },
+  {
+    doctorsNameSurname: "Ташболот И.Р",
+    doctorsNumber: "+996 778 890 900",
+    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
+    patientsQuantity: 45,
+    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
+    doctorsStatus: true,
+  },
+  {
+    doctorsNameSurname: "Ташболот И.Р",
+    doctorsNumber: "+996 778 890 900",
+    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
+    patientsQuantity: 45,
+    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
+    doctorsStatus: true,
+  },
+  {
+    doctorsNameSurname: "Ташболот И.Р",
+    doctorsNumber: "+996 778 890 900",
+    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
+    patientsQuantity: 45,
+    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
+    doctorsStatus: true,
+  },
+  {
+    doctorsNameSurname: "Ташболот И.Р",
+    doctorsNumber: "+996 778 890 900",
+    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
+    patientsQuantity: 45,
+    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
+    doctorsStatus: true,
+  },
+  {
+    doctorsNameSurname: "Ташболот И.Р",
+    doctorsNumber: "+996 778 890 900",
+    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
+    patientsQuantity: 45,
+    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
+    doctorsStatus: true,
+  },
 ];
 
 const DoctorsTable = () => {
@@ -90,7 +154,7 @@ const DoctorsTable = () => {
                 height: "50px",
               }}
             >
-              <th>N#</th>
+              <th>№</th>
               <th>ФИО врача</th>
               <th>Номер телефона</th>
               <th>Электронная почта</th>
@@ -99,12 +163,18 @@ const DoctorsTable = () => {
               <th>Статус</th>
             </TableRow>
           </TableHead>
+          <div style={{ width: "100%", height: "10px" }}></div>
           <TableBody>
             {data.map((item, index) => (
               <TableRow
                 onClick={() => handleClick(item)}
+                sx={{
+                  background: index % 2 !== 0 ? "" : "#F8F8F8",
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
                 key={index}
-                sx={rowStyle}
               >
                 <TableDataCell>{makeNumberWithZeros(index + 1)}</TableDataCell>
                 <TableDataCell>{item.doctorsNameSurname}</TableDataCell>
@@ -124,7 +194,7 @@ const DoctorsTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {isModalOpen && <DoctorsInfoModal />}
+      <DoctorsInfoModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
     </div>
   );
 };
