@@ -1,20 +1,50 @@
-import { InputAdornment, TextField } from '@mui/material';
+import { InputAdornment, TextField } from "@mui/material";
 
-const IconTextField = ({ iconStart, iconEnd, InputProps, ...props }) => {
+const IconTextField = ({
+  iconStart,
+  iconEnd,
+  InputProps,
+  value,
+  onChange,
+  ...props
+}) => {
   return (
     <TextField
       {...props}
+      sx={{ "& legend": { display: "none" }, "& fieldset": { top: 0 } }}
+      value={value}
+      onChange={onChange}
+      autoComplete="off"
       InputProps={{
         ...InputProps,
         style: {
-          height: '50px',
-          backgroundColor: '#F7F3F7',
+          height: "50px",
+          backgroundColor: "#F7F3F7",
         },
+
         startAdornment: iconStart ? (
-          <InputAdornment position="start">{iconStart}</InputAdornment>
+          <InputAdornment
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+            position="start"
+          >
+            {iconStart}
+          </InputAdornment>
         ) : null,
         endAdornment: iconEnd ? (
-          <InputAdornment position="end">{iconEnd}</InputAdornment>
+          <InputAdornment
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+            position="end"
+          >
+            {iconEnd}
+          </InputAdornment>
         ) : null,
       }}
     />

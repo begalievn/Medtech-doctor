@@ -1,0 +1,50 @@
+@use '../../../../utils/styles/styles';
+
+.input_container {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    top: 11px;
+    left: 8px;
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.input {
+    width: 320px;
+    height: 44px;
+    padding-left: 40px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: flex-end;
+
+    /* Серый */
+
+    color: #676767;
+    background: #F7F3F7;
+    /* Обводка инпута */
+
+    border: 1px solid #F1F0F3;
+    border-radius: 4px;
+}
+
+::placeholder {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    display: flex;
+    align-items: flex-end;
+    color: styles.$gray_color;
+}

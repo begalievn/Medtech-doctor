@@ -1,0 +1,37 @@
+@import './src/utils/styles/styles';
+
+.container {
+  width: 100%;
+
+  th {
+    padding-left: 15px;
+    text-align: start;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #3B393C;
+  }
+
+  .input_field {
+    width: 210px;
+    border-style: none;
+    background-color: $violet_like_bg;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #3B393C;
+  }
+
+  .input_field:focus {
+    outline-width: 0;
+  }
+
+  textarea {
+    width: 220px;
+    border: none;
+    background: none;
+  }
+}

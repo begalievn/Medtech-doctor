@@ -18,14 +18,12 @@
 
 .content form {
   width: 400px;
-  height: 400px;
+  height: 350px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .title {
-  font-family: Roboto;
   font-style: normal;
   font-weight: 400;
   font-size: 40px;
@@ -43,7 +41,7 @@
 
 .forgot_password {
   text-align: center;
-  margin-top: 37px;
+  margin-top: 40px;
 }
 
 .forgot_password p {
@@ -51,9 +49,43 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 100%;
-  color: #17b8cb;
+  color: #5CC78D;
 }
 
 .forgot_password p:hover {
   cursor: pointer;
+}
+
+.email_sent_to {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 120%;
+  color: #cdc5cb;
+  margin-bottom: 2px;
+}
+
+.email_sent_to_email {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+  color: rgb(35, 34, 34);
+}
+
+.error_message {
+  margin-bottom: 15px;
+}
+
+.error_message {
+  font-weight: 500;
+  color: rgb(244, 57, 57);
+}
+
+.error_message_invisible {
+  display: none;
+}
+
+.submit_button {
+  margin-top: 25px;
 }

@@ -1,0 +1,13 @@
+$gray_color: #A8A8A8;
+$violet_like_bg: #F7F3F7;
+$text_black: #3B393C;
+$solid_green: #5CC78D;
+
+@mixin patient-page-h2 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+
+  color: #3B393C;
+}

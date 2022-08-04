@@ -1,0 +1,118 @@
+@import "./src/utils/styles/styles";
+
+.container {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 30px 32px 72px 36px;
+
+  .header {
+    width: 100%;
+    height: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .avatar {
+    margin-bottom: 19px;
+  }
+
+  .doctors_info {
+    margin-bottom: 25px;
+  }
+
+  .working_days {
+    width: 100%;
+    margin-bottom: 25px;
+
+
+    h4 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 100%;
+      color: $text_black;
+      margin-bottom: 10px;
+    }
+    .days {
+      display: flex;
+      justify-content: space-between;
+
+      div {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #F1F0F3;
+        border-radius: 8px;
+        background: $violet_like_bg;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 13px;
+          color: $text_black;
+        }
+      }
+    }
+
+  }
+
+  .working_hours {
+    width: 100%;
+
+    h4 {
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 100%;
+      margin-bottom: 10px;
+    }
+
+    .time_row {
+      display: flex;
+      margin-bottom: 10px;
+
+      .time_block {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+
+        span {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 100%;
+          color: #A8A8A8;
+
+        }
+
+        .time {
+          width: 100px;
+          height: 40px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #F7F3F7;
+          border-radius: 6px;
+
+          span {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 19px;
+            display: flex;
+            align-items: center;
+            color: #4C464B;
+          }
+        }
+      }
+    }
+  }
+
+}

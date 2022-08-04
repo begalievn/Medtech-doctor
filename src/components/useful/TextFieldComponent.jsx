@@ -1,19 +1,23 @@
-import React from 'react';
-import { TextField } from '@mui/material';
+import React from "react";
+import { TextField } from "@mui/material";
 
-function TextFieldComponent({ errors, styles, ...field }) {
+function TextFieldComponent({ styles, inputRef, value, onChange }) {
   return (
     <TextField
-      {...field}
+      inputRef={inputRef}
       fullWidth
-      sx={styles}
-      error={!!errors.login?.message}
-      helperText={errors.login?.message}
+      value={value}
+      onChange={onChange}
+      sx={{
+        "& legend": { display: "none" },
+        "& fieldset": { top: 0 },
+        ...styles,
+      }}
       InputProps={{
-        autoComplete: 'off',
+        autoComplete: "off",
         style: {
-          height: '50px',
-          backgroundColor: '#F7F3F7',
+          height: "50px",
+          backgroundColor: "#F7F3F7",
         },
       }}
     />

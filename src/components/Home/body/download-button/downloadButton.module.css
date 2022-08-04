@@ -1,0 +1,37 @@
+.button {
+  width: 176px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: none;
+  border: 1px solid #5cc78d;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button p {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  margin-right: 12.25px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: flex-end;
+
+  /* Голубой */
+
+  color: #5cc78d;
+}
+
+.button img {
+  width: 19.5px;
+  height: 20.5px;
+}
