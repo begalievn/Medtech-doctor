@@ -1,57 +1,39 @@
-import React, { useState, useEffect } from "react";
+// modules
+import React from "react";
+import {Routes, Route} from "react-router-dom";
 
-import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
-
-import { navOptions } from "../../utils/consts/homeConsts";
-
-import { logoWhite, doctorsAva } from "../../assets/images/images";
-import { logoutIcon } from "../../assets/icons/icons";
-
+// components
 import Schedule from "./components/Schedule/Schedule";
 import NavOptionButton from "../../components/Home/header/nav-option-button/NavOptionButton";
 import NavContainer from "../../components/Home/header/nav-container/NavContainer";
 import Colleagues from "./components/Colleagues/Colleagues";
 import Patients from "./components/Patients/Patients";
-import classes from "./homePage.module.css";
 import PatientPage from "./components/PatientPage/PatientPage";
 import DoctorsPage from "./components/DoctorsPage/DoctorsPage";
 import DoctorsAvatar from "../../components/Home/header/doctors-avatar/DoctorsAvatar";
 import NavLogout from "../../components/Home/header/nav-logout/NavLogout";
-import { useSelector } from "react-redux";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import ErrorPage from "../ErrorPage/ErrorPage";
+
+
+// rtk-queries
+import { useGetDoctorsQuery} from "../../store/features/doctors/doctorsQuery";
+
+// assets
+import { logoWhite, doctorsAva } from "../../assets/images/images";
+import { logoutIcon } from "../../assets/icons/icons";
+
+// constants
+import { navOptions } from "../../utils/consts/homeConsts";
+
+// styles
+import classes from "./homePage.module.css";
 
 const HomePage = () => {
-  const location = useLocation();
-  const userData = useSelector((state) => state.auth.userData);
-  const axiosPrivate = useAxiosPrivate()
-  const navigate = useNavigate();
 
-  // console.log("userData", userData);
+  // const { data: doctors, isLoading: doctorsLoading } = useGetDoctorsQuery("");
 
-  useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+  // console.log(doctors);
 
-    const getUsers = async () => {
-      try {
-        const response = await axiosPrivate.get('/user', {
-          signal: controller.signal
-        });
-        console.log(response);
-        console.log("Some request sent");
-      }catch (err) {
-        console.log(err);
-        navigate('/', {state: {from: location}, replace: true})
-      }
-    }
-
-    getUsers();
-
-    return () => {
-      isMounted = false;
-      controller.abort();
-    }
-  }, [])
 
   return (
     <div className={classes.home}>
@@ -95,6 +77,7 @@ const HomePage = () => {
           <Route path="/profile" element={<DoctorsPage />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/patients/:patientId/*" element={<PatientPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </div>

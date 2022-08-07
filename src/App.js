@@ -1,15 +1,19 @@
+// modules
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import MainPage from "./pages/MainPage/MainPage";
 
+// components
+import MainPage from "./pages/MainPage/MainPage";
 import LoginPage from "./pages/Authorization/LoginPage";
 import HomePage from "./pages/HomePage/HomePage";
-
 import RequireAuth from "./components/Auth/require-auth/RequireAuth";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
+
+
+// constants
 import { ROLES } from "./utils/consts/constants";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <Routes>
@@ -22,9 +26,12 @@ function App() {
             allowedRoles={[ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.DOCTOR]}
           />
         }
-      ></Route>
-      <Route path="/main" element={<MainPage />} />
-      <Route path="/home/*" element={<HomePage />} />
+      >
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/home/*" element={<HomePage />} />
+      </Route>
+      <Route path="*" element={<ErrorPage />} />
+
     </Routes>
   );
 }

@@ -74,6 +74,8 @@ function Login() {
       dispatch(setUserData(response?.data));
       dispatch(setAccessToken(response?.data.accessToken));
       dispatch(setRefreshToken(response?.data.refreshToken));
+      localStorage.setItem("accessToken", response?.data?.accessToken);
+      localStorage.setItem("refreshToken", response?.data?.refreshToken)
       // Setting loading to false
       setLoading(false);
 
@@ -168,7 +170,7 @@ function Login() {
           <div className={classes.submit_button}>
             {/* <p>Incorrect Fields</p> */}
             <AuthButton
-              text={isLoading ? "Loading..." : "Войти"}
+              text={isLoading ? "Загрузка..." : "Войти"}
               disabled={!validLogin || !validPwd || isLoading}
             />
           </div>
