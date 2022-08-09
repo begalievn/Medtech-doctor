@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  meetings: [],
+}
+
 export const scheduleSlice = createSlice({
   name: 'schedule',
-  initialState: {
-    meetings: [],
-  },
+  initialState,
   reducers: {
 
   },

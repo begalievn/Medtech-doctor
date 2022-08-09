@@ -2,4 +2,16 @@
   width: 100%;
   background: #FFFFFF;
   border-radius: 10px;
+  padding: 30px 36px 40px 36px;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+  }
+
+  .table {
+    width: 100%;
+  }
 }

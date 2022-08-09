@@ -1,5 +1,7 @@
+// modules
 import React from 'react';
 
+// styles
 import classes from './textFieldV2.module.scss'
 
 const TextFieldV2 = ({label, text}) => {

@@ -1,3 +1,4 @@
+// modules
 import React from "react";
 import {
   Switch,
@@ -7,12 +8,97 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-import classes from "./patientsTable.module.scss";
+// components
 import TableDataCell from "../../../../../../components/Home/body/table-data-cell/TableDataCell";
 import { makeNumberWithZeros } from "../../../../../../utils/helpers/MakeNumberWithZeros";
-import { useNavigate } from "react-router-dom";
-import CheckListDataCell from "../../../PatientPage/components/check-list-data-cell/CheckListDataCell";
+
+// redux-actions
+import { setPatientById } from "../../../../../../store/features/patients/patientsSlice";
+
+// styles
+import classes from "./patientsTable.module.scss";
+import {useDispatch} from "react-redux";
+
+
+
+const PatientsTable = ({patientsList = []}) => {
+
+  // tools
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleClick = (data) => {
+    dispatch(setPatientById(data));
+    navigate(`${data.patientId}`);
+  };
+
+  const handleSwitchChange = (data) => {
+    console.log("Switch changed: ", data);
+  };
+
+  return (
+    <div className={classes.container}>
+      <TableContainer>
+        <Table>
+          <TableHead >
+            <TableRow
+              sx={{
+                borderBottom: "1px solid #3B393C",
+                height: "50px",
+                marginBottom: "20px",
+              }}
+            >
+              <th>№</th>
+              <th>ФИО пациента</th>
+              <th>Номер телефона</th>
+              <th>Электронная почта</th>
+              <th>Срок бер-ти</th>
+              <th>Адрес прописки</th>
+              <th>Статус</th>
+            </TableRow>
+          </TableHead>
+          {/*<div style={{ width: "100%", height: "10px" }}></div>*/}
+          <TableBody>
+            {patientsList && patientsList?.map((item, index) => (
+              <TableRow
+                sx={{
+                  background: index % 2 !== 0 ? "" : "#F8F8F8",
+                  border: "none",
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+                key={index}
+                onClick={() => handleClick(item)}
+              >
+                <TableDataCell>{makeNumberWithZeros(index + 1)}</TableDataCell>
+                <TableDataCell>{item.fio}</TableDataCell>
+                <TableDataCell>{item.phoneNumber}</TableDataCell>
+                <TableDataCell>{item.email}</TableDataCell>
+                <TableDataCell>{item.currentWeekOfPregnancy}</TableDataCell>
+                <TableDataCell>{item.residenceAddress}</TableDataCell>
+                <TableDataCell onClick={(e) => e.stopPropagation()}>
+                  {
+                    <Switch
+                      value={true}
+                      onClick={(e) => e.stopPropagation()}
+                      onChange={(e) => handleSwitchChange(item, e)}
+                    />
+                  }
+                </TableDataCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
+};
+
+export default PatientsTable;
+
 
 const patients = [
   {
@@ -104,75 +190,3 @@ const patients = [
     patientAddress: "ул. Молодая гвардия",
   },
 ];
-
-const PatientsTable = () => {
-  const navigate = useNavigate();
-
-  const handleClick = (data) => {
-    console.log(data);
-    navigate(`${data.id}`);
-  };
-
-  const handleSwitchChange = (data) => {
-    console.log("Switch changed: ", data);
-  };
-
-  return (
-    <div className={classes.container}>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow
-              sx={{
-                borderBottom: "1px solid #3B393C",
-                height: "50px",
-                marginBottom: "5px",
-              }}
-            >
-              <th>№</th>
-              <th>ФИО пациента</th>
-              <th>Номер телефона</th>
-              <th>Электронная почта</th>
-              <th>Срок бер-ти</th>
-              <th>Адрес прописки</th>
-              <th>Статус</th>
-            </TableRow>
-          </TableHead>
-          <div style={{ width: "100%", height: "10px" }}></div>
-          <TableBody>
-            {patients.map((item, index) => (
-              <TableRow
-                sx={{
-                  background: index % 2 !== 0 ? "" : "#F8F8F8",
-                  border: "none",
-                  "&:hover": {
-                    cursor: "pointer",
-                  },
-                }}
-                key={index}
-                onClick={() => handleClick(item)}
-              >
-                <TableDataCell>{makeNumberWithZeros(index + 1)}</TableDataCell>
-                <TableDataCell>{item.patientNameSurname}</TableDataCell>
-                <TableDataCell>{item.patientNumber}</TableDataCell>
-                <TableDataCell>{item.patientEmail}</TableDataCell>
-                <TableDataCell>{item.patientPregnancyWeeks}</TableDataCell>
-                <TableDataCell>{item.patientAddress}</TableDataCell>
-                <TableDataCell onClick={(e) => e.stopPropagation()}>
-                  {
-                    <Switch
-                      onClick={(e) => e.stopPropagation()}
-                      onChange={(e) => handleSwitchChange(item, e)}
-                    />
-                  }
-                </TableDataCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-  );
-};
-
-export default PatientsTable;

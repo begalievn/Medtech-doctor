@@ -3,7 +3,6 @@ import axios from "axios";
 export const API_URL = `https://medtech-neobisx.herokuapp.com/api`;
 
 const $api = axios.create({
-  // withCredentials: true,
   baseURL: API_URL,
 });
 

@@ -1,11 +1,14 @@
+// modules
 import React from "react";
 
+// styles
 import classes from "./medCardTextField.module.scss";
 
-const MedCardTextField = ({ placeholder, ...props }) => {
+const MedCardTextField = ({ placeholder, label, ...props }) => {
   return (
     <div>
-      <input {...props} className={classes.input} placeholder={placeholder} />
+      <p className={classes.label}>{label}</p>
+      <input className={classes.input} placeholder={placeholder} {...props} />
     </div>
   );
 };

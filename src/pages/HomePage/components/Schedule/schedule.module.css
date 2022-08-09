@@ -3,12 +3,12 @@
   max-width: 1340px;
   height: 820px;
   display: flex;
-  flex-wrap: wrap;
+  /*flex-wrap: wrap;*/
   justify-content: space-between;
 }
 
 .list_section {
-  width: 887px;
+  max-width: 887px;
   height: 100%;
   background: #ffffff;
   padding: 30px 25px 0 20px;
@@ -46,7 +46,7 @@
 }
 
 .calendar_section {
-  width: 433px;
+  max-width: 433px;
   height: 100%;
   position: relative;
   background: #ffffff;

@@ -12,7 +12,7 @@
 .options_right {
   width: 454px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .space_between {

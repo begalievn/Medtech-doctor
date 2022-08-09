@@ -183,7 +183,7 @@ const DoctorsTable = () => {
                 <TableDataCell>{item.patientsQuantity} пациентов</TableDataCell>
                 <TableDataCell>
                   {item.doctorsWorkingDays.map((item, index) => (
-                    <span>{`${item} `}</span>
+                    <span key={index}>{`${item} `}</span>
                   ))}
                 </TableDataCell>
                 <TableDataCell>

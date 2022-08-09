@@ -1,14 +1,24 @@
+// modules
 import React from "react";
-
-import { patientProfilePhoto } from "../../../../../../assets/images/images";
-import { cardIcon } from "../../../../../../assets/icons/icons";
-
-import classes from "./patientPageAside.module.scss";
-import CardTextField from "../card-text-field/CardTextField";
-import { Card } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Card } from "@mui/material";
 
-const PatientPageAside = () => {
+// components
+import CardTextField from "../card-text-field/CardTextField";
+
+
+// assets
+import { cardIcon } from "../../../../../../assets/icons/icons";
+import { patientProfilePhoto } from "../../../../../../assets/images/images";
+
+// styles
+import classes from "./patientPageAside.module.scss";
+import {useGetAllCheckListsOfPatientByIdQuery} from "../../../../../../store/features/patients/patientsApi";
+
+
+
+const PatientPageAside = ({checkLists}) => {
+  // tools
   const navigate = useNavigate();
 
   const handleMedCardClick = () => {
@@ -63,6 +73,11 @@ const PatientPageAside = () => {
       <div className={classes.check_lists}>
         <div onClick={handleCheckListClick} className={classes.check_list_item}>
           <h4>Чек лист</h4>
+          {
+            checkLists && checkLists.map((item, index) => (
+              <CardTextField key={index} text={"Чек лист N#1"} />
+            ))
+          }
           <CardTextField text={"Чек лист N#1"} />
         </div>
       </div>

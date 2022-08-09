@@ -31,6 +31,9 @@ export const authSlice = createSlice({
     setUserData: (state, action) => {
       state.userData = action.payload;
     },
+    clearUserData: (state) => {
+      state.userData = {};
+    },
     setAccessToken: (state, action) => {
       state.accessToken = action.payload;
     },
@@ -45,6 +48,7 @@ export const {
   setAuth,
   setUser,
   setUserData,
+  clearUserData,
   setAccessToken,
   setRefreshToken,
 } = authSlice.actions;
