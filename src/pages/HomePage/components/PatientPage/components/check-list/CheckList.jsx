@@ -3,6 +3,7 @@ import React from "react";
 import classes from "./checkList.module.scss";
 import { Switch } from "@mui/material";
 import CheckListTable from "../check-list-table/CheckListTable";
+import EditSaveButton from "../edit-save-button/EditSaveButton";
 
 const CheckList = () => {
   return (
@@ -15,7 +16,7 @@ const CheckList = () => {
             <Switch color="success" />
           </div>
           <div>
-            <button className={classes.save_button}>Сохранить</button>
+            <EditSaveButton text={"Сохранить"} />
           </div>
         </div>
       </div>

@@ -1,0 +1,17 @@
+@import './src/utils/styles/styles';
+
+.button {
+  width: 204px;
+  height: 44px;
+  border-style: none;
+  border-radius: 4px;
+  background: $dark_green;
+
+  // text
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: #FFFFFF;
+}

@@ -11,6 +11,9 @@ import navPatientsIcon from "./patientsIcon.svg";
 import searchIcon from "./searchIcon.svg";
 import infoIcon from "./infoIcon.svg";
 import cardIcon from "./cardIcon.svg";
+import navContentIcon from './navContentIcon.svg';
+import closedArrow from './closedArrow.svg';
+import openArrow from './openArrow.svg';
 
 export {
   navCheckListIcon,
@@ -26,4 +29,7 @@ export {
   searchIcon,
   infoIcon,
   cardIcon,
+  navContentIcon,
+  closedArrow,
+  openArrow,
 };

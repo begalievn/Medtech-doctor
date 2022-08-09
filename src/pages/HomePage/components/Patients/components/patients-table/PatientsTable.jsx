@@ -8,7 +8,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
 
 // components
@@ -43,12 +42,12 @@ const PatientsTable = ({patientsList = []}) => {
     <div className={classes.container}>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead >
             <TableRow
               sx={{
                 borderBottom: "1px solid #3B393C",
                 height: "50px",
-                marginBottom: "5px",
+                marginBottom: "20px",
               }}
             >
               <th>№</th>
@@ -60,7 +59,7 @@ const PatientsTable = ({patientsList = []}) => {
               <th>Статус</th>
             </TableRow>
           </TableHead>
-          <div style={{ width: "100%", height: "10px" }}></div>
+          {/*<div style={{ width: "100%", height: "10px" }}></div>*/}
           <TableBody>
             {patientsList && patientsList?.map((item, index) => (
               <TableRow

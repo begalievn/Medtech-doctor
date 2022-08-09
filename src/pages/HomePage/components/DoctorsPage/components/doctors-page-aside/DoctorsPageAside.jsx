@@ -13,8 +13,21 @@ const workingDays = [
   "Mn", "Tu", "Wd", "Th", "Fr", "St", "Sn"
 ]
 
+/*
+email: "trustmed.team3@gmail.com"
+firstName: "Neobis"
+lastName: "Team"
+middleName: "Four"
+otpUsed: true
+phoneNumber: ""
+resetCode: null
+role: {id: 1, name: 'SUPERADMIN', permissionEntities: Array(0), authorities: Array(1)}
+status: "ACTIVE"
+userId: 5
+ */
 
-const DoctorsPageAside = () => {
+
+const DoctorsPageAside = ({ doctorData }) => {
   return (
     <div className={classes.container}>
       <div className={classes.header}>
@@ -25,12 +38,12 @@ const DoctorsPageAside = () => {
         <AvatarPhotoV2 image={doctorsAva} />
       </div>
       <div className={classes.doctors_info}>
-        <TextFieldV2 label={"Фамилия"} text={"Begaliev"} />
-        <TextFieldV2 label={"Фамилия"} text={"Begaliev"} />
-        <TextFieldV2 label={"Фамилия"} text={"Begaliev"} />
-        <TextFieldV2 label={"Фамилия"} text={"Begaliev"} />
-        <TextFieldV2 label={"Фамилия"} text={"Begaliev"} />
-        <TextFieldV2 label={"Фамилия"} text={"Begaliev"} />
+        <TextFieldV2 label={"Фамилия"} text={doctorData.lastName} />
+        <TextFieldV2 label={"Имя"} text={doctorData.firstName} />
+        <TextFieldV2 label={"Отчество"} text={doctorData.middleName} />
+        <TextFieldV2 label={"Количество пациенток"} text={0} />
+        <TextFieldV2 label={"Email"} text={doctorData.email} />
+        <TextFieldV2 label={"Номер телефона"} text={doctorData.phoneNumber} />
       </div>
       <div className={classes.working_days}>
         <h4>Рабочие дни</h4>

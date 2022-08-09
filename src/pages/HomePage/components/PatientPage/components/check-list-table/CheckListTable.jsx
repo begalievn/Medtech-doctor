@@ -1,6 +1,5 @@
+// modules
 import React from "react";
-
-import classes from "./checkListTable.module.scss";
 import {
   Table,
   TableBody,
@@ -10,8 +9,12 @@ import {
   TextareaAutosize,
   TextField,
 } from "@mui/material";
+
+// components
 import CheckListDataCell from "../check-list-data-cell/CheckListDataCell";
 
+// styles
+import classes from "./checkListTable.module.scss";
 import "./checkListTable.scss";
 
 // .css-8q2m5j-MuiInputBase-root-MuiInput-root:before

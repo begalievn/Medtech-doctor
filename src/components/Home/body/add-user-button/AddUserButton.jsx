@@ -1,70 +1,75 @@
-import React, { useState } from 'react';
-import { whiteDownArrow } from '../../../../assets/icons/icons';
+// modules
+import React, { useState, useEffect } from 'react';
 import {
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
 } from '@mui/material';
 
+// assets
+import { whiteDownArrow } from '../../../../assets/icons/icons';
+
+// styles
 import classes from './addUserButton.module.css';
+import {ROLES} from "../../../../utils/consts/constants";
+
+const inputLabelStyles = {
+  fontFamily: 'SF Pro Display',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: '16px',
+  lineHeight: '19px',
+  color: 'white',
+  marginLeft: '10px',
+  top: '50%',
+  transform: 'translate(0,-50%)',
+};
+
+const selectStyles = {
+  width: '238px',
+  height: '44px',
+  background: '#5cc78d',
+  borderRadius: '4px',
+  borderStyle: 'none',
+  cursor: 'pointer',
+  '& legend': { display: 'none' },
+  '& fieldset': { top: 0 },
+};
+
+const formRadioStyles = {
+  fontFamily: 'SF Pro Display',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: '16px',
+  lineHeight: '19px',
+  color: '#4C464B',
+};
 
 const AddUserButton = ({ text }) => {
   const [role, setRole] = useState('');
 
   const handleChange = (event) => {
     setRole(event.target.value);
+    console.log(event.target.value);
+    console.log("OPEN MODAL");
   };
 
-  const inputLabelStyles = {
-    fontFamily: 'SF Pro Display',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '16px',
-    lineHeight: '19px',
-    color: 'white',
-    marginLeft: '10px',
-    top: '50%',
-    transform: 'translate(0,-50%)',
-  };
-
-  const selectStyles = {
-    width: '238px',
-    height: '44px',
-    background: '#5cc78d',
-    borderRadius: '4px',
-    borderStyle: 'none',
-    '&:hover': { cursor: 'pointer' },
-  };
-
-  const formRadioStyles = {
-    fontFamily: 'SF Pro Display',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '16px',
-    lineHeight: '19px',
-    color: '#4C464B',
-  };
 
   const options = [
-    { option: 'Администратор' },
-    { option: 'Супер администратор' },
-    { option: 'Пациент' },
-    { option: 'Врач' },
+    { option: 'Администратор', value: ROLES.ADMIN },
+    { option: 'Супер администратор', value: ROLES.SUPERADMIN },
+    { option: 'Врач', value: ROLES.DOCTOR },
   ];
 
+
   return (
-    // <button className={classes.button}>
-    //   <p>{text}</p>
-    //   <img src={whiteDownArrow} alt="icon" />
-    // </button>
-    <FormControl>
-      <InputLabel style={inputLabelStyles} id="demo-simple-select-label">
-        {text}
-      </InputLabel>
+    <FormControl >
+      {
+        role === '' ? <InputLabel style={inputLabelStyles} id="demo-simple-select-label">
+          <span className={classes.inputLabel}>{text}</span>
+        </InputLabel> : null
+      }
 
       <Select
         sx={selectStyles}
@@ -81,13 +86,39 @@ const AddUserButton = ({ text }) => {
           },
           background: '#F1F0F3',
         }}
-        // IconComponent={() => (
-        //   <img
-        //     style={{ marginRight: '15px' }}
-        //     src={whiteDownArrow}
-        //     alt="icon"
-        //   />
-        // )}
+        value={role}
+        onChange={handleChange}
+      >
+        {
+          options.map((item, index) => (
+            <MenuItem key={index} value={item.value}>{item.option}</MenuItem>
+          ))
+        }
+      </Select>
+    </FormControl>
+  );
+};
+
+export default AddUserButton;
+
+
+/*
+
+ <Select
+        sx={selectStyles}
+        id="demo-simple-select"
+        MenuProps={{
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'center',
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          },
+          background: '#F1F0F3',
+        }}
+        onChange={(e) => console.log(e)}
       >
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
@@ -111,8 +142,4 @@ const AddUserButton = ({ text }) => {
           ))}
         </RadioGroup>
       </Select>
-    </FormControl>
-  );
-};
-
-export default AddUserButton;
+ */

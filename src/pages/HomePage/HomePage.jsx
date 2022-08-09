@@ -22,18 +22,25 @@ import { useGetDoctorsQuery} from "../../store/features/doctors/doctorsQuery";
 import { logoWhite, doctorsAva } from "../../assets/images/images";
 import { logoutIcon } from "../../assets/icons/icons";
 
+// hooks
+import useGetUserRole from "../../hooks/useGetUserRole";
+
 // constants
-import { navOptions } from "../../utils/consts/homeConsts";
+import {navOptions, navOptionsAdmin} from "../../utils/consts/homeConsts";
+import {ROLES} from "../../utils/consts/constants";
+
 
 // styles
 import classes from "./homePage.module.css";
+import Content from "./components/Content/Content";
 
 const HomePage = () => {
 
   // const { data: doctors, isLoading: doctorsLoading } = useGetDoctorsQuery("");
-
   // console.log(doctors);
 
+  // Role of User
+  const role = useGetUserRole();
 
   return (
     <div className={classes.home}>
@@ -48,14 +55,25 @@ const HomePage = () => {
           <nav className={classes.navContainer}>
             <div className={classes.nav}>
               <div className={classes.nav__options}>
-                {navOptions.map((option, index) => (
-                  <NavOptionButton
-                    key={index}
-                    path={option.path}
-                    icon={option.icon}
-                    text={option.text}
-                  />
-                ))}
+                {
+                  role === ROLES.DOCTOR ? navOptions.map((option, index) => (
+                    <NavOptionButton
+                      key={index}
+                      path={option.path}
+                      icon={option.icon}
+                      text={option.text}
+                    />
+                  ))
+                    :
+                    navOptionsAdmin.map((option, index) => (
+                      <NavOptionButton
+                        key={index}
+                        path={option.path}
+                        icon={option.icon}
+                        text={option.text}
+                      />
+                    ))
+                }
               </div>
 
               {/* Doctor */}
@@ -77,6 +95,7 @@ const HomePage = () => {
           <Route path="/profile" element={<DoctorsPage />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/patients/:patientId/*" element={<PatientPage />} />
+          <Route path="/content" element={<Content />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>

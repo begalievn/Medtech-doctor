@@ -44,19 +44,6 @@
           height: 20.5px;
         }
       }
-
-      .save_button {
-        width: 140px;
-        height: 44px;
-        background: styles.$solid_green;
-        border-style: none;
-        border-radius: 4px;
-        font-style: normal;
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 100%;
-        color: white;
-      }
     }
 
   }
@@ -134,7 +121,7 @@
       }
     }
 
-    h3 {
+    .header_2 {
       text-align: center;
       font-style: normal;
       font-weight: 700;
@@ -145,6 +132,7 @@
     }
 
     .medcard_number {
+      margin-bottom: 20px;
       p {
         font-style: normal;
         font-weight: 700;
@@ -154,6 +142,42 @@
         margin-bottom: 4px;
       }
     }
+
+    .title {
+      width: 100%;
+      height: 80px;
+      background: #FDFDFD;
+      border: 1px solid #F7F3F7;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      margin: 20px 0;
+      cursor: pointer;
+
+      h3 {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: styles.$text_black;
+        margin-right: 25px;
+        user-select: none;
+      }
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-column-gap: 15px;
+      row-gap: 15px;
+    }
+
+    .invisible {
+      display: none;
+    }
+
+
+
 
 
   }

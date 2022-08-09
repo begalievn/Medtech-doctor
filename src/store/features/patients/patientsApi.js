@@ -20,8 +20,16 @@ export const patientsApi = createApi({
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         }
       })
+    }),
+    getPatientsExcel: builder.query({
+      query: () => ({
+        url: `/patient/excel/get-patients`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        }
+      })
     })
   }),
 });
 
-export const { useGetAllPatientsQuery, useGetAllCheckListsOfPatientByIdQuery } = patientsApi;
+export const { useGetAllPatientsQuery, useGetAllCheckListsOfPatientByIdQuery, useGetPatientsExcelQuery } = patientsApi;

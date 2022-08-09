@@ -1,6 +1,19 @@
+@import './src/utils/styles/styles';
+
+.label {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 120%;
+  color: $text_black;
+  margin-bottom: 4px;
+}
+
 .input {
   width: 280px;
+  max-width: 280px;
   height: 40px;
+  display: block;
   background: #F7F3F7;
   border: 1px solid #F1F0F3;
   border-radius: 4px;

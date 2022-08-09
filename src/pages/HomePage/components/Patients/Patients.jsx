@@ -1,5 +1,5 @@
 // modules
-import React, {useEffect, useState} from "react";
+import React from "react";
 
 // components
 import BodyContentContainer from "../../../../components/Home/body/body-content-container/BodyContentContainer";
@@ -10,19 +10,23 @@ import PageContainer from "../../../../components/Home/body/page-container/PageC
 import UserSearch from "../../../../components/Home/body/user-search/UserSearch";
 import PatientsTable from "./components/patients-table/PatientsTable";
 import Loader from "../../../../components/useful/loader/Loader";
+import DownloadButton from "../../../../components/Home/body/download-button/DownloadButton";
+import AddUserButton from "../../../../components/Home/body/add-user-button/AddUserButton";
+
 
 // rtk-queries
 import {useGetAllPatientsQuery} from "../../../../store/features/patients/patientsApi";
 
 // styles
 import classes from "./patients.module.css";
+import AddPatientButton from "../../../../components/Home/body/add-patient-button/AddPatientButton";
 
 
 const Patients = () => {
 
   const { data: patients, isLoading: patientsLoading, error: patientsError } = useGetAllPatientsQuery("");
 
-  console.log(patients);
+  console.log("Patients", patients);
 
 
 
@@ -34,8 +38,8 @@ const Patients = () => {
           {/*<SelectButton text={`Врач`} />*/}
           <UserSearch />
           <div className={classes.options_right}>
-            {/*<DownloadButton text={`Скачать список`} />*/}
-            {/*<AddUserButton text={`Добавить пользователя`} />*/}
+            <DownloadButton text={`Скачать список`} patients={true} />
+            <AddPatientButton text={`Добавить пользователя`} />
           </div>
         </BodyOptionsContainer>
       </BodyHeaderContainer>

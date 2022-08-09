@@ -10,6 +10,7 @@ import patientsReducer from './features/patients/patientsSlice';
 // rtk-query apis
 import {patientsApi} from "./features/patients/patientsApi";
 import { doctorsAPI} from "./features/doctors/doctorsQuery";
+import { userApi} from "./features/user/userApi";
 
 
 export const store = configureStore({
@@ -20,12 +21,14 @@ export const store = configureStore({
 
     [patientsApi.reducerPath]: patientsApi.reducer,
     [doctorsAPI.reducerPath]: doctorsAPI.reducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       patientsApi.middleware,
-      doctorsAPI.middleware
+      doctorsAPI.middleware,
+      userApi.middleware,
     )
 });
 

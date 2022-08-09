@@ -29,10 +29,11 @@ const TableV2 = ({ tableHead, data }) => {
               ))}
             </TableRow>
           </TableHead>
-          <div style={{ width: "100%", height: "10px" }}></div>
+          {/*<div style={{ width: "100%", height: "10px" }}></div>*/}
           <TableBody>
             {data.map((item, index) => (
               <TableRow
+                key={index}
                 sx={{
                   background: index % 2 !== 0 ? "" : "#F8F8F8",
                   "&:hover": {
