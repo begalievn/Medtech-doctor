@@ -4,9 +4,9 @@ import React from 'react';
 // styles
 import classes from './textFieldV3.module.scss';
 
-const TextFieldV3 = ({placeholder, label, value, onChange, labelStyles, inputStyles, type, textAreaStyles, ...props}) => {
+const TextFieldV3 = ({placeholder, label, value, onChange, labelStyles, inputStyles, inputType, textAreaStyles, ...props}) => {
 
-  if(type === 'textArea') {
+  if(inputType === 'textArea') {
     return (
       <div className={classes.container}>
         <p className={classes.label} style={labelStyles}>{label}</p>

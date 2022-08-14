@@ -14,7 +14,7 @@ import cardIcon from "./cardIcon.svg";
 import navContentIcon from './navContentIcon.svg';
 import closedArrow from './closedArrow.svg';
 import openArrow from './openArrow.svg';
-import changeImageIcon from './changeImageIcon.png';
+import plusIcon from './plusIcon.svg';
 
 export {
   navCheckListIcon,
@@ -33,5 +33,5 @@ export {
   navContentIcon,
   closedArrow,
   openArrow,
-  changeImageIcon
+  plusIcon
 };
