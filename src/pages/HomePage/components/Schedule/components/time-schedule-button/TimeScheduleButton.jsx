@@ -1,6 +1,5 @@
+// modules
 import React from "react";
-
-import { timeSchedulePlusIcon } from "../../../../../../assets/icons/icons";
 
 import classes from "./timeSched.module.css";
 

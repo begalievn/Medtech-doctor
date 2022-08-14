@@ -33,8 +33,8 @@ const NavOptionButton = ({ text, icon, path }) => {
         isHome
           ? [classes.option, classes.home].join(" ")
           : !isActive
-          ? classes.option
-          : [classes.option, classes.active].join(" ")
+            ? classes.option
+            : [classes.option, classes.active].join(" ")
       }
       onClick={handleClick}
     >

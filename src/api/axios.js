@@ -24,7 +24,16 @@ export const axiosWithContentBlob = axios.create({
   baseURL: BASE_URL,
   headers: {
     Authorization: `Bearer ${accessToken}`,
-    "Content-Type": "blob",
+    'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  },
+  responseType: 'arraybuffer'
+})
+
+export const axiosForImage = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+    'Content-Type': 'multipart/form-data',
   }
 })
 

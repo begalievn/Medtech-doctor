@@ -1,20 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Box } from "@mui/system";
 import { InputLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller, useFormState } from "react-hook-form";
+import { setUser } from "../../store/features/auth/authSlice";
+import AuthService from "../../services/AuthService";
 import { loginValidation } from "./validation";
-
-import classes from "./auth.module.css";
 import TextFieldComponent from "../useful/TextFieldComponent";
 import AuthButton from "../useful/AuthButton";
-import AuthService from "../../services/AuthService";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../store/features/auth/authSlice";
+import classes from "./auth.module.css";
 
 function PassRecEmail() {
   const { control, handleSubmit } = useForm();
-  const { errors } = useFormState({ control });
+  const { errors,  } = useFormState({ control });
   const [isLoading, setLoading] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   const dispatch = useDispatch();

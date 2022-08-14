@@ -1,5 +1,7 @@
+// modules
 import React from 'react';
 
+// styles
 import classes from './bodyHeaderContainer.module.css';
 
 const BodyHeaderContainer = ({ children }) => {

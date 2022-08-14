@@ -11,7 +11,7 @@ import UserSearch from "../../../../components/Home/body/user-search/UserSearch"
 import PatientsTable from "./components/patients-table/PatientsTable";
 import Loader from "../../../../components/useful/loader/Loader";
 import DownloadButton from "../../../../components/Home/body/download-button/DownloadButton";
-import AddUserButton from "../../../../components/Home/body/add-user-button/AddUserButton";
+import AddPatientButton from "../../../../components/Home/body/add-patient-button/AddPatientButton";
 
 
 // rtk-queries
@@ -19,16 +19,11 @@ import {useGetAllPatientsQuery} from "../../../../store/features/patients/patien
 
 // styles
 import classes from "./patients.module.css";
-import AddPatientButton from "../../../../components/Home/body/add-patient-button/AddPatientButton";
 
 
 const Patients = () => {
 
   const { data: patients, isLoading: patientsLoading, error: patientsError } = useGetAllPatientsQuery("");
-
-  console.log("Patients", patients);
-
-
 
   return (
     <PageContainer>
