@@ -11,6 +11,7 @@ import patientsReducer from './features/patients/patientsSlice';
 import {patientsApi} from "./features/patients/patientsApi";
 import { doctorsAPI} from "./features/doctors/doctorsQuery";
 import { userApi} from "./features/user/userApi";
+import { contentApi} from "./features/content/contentQuery";
 
 
 export const store = configureStore({
@@ -22,6 +23,7 @@ export const store = configureStore({
     [patientsApi.reducerPath]: patientsApi.reducer,
     [doctorsAPI.reducerPath]: doctorsAPI.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [contentApi.reducerPath]: contentApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -29,6 +31,7 @@ export const store = configureStore({
       patientsApi.middleware,
       doctorsAPI.middleware,
       userApi.middleware,
+      contentApi.middleware
     )
 });
 

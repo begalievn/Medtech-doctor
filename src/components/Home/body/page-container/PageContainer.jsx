@@ -1,5 +1,6 @@
 import React from 'react';
 
+// styles
 import classes from './pageContainer.module.css';
 
 const PageContainer = ({ children }) => {

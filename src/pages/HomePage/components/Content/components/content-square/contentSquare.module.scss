@@ -1,0 +1,23 @@
+@import '../../../../../../utils/styles/styles';
+
+.container {
+  width: 145px;
+  max-width: 145px;
+  height: 145px;
+  max-height: 145px;
+  background: $violet_like_bg;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: $text_black;
+  }
+}

@@ -59,7 +59,7 @@ const PatientsTable = ({patientsList = []}) => {
               <th>Статус</th>
             </TableRow>
           </TableHead>
-          {/*<div style={{ width: "100%", height: "10px" }}></div>*/}
+          <div style={{ width: "100%", height: "10px" }}></div>
           <TableBody>
             {patientsList && patientsList?.map((item, index) => (
               <TableRow

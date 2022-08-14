@@ -1,0 +1,45 @@
+@import "./src/utils/styles/styles";
+
+.container {
+
+  .label {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 100%;
+    color: $gray_color;
+    margin-left: 7px;
+    margin-bottom: 5px;
+  }
+
+  .input {
+    width: 280px;
+    height: 40px;
+    background: $violet_like_bg;
+    border: 1px solid #F1F0F3;
+    border-radius: 4px;
+    padding-left: 12px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: $text_black;
+  }
+
+  .textArea {
+    width: 100%;
+    height: 180px;
+    padding: 14px;
+    background: $violet_like_bg;
+    border: 1px solid #F1F0F3;
+    border-radius: 16px;
+    resize: none;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    color: $text_black;
+  }
+}
