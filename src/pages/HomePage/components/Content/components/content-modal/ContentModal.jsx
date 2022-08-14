@@ -155,7 +155,7 @@ const ContentModal = ({contentModalVisible, setContentModalVisible, data}) => {
               />
             </div>
             <div className={classes.second}>
-              <TextFieldV3 label={"Описание"} value={contentTextValues[activeContent]?.description} onChange={handleTextChange} name={"description"} type={"textArea"} style={{height: "140px"}}  />
+              <TextFieldV3 label={"Описание"} value={contentTextValues[activeContent]?.description} onChange={handleTextChange} name={"description"} inputType={"textArea"} style={{height: "140px"}}  />
             </div>
           </div>
 

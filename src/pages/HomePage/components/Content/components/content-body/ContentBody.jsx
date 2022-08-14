@@ -18,7 +18,6 @@ const ContentBody = ({ content }) => {
   const [selectedWeek, setSelectedWeek] = useState([]);
 
   const result = useMemo(() => collectDataFromContent(content), [content]);
-  console.log(result);
   console.log("week", selectedWeek);
 
   const handleContentClick = (data) => {
