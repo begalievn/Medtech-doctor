@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux";
 
 // components
 import TableDataCell from "../../../../../../components/Home/body/table-data-cell/TableDataCell";
@@ -19,7 +20,6 @@ import { setPatientById } from "../../../../../../store/features/patients/patien
 
 // styles
 import classes from "./patientsTable.module.scss";
-import {useDispatch} from "react-redux";
 
 
 
@@ -31,6 +31,7 @@ const PatientsTable = ({patientsList = []}) => {
 
   const handleClick = (data) => {
     dispatch(setPatientById(data));
+    localStorage.setItem("patientId", data.patientId);
     navigate(`${data.patientId}`);
   };
 

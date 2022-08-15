@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../../utils/consts/apiConsts";
 
+const authWithToken = {
+  Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+};
+
 export const patientsApi = createApi({
   reducerPath: "patientsApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
@@ -18,18 +22,29 @@ export const patientsApi = createApi({
         url: `/patient/patients-checklists/${patientId}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        }
-      })
+        },
+      }),
     }),
     getPatientsExcel: builder.query({
       query: () => ({
         url: `/patient/excel/get-patients`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        }
-      })
-    })
+        },
+      }),
+    }),
+    getPatientProfile: builder.query({
+      query: (patientId) => ({
+        url: `/patient/get-profile-web/${patientId}`,
+        headers: authWithToken,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllPatientsQuery, useGetAllCheckListsOfPatientByIdQuery, useGetPatientsExcelQuery } = patientsApi;
+export const {
+  useGetAllPatientsQuery,
+  useGetAllCheckListsOfPatientByIdQuery,
+  useGetPatientsExcelQuery,
+  useGetPatientProfileQuery,
+} = patientsApi;

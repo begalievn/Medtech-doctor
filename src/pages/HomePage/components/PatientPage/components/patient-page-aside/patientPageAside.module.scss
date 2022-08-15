@@ -30,34 +30,10 @@
   }
 
   .patient_info {
-    p {
-      font-style: normal;
-      font-weight: 700;
-      font-size: 12px;
-      line-height: 20px;
-      color: styles.$gray_color;
-      margin-left: 5px;
-    }
-
-    div {
-      width: 300px;
-      height: 50px;
-      background: styles.$violet_like_bg;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      border: 1px solid #F1F0F3;
-      border-radius: 4px;
-
-      p {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 19px;
-        color: styles.$text_black;
-      }
-
+    input {
+      height: 45px;
+      margin-bottom: 8px;
+      width: 100%;
     }
   }
 

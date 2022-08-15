@@ -129,8 +129,11 @@ const data = [
   },
 ];
 
-const DoctorsTable = () => {
+const doctorsWorkingDays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
+
+const DoctorsTable = ({ doctorsList }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  console.log("doctorsList: ", doctorsList);
 
   const handleClick = (data) => {
     setModalOpen(true);
@@ -145,13 +148,23 @@ const DoctorsTable = () => {
 
   return (
     <div className={classes.container}>
-      <TableContainer>
-        <Table>
-          <TableHead>
+      <TableContainer  sx={{
+        height: 550
+      }}>
+        <Table sx={{
+          height: "max-content"
+        }}>
+          <TableHead sx={{position: "relative"}}>
             <TableRow
               sx={{
-                borderBottom: "1px solid black",
+                // borderBottom: "1px solid black",
                 height: "50px",
+                position: "sticky",
+                top: "0",
+                left: "0",
+                zIndex: "10",
+                background: "white",
+                boxShadow: "0px 1px 1px black"
               }}
             >
               <th>№</th>
@@ -163,9 +176,9 @@ const DoctorsTable = () => {
               <th>Статус</th>
             </TableRow>
           </TableHead>
-          <div style={{ width: "100%", height: "10px" }}></div>
-          <TableBody>
-            {data.map((item, index) => (
+          {/*<div style={{ width: "100%", height: "10px" }}></div>*/}
+          <TableBody sx={{ "&:before": {content: `"-"`, lineHeight: "10px", display: 'block', color: 'transparent'}}}>
+            {doctorsList.map((item, index) => (
               <TableRow
                 onClick={() => handleClick(item)}
                 sx={{
@@ -177,17 +190,17 @@ const DoctorsTable = () => {
                 key={index}
               >
                 <TableDataCell>{makeNumberWithZeros(index + 1)}</TableDataCell>
-                <TableDataCell>{item.doctorsNameSurname}</TableDataCell>
-                <TableDataCell>{item.doctorsNumber}</TableDataCell>
-                <TableDataCell>{item.doctorsEmail}</TableDataCell>
-                <TableDataCell>{item.patientsQuantity} пациентов</TableDataCell>
+                <TableDataCell>{item.fio}</TableDataCell>
+                <TableDataCell>{item.phoneNumber}</TableDataCell>
+                <TableDataCell>{item.email}</TableDataCell>
+                <TableDataCell>{item.countOfPatients} пациентов</TableDataCell>
                 <TableDataCell>
-                  {item.doctorsWorkingDays.map((item, index) => (
+                  {doctorsWorkingDays.map((item, index) => (
                     <span key={index}>{`${item} `}</span>
                   ))}
                 </TableDataCell>
                 <TableDataCell>
-                  <Switch defaultChecked />
+                  <Switch checked={item.status === 'ACTIVE'} />
                 </TableDataCell>
               </TableRow>
             ))}
@@ -200,3 +213,6 @@ const DoctorsTable = () => {
 };
 
 export default DoctorsTable;
+
+
+
