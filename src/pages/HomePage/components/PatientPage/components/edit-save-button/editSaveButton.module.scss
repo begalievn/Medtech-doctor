@@ -13,3 +13,7 @@
   color: white;
   cursor: pointer;
 }
+
+.edit_save_button:disabled {
+  background: styles.$gray_color;
+}

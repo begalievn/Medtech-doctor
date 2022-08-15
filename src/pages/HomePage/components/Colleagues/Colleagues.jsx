@@ -11,16 +11,24 @@ import BodyContentContainer from "../../../../components/Home/body/body-content-
 import DoctorsTable from "./components/doctors-table/DoctorsTable";
 import DownloadButton from "../../../../components/Home/body/download-button/DownloadButton";
 import AddUserButton from "../../../../components/Home/body/add-user-button/AddUserButton";
+import Loader from "../../../../components/useful/loader/Loader";
+
+// rtk-queries
+import { useGetAllDoctorsQuery} from "../../../../store/features/doctors/doctorsQuery";
 
 // hooks
 import useGetUserRole from "../../../../hooks/useGetUserRole";
 
-// styles
-// import classes from "../Patients/patients.module.css";
-import classes from './colleagues.module.scss';
+// constants
 import { ROLES } from "../../../../utils/consts/constants";
 
+// styles
+import classes from './colleagues.module.scss';
+
 const Colleagues = () => {
+
+  const { data: doctorsList, isLoading: doctorsListLoading } = useGetAllDoctorsQuery("");
+
   const role = useGetUserRole();
 
   return (
@@ -39,10 +47,14 @@ const Colleagues = () => {
       </BodyHeaderContainer>
       <div className={classes.space_between}></div>
       <BodyContentContainer>
-        <DoctorsTable />
+        {
+          doctorsListLoading ? <Loader /> : <DoctorsTable doctorsList={doctorsList} />
+        }
       </BodyContentContainer>
     </PageContainer>
   );
 };
 
 export default Colleagues;
+
+

@@ -1,40 +1,40 @@
 // modules
 import React from "react";
-import {Routes, Route, useNavigate, useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Loader from "../../../../components/useful/loader/Loader";
 
 // rtk-queries
-import { useGetAllCheckListsOfPatientByIdQuery } from "../../../../store/features/patients/patientsApi";
+import {
+  useGetAllCheckListsOfPatientByIdQuery,
+  useGetPatientProfileQuery,
+} from "../../../../store/features/patients/patientsApi";
 
 // components
 import PatientPageAside from "./components/patient-page-aside/PatientPageAside";
 import CheckList from "./components/check-list/CheckList";
-
 import MedCard from "./components/medcard/MedCard";
+
 // styles
 import classes from "./patientPage.module.scss";
-import Loader from "../../../../components/useful/loader/Loader";
 
 const PatientPage = () => {
+  const patientId = localStorage.getItem("patientId");
+  console.log("PatientId: ", patientId);
 
-  const patientById = useSelector(state => state.patients.patientById);
-  console.log("PatientById: ", patientById);
-
-  const { data: checkLists, isLoading: checkListsLoading, error: checkListsError} = useGetAllCheckListsOfPatientByIdQuery(patientById.patientId || "");
-
-  console.log("CheckLists", checkLists);
-  if(checkListsError) {
-    console.log(checkListsError);
-  }
-
+  const { data: patientsProfile, isLoading: patientsProfileLoading } =
+    useGetPatientProfileQuery(patientId);
+  console.log("patientsProfile: ", patientsProfile);
 
   return (
     <div className={classes.container}>
       <div>
-        {
-          checkListsLoading ? <Loader /> :
-            <PatientPageAside checkLists={checkLists} />
-        }
+        {patientsProfileLoading ? null : (
+          <PatientPageAside
+            patientId={patientId}
+            patientsProfile={patientsProfile}
+          />
+        )}
       </div>
       <div>
         <Routes>

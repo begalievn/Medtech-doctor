@@ -5,7 +5,10 @@ import { Card } from "@mui/material";
 
 // components
 import CardTextField from "../card-text-field/CardTextField";
+import TextFieldV3 from "../../../../../../components/Home/body/text-field-v3/TextFieldV3";
 
+// rkt-queries
+import {useGetAllCheckListsOfPatientByIdQuery} from "../../../../../../store/features/patients/patientsApi";
 
 // assets
 import { cardIcon } from "../../../../../../assets/icons/icons";
@@ -13,13 +16,20 @@ import { patientProfilePhoto } from "../../../../../../assets/images/images";
 
 // styles
 import classes from "./patientPageAside.module.scss";
-import {useGetAllCheckListsOfPatientByIdQuery} from "../../../../../../store/features/patients/patientsApi";
 
 
 
-const PatientPageAside = ({checkLists}) => {
+const PatientPageAside = ({patientId, patientsProfile}) => {
   // tools
   const navigate = useNavigate();
+
+  const { lastName, firstName, middleName, email, phoneNumber, doctor, imageUrl } = patientsProfile;
+
+  const {
+    data: checkLists,
+    isLoading: checkListsLoading,
+    error: checkListsError,
+  } = useGetAllCheckListsOfPatientByIdQuery(patientId || "");
 
   const handleMedCardClick = () => {
     navigate("med-card");
@@ -37,33 +47,15 @@ const PatientPageAside = ({checkLists}) => {
         <h2>Профиль</h2>
       </div>
       <div className={classes.photo}>
-        <img src={patientProfilePhoto} alt={"profile photo"} />
+        <img src={imageUrl} alt={"profile photo"} />
       </div>
       <div className={classes.patient_info}>
-        <p>{"Фамилия"}</p>
-        <div>
-          <p>{"data"}</p>
-        </div>
-        <p>{"Имя"}</p>
-        <div>
-          <p>{"data"}</p>
-        </div>
-        <p>{"Отчество"}</p>
-        <div>
-          <p>{"data"}</p>
-        </div>
-        <p>{"Номер телефона"}</p>
-        <div>
-          <p>{"data"}</p>
-        </div>
-        <p>{"Email"}</p>
-        <div>
-          <p>{"data"}</p>
-        </div>
-        <p>{"Гинеколог"}</p>
-        <div>
-          <p>{"data"}</p>
-        </div>
+        <TextFieldV3 disabled={true} value={lastName} label={"Фамилия"} />
+        <TextFieldV3 disabled={true} value={firstName} label={"Имя"} />
+        <TextFieldV3 disabled={true} value={middleName} label={"Отчество"} />
+        <TextFieldV3 disabled={true} value={phoneNumber} label={"Номер телефона"} />
+        <TextFieldV3 disabled={true} value={email} label={"Email"} />
+        <TextFieldV3 disabled={true} value={doctor} label={"Гинеколог"} />
       </div>
 
       <div onClick={handleMedCardClick} className={classes.med_card}>
@@ -75,10 +67,10 @@ const PatientPageAside = ({checkLists}) => {
           <h4>Чек лист</h4>
           {
             checkLists && checkLists.map((item, index) => (
-              <CardTextField key={index} text={"Чек лист N#1"} />
+              <CardTextField key={index} text={`Чек лист № ${index + 1}`} />
             ))
           }
-          <CardTextField text={"Чек лист N#1"} />
+          <CardTextField text={"Чек лист № 1"} />
         </div>
       </div>
     </div>

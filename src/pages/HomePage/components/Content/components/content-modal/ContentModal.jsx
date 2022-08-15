@@ -48,8 +48,9 @@ const ContentModal = ({contentModalVisible, setContentModalVisible, data}) => {
   console.log("data", data);
 
   const [activeContent, setActiveContent] = useState(0);
-  const [ contentTextValues, setContentTextValues ] = useState(data)
-  const [activeImageOfContent, setActiveImageOfContent] = useState(data[activeContent]?.imageUrl)
+  const [ contentTextValues, setContentTextValues ] = useState(data);
+  const [activeImageOfContent, setActiveImageOfContent] = useState(data[activeContent]?.imageUrl);
+  const [uploadedImage, setUploadedImage] = useState();
 
 
   const handleClose = () => {
@@ -58,6 +59,8 @@ const ContentModal = ({contentModalVisible, setContentModalVisible, data}) => {
 
   const handleTitleClick = (order) => {
     setActiveContent(order - 1);
+    setActiveImageOfContent(data[order - 1]?.imageUrl)
+
   }
 
   const handleSaveClick = async () => {
@@ -71,9 +74,16 @@ const ContentModal = ({contentModalVisible, setContentModalVisible, data}) => {
     } catch (err) {
       console.log(err);
     }
-    // setContentModalVisible(false);
-    console.log(contentTextValues[activeContent]);
-    console.log(currentObj);
+
+    // Make a post request to send the image
+    const contentId = contentTextValues[activeContent]?.contentId;
+    const imageData = new FormData();
+    imageData.append("file", uploadedImage);
+    try {
+      const response = await axiosForImage.post(`https://medtech-neobisx.herokuapp.com/image/upload/content/${contentId}`, imageData );
+    }catch (err) {
+      console.log(err);
+    }
 
     // refetch content
     refetch();
@@ -94,22 +104,11 @@ const ContentModal = ({contentModalVisible, setContentModalVisible, data}) => {
 
   const handleUploadImage = async (e) => {
     console.log(e.target.files[0]);
+    setUploadedImage(e.target.files[0]);
 
     // Make a preview of uploaded image
     const objectUrl = URL.createObjectURL(e.target.files[0]);
     setActiveImageOfContent(objectUrl);
-
-    // Make a post request to send the image
-    const contentId = contentTextValues[activeContent]?.contentId;
-    const imageData = new FormData();
-    imageData.append("file", e.target.files[0]);
-    try {
-      const response = await axiosForImage.post(`https://medtech-neobisx.herokuapp.com/image/upload/content/${contentId}`, imageData );
-      // refetch content
-      refetch();
-    }catch (err) {
-      console.log(err);
-    }
   }
 
   return (

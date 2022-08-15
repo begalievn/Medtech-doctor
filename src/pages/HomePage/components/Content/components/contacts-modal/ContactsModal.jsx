@@ -37,8 +37,8 @@ const ContactsModal = ({ visible, setVisible, contacts }) => {
   const [contactsOldValue] = useState(contacts || []);
   const [contactsValue, setContactsValue] = useState(contacts || []);
 
-  const [updateContact] = useUpdateContactMutation();
-  const [createContact] = useCreateContactMutation();
+  const [updateContact, {isLoading: updateLoading}] = useUpdateContactMutation();
+  const [createContact, {isLoading: createLoading}] = useCreateContactMutation();
 
   const handleClose = () => {
     setVisible(false);
@@ -77,6 +77,7 @@ const ContactsModal = ({ visible, setVisible, contacts }) => {
         createContact(body);
       }
     })
+
     // const body = {
     //   newContact: contactsValue[1],
     //   oldContact: contactsOldValue[1],
@@ -133,7 +134,8 @@ const ContactsModal = ({ visible, setVisible, contacts }) => {
 
         <EditSaveButton
           onClick={handleSaveContacts}
-          text={"Cохранить"}
+          disabled={updateLoading || createLoading}
+          text={updateLoading ? "Загрузка..." : "Cохранить"}
           style={{ width: "100%" }}
         />
       </Box>

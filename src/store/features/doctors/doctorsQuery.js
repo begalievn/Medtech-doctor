@@ -1,5 +1,5 @@
 // modules
-import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // constants
 import { BASE_URL } from "../../../utils/consts/apiConsts";
@@ -10,21 +10,33 @@ export const doctorsAPI = createApi({
   endpoints: (builder) => ({
     getDoctors: builder.query({
       query: () => ({
-        url: '/user',
+        url: "/user",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-        }
-      })
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
     }),
     getDoctorsImage: builder.query({
       query: () => ({
         url: `/image/get`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        }
-      })
-    })
-  }) ,
+        },
+      }),
+    }),
+    getAllDoctors: builder.query({
+      query: () => ({
+        url: `/doctor/get-all`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
+    }),
+  }),
 });
 
-export const { useGetDoctorsQuery, useGetDoctorsImageQuery } = doctorsAPI;
+export const {
+  useGetDoctorsQuery,
+  useGetDoctorsImageQuery,
+  useGetAllDoctorsQuery,
+} = doctorsAPI;
