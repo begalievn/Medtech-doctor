@@ -17,14 +17,10 @@ const RequireAuth = ({ allowedRoles }) => {
 
     if(!role) {
       role = decodedRole;
-      console.log("role from state was cleared and replaced with decoded role", decodedRole);
     }
   } catch(err) {
     console.log(err);
   }
-
-
-
 
   console.log("RequireAuth auth: ", role);
   return (role) && allowedRoles.includes(role) ? (

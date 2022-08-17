@@ -3,6 +3,13 @@ import React, { useState } from "react";
 
 // components
 import MedCardTextField from "../../../../../../components/Home/body/medcard-text-field/MedCardTextField";
+import EditSaveButton from "../edit-save-button/EditSaveButton";
+
+// rtk-queries
+import {
+  useGetPatientMedCardInfoByIdQuery,
+  useUpdatePatientMedCardMutation
+} from "../../../../../../store/features/patients/patientsApi";
 
 // assets
 import {
@@ -16,13 +23,24 @@ import { medCardInitialState } from "../../../../../../utils/consts/constants";
 
 // styles
 import classes from "./medCard.module.scss";
-import EditSaveButton from "../edit-save-button/EditSaveButton";
+import {axiosWithToken} from "../../../../../../api/axios";
+import {useLazySearchDoctorsQuery} from "../../../../../../store/features/doctors/doctorsQuery";
 
-const MedCard = () => {
+const MedCard = ({medCard, refetch, patientId}) => {
+
+  // const [ searchDoctors, { data: searchDoctorsData } ] = useLazySearchDoctorsQuery();
+  // searchDoctors(medCard?.doctor.split(" ").slice(0, 1).join(""));
+  // console.log("doctorsEmail: ", searchDoctorsData);
+
   const [activeTabs, setActiveTabs] = useState(["1"]);
-  const [medCardValues, setMedCardValues] = useState(medCardInitialState);
+  const [medCardValues, setMedCardValues] = useState(medCard || medCardInitialState);
   const [editable, setEditable] = useState(false);
 
+  const [ updatePatientMedCard, {isLoading: updateMedCardLoading} ] = useUpdatePatientMedCardMutation();
+
+  console.log("typeResultAppointments", medCard?.typeResultAppointments);
+  console.log("doctor: ", medCard?.doctor);
+  console.log("medCard: ", medCard);
   // Handles edit button click
   const handleEditButtonClick = () => {
     setEditable(true);
@@ -30,8 +48,18 @@ const MedCard = () => {
   };
 
   // Handles save button click
-  const handleSaveButtonClick = () => {
-    console.log(medCardValues);
+  const handleSaveButtonClick = async () => {
+    // console.log("2 ", JSON.parse(JSON.stringify({...medCardValues, patientId: 40, doctor: "shulamitaasanova3@gmail.com"})));
+    const body = {...medCardValues, patientId, doctor: "shulamitaasanova3@gmail.com"};
+    console.log("3 ", body);
+    try {
+      const response = await axiosWithToken.put('/patient/update-med-card', body);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+
+    refetch();
     setEditable(false);
   };
 
@@ -148,6 +176,7 @@ const MedCard = () => {
               name={"registrationDate"}
               value={medCardValues.registrationDate}
               onChange={handleInputChange}
+              type={"date"}
             />
             <MedCardTextField
               disabled={!editable}

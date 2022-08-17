@@ -104,6 +104,7 @@ export const HomeBodyTable = ({ tableHeadData, tablebody }) => {
               [`& .${tableCellClasses.root}`]: {
                 borderBottom: 'none',
               },
+              "&:before": {content: `"-"`, lineHeight: "10px", display: 'block', color: 'transparent'}
             }}
           >
             {data.map((item, index) => (

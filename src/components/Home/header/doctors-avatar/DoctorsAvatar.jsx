@@ -1,54 +1,47 @@
 // modules
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// hooks
+import useGetUserRole from "../../../../hooks/useGetUserRole";
+
 // rtk-queries
-// import { useGetDoctorsImageQuery } from "../../../../store/features/doctors/doctorsQuery";
+import { useGetUserByIdQuery } from "../../../../store/features/user/userApi";
 
 // assets
-import { doctorsAva } from "../../../../assets/images/images";
+import { avatarPlaceholder } from "../../../../assets/images/images";
 
 // styles
 import classes from "./doctorsAvatar.module.scss";
 
-// functions
-import { axiosWithToken } from "../../../../api/axios";
-
 const DoctorsAvatar = () => {
-
-  // const { data: image, isLoading: imageLoading, error: imageError } = useGetDoctorsImageQuery("");
-  // console.log("DoctorsAvatar", image);
+  const [avatarImage, setAvatarImage] = useState(avatarPlaceholder);
 
   const navigate = useNavigate();
 
-  const [avatarImage, setAvatarImage] = useState(doctorsAva);
+  const userId = localStorage.getItem("userId");
 
-  // useEffect( () => {
-  //   const getDoctorAvatar = async () => {
-  //     const response = await axiosWithToken('/image/get');
-  //     setAvatarImage(response.data);
-  //     // console.log("Avatar response", response.data);
-  //   }
-  //
-  //   try {
-  //     getDoctorAvatar()
-  //   }catch(err) {
-  //     console.log(err);
-  //   }
-  // }, [])
+  const { data: userData, isLoading: userDataLoading } =
+    useGetUserByIdQuery(userId);
 
+
+  const role = useGetUserRole();
 
   const handleClick = () => {
-    console.log("Avatar has been clicked");
     navigate("profile");
   };
 
+
   return (
     <div className={classes.container} onClick={handleClick}>
-      <div className={classes.user_icon}>
-        <img src={avatarImage} alt="avatar" />
-      </div>
-      <p>{`Бегалиев Н.`}</p>
+      {userDataLoading ? null : (
+        <>
+          <div className={classes.user_icon}>
+            <img src={avatarImage} alt="avatar" />
+          </div>
+          <p>{`${userData.lastName} ${userData.firstName.split("").slice(0, 1).join("")}.`}</p>
+        </>
+      )}
     </div>
   );
 };

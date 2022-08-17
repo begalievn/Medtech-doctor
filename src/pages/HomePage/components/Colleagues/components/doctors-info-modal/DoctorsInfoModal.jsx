@@ -1,10 +1,20 @@
-import React from "react";
+// modules
+import React, { useEffect, useState } from "react";
 
-import classes from "./doctorsInfoModal.module.scss";
+// components
 import { Modal } from "@mui/material";
 import { Box } from "@mui/system";
-import { doctorsAva } from "../../../../../../assets/images/images";
 import InfoTextField from "../../../../../../components/Home/body/info-text-field/InfoTextField";
+import Loader from "../../../../../../components/useful/loader/Loader";
+
+// rtk-queries
+import { useGetAllUsersQuery } from "../../../../../../store/features/user/userApi";
+
+// assets
+import { avatarPlaceholder } from "../../../../../../assets/images/images";
+
+// styles
+import classes from "./doctorsInfoModal.module.scss";
 
 const style = {
   width: "700px",
@@ -23,7 +33,19 @@ const style = {
   alignItems: "center",
 };
 
-const DoctorsInfoModal = ({ isModalOpen, setModalOpen }) => {
+const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
+  const [doctorInfo, setDoctorInfo] = useState({});
+
+  const { data: users, isLoading: usersLoading } = useGetAllUsersQuery("");
+
+  useEffect(() => {
+    setDoctorInfo(users);
+    if (users) {
+      setDoctorInfo(users.filter((item) => item.email === doctorData.email)[0]);
+    }
+  }, [usersLoading, isModalOpen]);
+
+
   const handleClose = () => {
     setModalOpen(false);
   };
@@ -38,75 +60,84 @@ const DoctorsInfoModal = ({ isModalOpen, setModalOpen }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div className={classes.close} onClick={handleClose}></div>
-          <div className={classes.title}>
-            <h3>Страница пользователя</h3>
-          </div>
-          <div className={classes.photo}>
-            <div className={classes.avatar}>
-              <img src={doctorsAva} alt="doctors ava" />
-            </div>
-          </div>
-          <div className={classes.doctor_info}>
-            <div className={classes.row}>
-              <InfoTextField label={"Фамилия"} text={"Беглиев"} />
-              <InfoTextField label={"Имя"} text={"Нурсултан"} />
-            </div>
-            <div className={classes.row}>
-              <InfoTextField label={"Отчество"} text={"Айбекович"} />
-              <InfoTextField
-                label={"Количество пациентов"}
-                text={`${"data"} пациентов`}
-              />
-            </div>
-            <div className={classes.row}>
-              <InfoTextField
-                label={"Номер телефона"}
-                text={"+996 553 404 406"}
-              />
-              <InfoTextField label={"Email"} text={"begaliev.info@gmail.com"} />
-            </div>
-          </div>
-          <div className={classes.working_days}>
-            <p className={classes.text}>Рабочие дни недели</p>
-            <div className={classes.days}>
-              <div className={classes.day}>
-                <span>Пн</span>
+          {usersLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <div className={classes.close} onClick={handleClose}></div>
+              <div className={classes.title}>
+                <h3>Страница пользователя</h3>
               </div>
-            </div>
-          </div>
-          <div className={classes.interview_time}>
-            <p className={classes.text}>Время интервью</p>
-            <div className={classes.time_row}>
-              <div className={classes.time_block}>
-                <span>С</span>
-                <div className={classes.time}>
-                  <span>{"data"}</span>
+              <div className={classes.photo}>
+                <div className={classes.avatar}>
+                  <img src={avatarPlaceholder} alt="doctors ava" />
                 </div>
               </div>
-              <div className={classes.time_block}>
-                <span>До</span>
-                <div className={classes.time}>
-                  <span>{"data"}</span>
+              <div className={classes.doctor_info}>
+                <div className={classes.row}>
+                  <InfoTextField label={"Фамилия"} text={doctorInfo?.lastName} />
+                  <InfoTextField label={"Имя"} text={doctorInfo?.firstName} />
+                </div>
+                <div className={classes.row}>
+                  <InfoTextField label={"Отчество"} text={doctorInfo?.middleName} />
+                  <InfoTextField
+                    label={"Количество пациентов"}
+                    text={`${"data"} пациентов`}
+                  />
+                </div>
+                <div className={classes.row}>
+                  <InfoTextField
+                    label={"Номер телефона"}
+                    text={doctorInfo?.phoneNumber}
+                  />
+                  <InfoTextField
+                    label={"Email"}
+                    text={doctorInfo?.email}
+                  />
                 </div>
               </div>
-            </div>
+              <div className={classes.working_days}>
+                <p className={classes.text}>Рабочие дни недели</p>
+                <div className={classes.days}>
+                  <div className={classes.day}>
+                    <span>Пн</span>
+                  </div>
+                </div>
+              </div>
+              <div className={classes.interview_time}>
+                <p className={classes.text}>Время интервью</p>
+                <div className={classes.time_row}>
+                  <div className={classes.time_block}>
+                    <span>С</span>
+                    <div className={classes.time}>
+                      <span>{"data"}</span>
+                    </div>
+                  </div>
+                  <div className={classes.time_block}>
+                    <span>До</span>
+                    <div className={classes.time}>
+                      <span>{"data"}</span>
+                    </div>
+                  </div>
+                </div>
 
-            <div className={classes.time_row}>
-              <div className={classes.time_block}>
-                <span>С</span>
-                <div className={classes.time}>
-                  <span>{"data"}</span>
+                <div className={classes.time_row}>
+                  <div className={classes.time_block}>
+                    <span>С</span>
+                    <div className={classes.time}>
+                      <span>{"data"}</span>
+                    </div>
+                  </div>
+                  <div className={classes.time_block}>
+                    <span>До</span>
+                    <div className={classes.time}>
+                      <span>{"data"}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className={classes.time_block}>
-                <span>До</span>
-                <div className={classes.time}>
-                  <span>{"data"}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </Box>
       </Modal>
     </div>

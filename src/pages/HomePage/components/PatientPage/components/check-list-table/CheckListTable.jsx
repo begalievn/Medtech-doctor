@@ -1,5 +1,5 @@
 // modules
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
   Table,
   TableBody,
@@ -13,16 +13,26 @@ import {
 import CheckListDataCell from "../check-list-data-cell/CheckListDataCell";
 import CheckListTextFieldV2 from "../check-list-textfiled-v2/CheckListTextFieldV2";
 
+// utils
+import {makeNumberWithZeros} from "../../../../../../utils/helpers/MakeNumberWithZeros";
+
 // styles
 import classes from "./checkListTable.module.scss";
 
 
-const CheckListTable = () => {
-  const [testValue, setTestValue] = useState("some text");
+const CheckListTable = ({ checkList, setCheckList, editable }) => {
 
   const handelTextValueChange = (e) => {
-    console.log(e.target.value);
-    setTestValue(e.target.value);
+    const { name, value } = e.target;
+    const [key, answerId] = name.split(" ");
+
+    setCheckList(checkList.map((item) => {
+      if(+answerId === item.id) {
+        return {...item, [key]: value};
+      }else {
+        return item;
+      }
+    }));
   }
 
   return (
@@ -30,7 +40,6 @@ const CheckListTable = () => {
       <TableContainer>
         <Table
           sx={{
-            minWidth: 650,
             borderCollapse: "separate",
             borderSpacing: "0px 5px",
           }}
@@ -44,36 +53,32 @@ const CheckListTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow sx={{ marginBottom: "10px" }}>
-              <CheckListDataCell first={true}>data</CheckListDataCell>
-              <CheckListDataCell>data</CheckListDataCell>
-              <CheckListDataCell>
-                <CheckListTextFieldV2 onChange={handelTextValueChange} value={testValue} placeholder={"Введите показатели"} />
-              </CheckListDataCell>
-              <CheckListDataCell last={true}>
-                <CheckListTextFieldV2 onChange={handelTextValueChange} value={testValue} placeholder={"Пропишите описание"} />
-              </CheckListDataCell>
-            </TableRow>
-            <TableRow sx={{ marginBottom: "10px" }}>
-              <CheckListDataCell first={true}>data</CheckListDataCell>
-              <CheckListDataCell>data</CheckListDataCell>
-              <CheckListDataCell>
-                <CheckListTextFieldV2 onChange={handelTextValueChange} value={testValue} placeholder={"Введите показатели"} />
-              </CheckListDataCell>
-              <CheckListDataCell last={true}>
-                <CheckListTextFieldV2 onChange={handelTextValueChange} value={testValue} placeholder={"Пропишите описание"} />
-              </CheckListDataCell>
-            </TableRow>
-            <TableRow>
-              <CheckListDataCell first={true}>data</CheckListDataCell>
-              <CheckListDataCell>data</CheckListDataCell>
-              <CheckListDataCell>
-                <CheckListTextFieldV2 onChange={handelTextValueChange} value={testValue} placeholder={"Введите показатели"} />
-              </CheckListDataCell>
-              <CheckListDataCell last={true}>
-                <CheckListTextFieldV2 onChange={handelTextValueChange} value={testValue} placeholder={"Пропишите описание"} />
-              </CheckListDataCell>
-            </TableRow>
+            {
+              checkList.slice().sort((a, b) => a.id - b.id).map((item) => (
+                <TableRow key={item?.id} sx={{ marginBottom: "10px" }}>
+                  <CheckListDataCell first={true}>{makeNumberWithZeros(item?.id)}</CheckListDataCell>
+                  <CheckListDataCell><span className={classes.question_text}>{item?.question}</span></CheckListDataCell>
+                  <CheckListDataCell>
+                    <CheckListTextFieldV2
+                      onChange={handelTextValueChange}
+                      value={item?.indicators}
+                      name={`indicators ${item?.id}`}
+                      placeholder={"Введите показатели"}
+                      disabled={!editable}
+                    />
+                  </CheckListDataCell>
+                  <CheckListDataCell last={true}>
+                    <CheckListTextFieldV2
+                      onChange={handelTextValueChange}
+                      value={item?.description}
+                      name={`description ${item?.id}`}
+                      placeholder={"Пропишите описание"}
+                      disabled={!editable}
+                    />
+                  </CheckListDataCell>
+                </TableRow>
+              ))
+            }
           </TableBody>
         </Table>
       </TableContainer>

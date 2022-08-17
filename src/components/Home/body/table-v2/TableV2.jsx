@@ -29,8 +29,7 @@ const TableV2 = ({ tableHead, data }) => {
               ))}
             </TableRow>
           </TableHead>
-          {/*<div style={{ width: "100%", height: "10px" }}></div>*/}
-          <TableBody>
+          <TableBody sx={{ "&:before": {content: `"-"`, lineHeight: "10px", display: 'block', color: 'transparent'}}}>
             {data.map((item, index) => (
               <TableRow
                 key={index}

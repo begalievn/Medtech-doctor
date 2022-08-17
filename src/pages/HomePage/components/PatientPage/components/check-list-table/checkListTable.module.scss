@@ -13,6 +13,14 @@
     color: #3B393C;
   }
 
+  .question_text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: $text_black;
+  }
+
   .input_field {
     width: 210px;
     border-style: none;
@@ -29,9 +37,4 @@
     outline-width: 0;
   }
 
-  textarea {
-    width: 220px;
-    border: none;
-    background: none;
-  }
 }

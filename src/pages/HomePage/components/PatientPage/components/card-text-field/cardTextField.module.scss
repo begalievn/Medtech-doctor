@@ -13,7 +13,10 @@
     width: 17.5px;
     height: 21.5px;
     margin: 0 13.25px 0 13.25px;
+  }
 
+  .white_img {
+    filter: brightness(0) invert(1);
   }
 
   p {
@@ -22,7 +25,17 @@
     font-size: 16px;
     line-height: 19px;
     color: styles.$gray_color;
+
+    span:nth-child(1) {
+      margin-right: 10px;
+    }
   }
 
+  .active_p {
+    color: white;
+  }
+}
 
+.active {
+  background: #BDF5D0;
 }

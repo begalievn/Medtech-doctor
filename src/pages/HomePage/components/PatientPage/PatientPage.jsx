@@ -1,5 +1,5 @@
 // modules
-import React from "react";
+import React, {useState} from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../../../../components/useful/loader/Loader";
@@ -7,6 +7,7 @@ import Loader from "../../../../components/useful/loader/Loader";
 // rtk-queries
 import {
   useGetAllCheckListsOfPatientByIdQuery,
+  useGetPatientMedCardInfoByIdQuery,
   useGetPatientProfileQuery,
 } from "../../../../store/features/patients/patientsApi";
 
@@ -20,11 +21,18 @@ import classes from "./patientPage.module.scss";
 
 const PatientPage = () => {
   const patientId = localStorage.getItem("patientId");
-  console.log("PatientId: ", patientId);
+  const [checkListId, setCheckListId] = useState();
+
+  const {
+    data: medCard,
+    isLoading: medCardLoading,
+    error: medCardError,
+    refetch
+  } = useGetPatientMedCardInfoByIdQuery(patientId);
+
 
   const { data: patientsProfile, isLoading: patientsProfileLoading } =
     useGetPatientProfileQuery(patientId);
-  console.log("patientsProfile: ", patientsProfile);
 
   return (
     <div className={classes.container}>
@@ -33,15 +41,19 @@ const PatientPage = () => {
           <PatientPageAside
             patientId={patientId}
             patientsProfile={patientsProfile}
+            setCheckListId={setCheckListId}
           />
         )}
       </div>
       <div>
-        <Routes>
-          <Route exact path="/" element={<MedCard />} />
-          <Route path="/check-list" element={<CheckList />} />
-          <Route path="/med-card" element={<MedCard />} />
-        </Routes>
+        {
+          medCardLoading ? <Loader /> :
+            <Routes>
+              <Route exact path="/" element={<MedCard medCard={medCard} refetch={refetch} patientId={patientId} />} />
+              <Route path="/check-list/:checkListId" element={<CheckList checkListId={checkListId} />} />
+              <Route path="/med-card" element={<MedCard />} />
+            </Routes>
+        }
       </div>
     </div>
   );
