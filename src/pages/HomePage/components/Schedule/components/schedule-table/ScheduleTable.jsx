@@ -86,7 +86,7 @@ const ScheduleTable = ({
               <th></th>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ "&:before": {content: `"-"`, lineHeight: "10px", display: 'block', color: 'transparent'}}}>
             {data.map((item, index) => (
               <TableRow key={index}>
                 <TableDataCell>{makeNumberWithZeros(index + 1)}</TableDataCell>

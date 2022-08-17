@@ -1,0 +1,21 @@
+.MuiButtonBase-root.MuiSwitch-switchBase.Mui-checked {
+  color: #5CC78D;
+}
+
+.MuiButtonBase-root.MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+  background-color: #BDF5D7;
+}
+
+.MuiTableRow-root {
+  padding-left: 10px;
+}
+
+.MuiTableCell-root {
+  text-align: start;
+  padding-left: 0;
+}
+
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium {
+  text-align: start;
+  padding: 10px;
+}

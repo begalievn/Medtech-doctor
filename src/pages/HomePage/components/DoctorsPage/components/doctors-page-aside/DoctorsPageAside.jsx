@@ -4,7 +4,7 @@ import classes from './doctorsPageAside.module.scss';
 import EditButtonV2 from "../../../../../../components/Home/body/edit-button-v2/EditButtonV2";
 import AsideHeaderV2 from "../../../../../../components/Home/body/aside-header-v2/AsideHeaderV2";
 
-import {doctorsAva} from '../../../../../../assets/images/images';
+import { avatarPlaceholder } from '../../../../../../assets/images/images';
 import AvatarPhotoV2 from "../../../../../../components/Home/body/avatar-photo-v2/AvatarPhotoV2";
 import TextFieldV2 from "../../../../../../components/Home/body/text-field-v2/TextFieldV2";
 
@@ -35,7 +35,7 @@ const DoctorsPageAside = ({ doctorData }) => {
           <EditButtonV2 text={"Редактировать"} />
       </div>
       <div className={classes.avatar}>
-        <AvatarPhotoV2 image={doctorsAva} />
+        <AvatarPhotoV2 image={avatarPlaceholder} />
       </div>
       <div className={classes.doctors_info}>
         <TextFieldV2 label={"Фамилия"} text={doctorData.lastName} />

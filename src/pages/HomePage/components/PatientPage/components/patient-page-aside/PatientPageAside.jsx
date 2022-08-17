@@ -1,29 +1,37 @@
 // modules
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { Card } from "@mui/material";
 
 // components
 import CardTextField from "../card-text-field/CardTextField";
 import TextFieldV3 from "../../../../../../components/Home/body/text-field-v3/TextFieldV3";
+import Loader from "../../../../../../components/useful/loader/Loader";
 
 // rkt-queries
-import {useGetAllCheckListsOfPatientByIdQuery} from "../../../../../../store/features/patients/patientsApi";
+import { useGetAllCheckListsOfPatientByIdQuery } from "../../../../../../store/features/patients/patientsApi";
 
 // assets
-import { cardIcon } from "../../../../../../assets/icons/icons";
-import { patientProfilePhoto } from "../../../../../../assets/images/images";
 
 // styles
 import classes from "./patientPageAside.module.scss";
+import {dateConverter} from "../../../../../../utils/helpers/dateConverter";
 
-
-
-const PatientPageAside = ({patientId, patientsProfile}) => {
+const PatientPageAside = ({ patientId, patientsProfile, setCheckListId }) => {
   // tools
   const navigate = useNavigate();
 
-  const { lastName, firstName, middleName, email, phoneNumber, doctor, imageUrl } = patientsProfile;
+  // state
+  const [activeCheckList, setActiveCheckList] = useState("");
+
+  const {
+    lastName,
+    firstName,
+    middleName,
+    email,
+    phoneNumber,
+    doctor,
+    imageUrl,
+  } = patientsProfile;
 
   const {
     data: checkLists,
@@ -36,8 +44,11 @@ const PatientPageAside = ({patientId, patientsProfile}) => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
-  const handleCheckListClick = () => {
-    navigate("check-list");
+  const handleCheckListClick = (index, item) => {
+    const checkListId = item.id;
+    setCheckListId(checkListId);
+    setActiveCheckList(index);
+    navigate(`check-list/${checkListId}`);
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
@@ -53,7 +64,11 @@ const PatientPageAside = ({patientId, patientsProfile}) => {
         <TextFieldV3 disabled={true} value={lastName} label={"Фамилия"} />
         <TextFieldV3 disabled={true} value={firstName} label={"Имя"} />
         <TextFieldV3 disabled={true} value={middleName} label={"Отчество"} />
-        <TextFieldV3 disabled={true} value={phoneNumber} label={"Номер телефона"} />
+        <TextFieldV3
+          disabled={true}
+          value={phoneNumber}
+          label={"Номер телефона"}
+        />
         <TextFieldV3 disabled={true} value={email} label={"Email"} />
         <TextFieldV3 disabled={true} value={doctor} label={"Гинеколог"} />
       </div>
@@ -63,14 +78,21 @@ const PatientPageAside = ({patientId, patientsProfile}) => {
         <CardTextField text={"Мед карта"} />
       </div>
       <div className={classes.check_lists}>
-        <div onClick={handleCheckListClick} className={classes.check_list_item}>
+        <div className={classes.check_list_item}>
           <h4>Чек лист</h4>
-          {
-            checkLists && checkLists.map((item, index) => (
-              <CardTextField key={index} text={`Чек лист № ${index + 1}`} />
+          {checkListsLoading ? (
+            <Loader />
+          ) : (
+            checkLists.map((item, index) => (
+              <CardTextField
+                key={index}
+                onClick={() => handleCheckListClick(index, item)}
+                text={`Чек лист № ${index + 1}`}
+                active={activeCheckList === index}
+                date={dateConverter(item.date, ".")}
+              />
             ))
-          }
-          <CardTextField text={"Чек лист № 1"} />
+          )}
         </div>
       </div>
     </div>

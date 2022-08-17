@@ -1,3 +1,22 @@
+@import './src/utils/styles/styles';
+
 .MuiInputBase-root.MuiInput-root:before {
   border-bottom: none;
+}
+
+.MuiInputBase-root.MuiInput-root.Mui-disabled:before {
+  border-bottom-style: none;
+}
+
+.MuiInputBase-root.MuiInput-root.Mui-disabled {
+  color: #3B393C;
+}
+
+textarea {
+  color: #444444;
+}
+
+.MuiInputBase-input.MuiInput-input.Mui-disabled {
+  color: #444444;
+  -webkit-text-fill-color: gray;
 }

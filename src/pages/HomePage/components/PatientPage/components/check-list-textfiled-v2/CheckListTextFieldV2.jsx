@@ -12,20 +12,10 @@ const CheckListTextFieldV2 = ({value, onChange, ...props}) => {
       onChange={onChange}
       variant="standard"
       sx={{
-        width: "250px",
+        width: "240px",
         "& legend": { display: "none" },
         "& fieldset": { top: 0 },
         border: "none",
-      }}
-      inputProps={{
-        underline: {
-          "&&&:before": {
-            borderBottom: "none",
-          },
-          "&&:after": {
-            borderBottom: "none",
-          },
-        },
       }}
       id="outlined-multiline-flexible"
       multiline

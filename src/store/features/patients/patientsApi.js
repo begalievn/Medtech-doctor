@@ -8,6 +8,7 @@ const authWithToken = {
 export const patientsApi = createApi({
   reducerPath: "patientsApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  tagTypes: ["Patient", "CheckList"],
   endpoints: (builder) => ({
     getAllPatients: builder.query({
       query: () => ({
@@ -17,20 +18,10 @@ export const patientsApi = createApi({
         },
       }),
     }),
-    getAllCheckListsOfPatientById: builder.query({
-      query: (patientId) => ({
-        url: `/patient/patients-checklists/${patientId}`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }),
-    }),
     getPatientsExcel: builder.query({
       query: () => ({
         url: `/patient/excel/get-patients`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
+        headers: authWithToken,
       }),
     }),
     getPatientProfile: builder.query({
@@ -39,6 +30,46 @@ export const patientsApi = createApi({
         headers: authWithToken,
       }),
     }),
+    getPatientMedCardInfoById: builder.query({
+      query: (patientId) => ({
+        url: `/patient/get-med-card-info/${patientId}`,
+        headers: authWithToken,
+      })
+    }),
+    updatePatientMedCard: builder.mutation({
+      query: (body) => ({
+        url: `/patient/update-med-card`,
+        method: "PUT",
+        headers: authWithToken,
+        body: body,
+      }),
+      invalidatesTags: ["Patient"]
+    }),
+    searchPatients: builder.query({
+      query: (username) => ({
+        url: `/patient/get-all-by-parameter/${username}`,
+        headers: authWithToken,
+      }),
+      providesTags: ["Patient"],
+    }),
+    getAllCheckListsOfPatientById: builder.query({
+      query: (patientId) => ({
+        url: `/patient/patients-checklists/${patientId}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
+      providesTags: ["Patient"],
+    }),
+    updateCheckListAnswers: builder.mutation({
+      query: (body) => ({
+        url: '/answer/fill-answers',
+        method: 'PUT',
+        headers: authWithToken,
+        body: body
+      }),
+      providesTags: ["CheckList"]
+    })
   }),
 });
 
@@ -47,4 +78,8 @@ export const {
   useGetAllCheckListsOfPatientByIdQuery,
   useGetPatientsExcelQuery,
   useGetPatientProfileQuery,
+  useGetPatientMedCardInfoByIdQuery,
+  useUpdatePatientMedCardMutation,
+  useLazySearchPatientsQuery,
+  useUpdateCheckListAnswersMutation
 } = patientsApi;

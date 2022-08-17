@@ -14,6 +14,7 @@ import Loader from "../../../../components/useful/loader/Loader";
 import useGetUserData from "../../../../hooks/useGetUserData";
 
 
+
 // styles
 import classes from "./doctorsPage.module.scss";
 
@@ -22,7 +23,6 @@ const DoctorsPage = () => {
   const userData = useGetUserData();
 
   const { data: doctorData, isLoading: doctorDataLoading, error: doctorDataError } = useGetUserByIdQuery(userData.userId || userData.user_id);
-  console.log("DoctorData: ", doctorData);
 
   return (
     <div className={classes.container}>

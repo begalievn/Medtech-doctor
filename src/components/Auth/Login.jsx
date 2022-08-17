@@ -18,24 +18,24 @@ import {
 } from "../../store/features/auth/authSlice";
 
 function Login() {
-  const loginRef = useRef();
-  const errRef = useRef();
+
 
   const [login, setLogin] = useState("");
   const [validLogin, setValidLogin] = useState(false);
-
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
-
   const [errMsg, setErrMsg] = useState("");
-
   const [isLoading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
-  const from = location.state?.from?.pathname || "/";
+
+  const loginRef = useRef();
+  const errRef = useRef();
+
+
 
   useEffect(() => {
     loginRef.current.focus();
@@ -63,19 +63,18 @@ function Login() {
         {
           headers: {
             "Content-Type": "application/json",
-            // "Access-Control-Allow-Origin": "*",
           },
-          // crossdomain: true,
-          // withCredentials: true,
         }
       );
 
-      console.log(response); // log
       dispatch(setUserData(response?.data));
       dispatch(setAccessToken(response?.data.accessToken));
       dispatch(setRefreshToken(response?.data.refreshToken));
+      localStorage.setItem("userId", response?.data?.userId);
+      localStorage.setItem("userEmail", response?.data?.email);
       localStorage.setItem("accessToken", response?.data?.accessToken);
-      localStorage.setItem("refreshToken", response?.data?.refreshToken)
+      localStorage.setItem("refreshToken", response?.data?.refreshToken);
+
       // Setting loading to false
       setLoading(false);
 

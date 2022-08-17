@@ -4,11 +4,11 @@ import { cardIcon } from "../../../../../../assets/icons/icons";
 
 import classes from "./cardTextField.module.scss";
 
-const CardTextField = ({ text }) => {
+const CardTextField = ({ text, onClick, active, date }) => {
   return (
-    <div className={classes.container}>
-      <img src={cardIcon} alt="icon" />
-      <p>{text}</p>
+    <div className={active ? [classes.container, classes.active].join(" ") : classes.container} onClick={onClick}>
+      <img src={cardIcon} className={active ? classes.white_img : null} alt="icon" />
+      <p className={active ? classes.active_p : null}><span>{text}</span> <span>{date}</span></p>
     </div>
   );
 };

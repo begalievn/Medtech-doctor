@@ -20,6 +20,7 @@ import { setPatientById } from "../../../../../../store/features/patients/patien
 
 // styles
 import classes from "./patientsTable.module.scss";
+import './styles.scss';
 
 
 
@@ -35,8 +36,10 @@ const PatientsTable = ({patientsList = []}) => {
     navigate(`${data.patientId}`);
   };
 
-  const handleSwitchChange = (data) => {
+  const handleSwitchChange = (e, data) => {
+    const { value } = e.target;
     console.log("Switch changed: ", data);
+    console.log("value", value);
   };
 
   return (
@@ -46,6 +49,7 @@ const PatientsTable = ({patientsList = []}) => {
           <TableHead >
             <TableRow
               sx={{
+                width: "90%",
                 borderBottom: "1px solid #3B393C",
                 height: "50px",
                 marginBottom: "20px",
@@ -60,8 +64,7 @@ const PatientsTable = ({patientsList = []}) => {
               <th>Статус</th>
             </TableRow>
           </TableHead>
-          <div style={{ width: "100%", height: "10px" }}></div>
-          <TableBody>
+          <TableBody sx={{ "&:before": {content: `"-"`, lineHeight: "10px", display: 'block', color: 'transparent'}}}>
             {patientsList && patientsList?.map((item, index) => (
               <TableRow
                 sx={{
@@ -80,12 +83,13 @@ const PatientsTable = ({patientsList = []}) => {
                 <TableDataCell>{item.email}</TableDataCell>
                 <TableDataCell>{item.currentWeekOfPregnancy}</TableDataCell>
                 <TableDataCell>{item.residenceAddress}</TableDataCell>
-                <TableDataCell onClick={(e) => e.stopPropagation()}>
+                <TableDataCell>
                   {
                     <Switch
-                      value={true}
+                      value={item.status === "ACTIVE"}
+                      checked={item.status === "ACTIVE"}
                       onClick={(e) => e.stopPropagation()}
-                      onChange={(e) => handleSwitchChange(item, e)}
+                      onChange={(e) => handleSwitchChange(e, item)}
                     />
                   }
                 </TableDataCell>
@@ -101,93 +105,3 @@ const PatientsTable = ({patientsList = []}) => {
 export default PatientsTable;
 
 
-const patients = [
-  {
-    id: 1,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 2,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 3,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 4,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 5,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 6,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 7,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 8,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 9,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 10,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-  {
-    id: 11,
-    patientNameSurname: "Ташболот И.Р",
-    patientNumber: "+996 778 890 900",
-    patientEmail: "ibragimov.tashbolon78@gmail.com",
-    patientPregnancyWeeks: 39,
-    patientAddress: "ул. Молодая гвардия",
-  },
-];

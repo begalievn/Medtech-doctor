@@ -1,6 +1,5 @@
+// modules
 import React, { useState } from "react";
-
-import classes from "./doctorsTable.module.scss";
 import {
   Switch,
   Table,
@@ -9,135 +8,25 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import TableCell from "@mui/material/TableCell";
+
+// components
 import TableDataCell from "../../../../../../components/Home/body/table-data-cell/TableDataCell";
 import DoctorsInfoModal from "../doctors-info-modal/DoctorsInfoModal";
 import { makeNumberWithZeros } from "../../../../../../utils/helpers/MakeNumberWithZeros";
 
-const data = [
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-  {
-    doctorsNameSurname: "Ташболот И.Р",
-    doctorsNumber: "+996 778 890 900",
-    doctorsEmail: "ibragimov.tashbolon78@gmail.com",
-    patientsQuantity: 45,
-    doctorsWorkingDays: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-    doctorsStatus: true,
-  },
-];
+// styles
+import classes from "./doctorsTable.module.scss";
+import "./styles.scss";
 
 const doctorsWorkingDays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
 
 const DoctorsTable = ({ doctorsList }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  console.log("doctorsList: ", doctorsList);
+  const [selectedDoctorData, setSelectedDoctorData] = useState();
 
   const handleClick = (data) => {
     setModalOpen(true);
-    console.log(data);
+    setSelectedDoctorData(data);
   };
 
   const rowStyle = {
@@ -148,13 +37,17 @@ const DoctorsTable = ({ doctorsList }) => {
 
   return (
     <div className={classes.container}>
-      <TableContainer  sx={{
-        height: 550
-      }}>
-        <Table sx={{
-          height: "max-content"
-        }}>
-          <TableHead sx={{position: "relative"}}>
+      <TableContainer
+        sx={{
+          height: 550,
+        }}
+      >
+        <Table
+          sx={{
+            height: "max-content",
+          }}
+        >
+          <TableHead sx={{ position: "relative" }}>
             <TableRow
               sx={{
                 // borderBottom: "1px solid black",
@@ -164,7 +57,8 @@ const DoctorsTable = ({ doctorsList }) => {
                 left: "0",
                 zIndex: "10",
                 background: "white",
-                boxShadow: "0px 1px 1px black"
+                // boxShadow: "0px 1px 1px black"
+                borderBottom: "solid 1px black",
               }}
             >
               <th>№</th>
@@ -177,7 +71,16 @@ const DoctorsTable = ({ doctorsList }) => {
             </TableRow>
           </TableHead>
           {/*<div style={{ width: "100%", height: "10px" }}></div>*/}
-          <TableBody sx={{ "&:before": {content: `"-"`, lineHeight: "10px", display: 'block', color: 'transparent'}}}>
+          <TableBody
+            sx={{
+              "&:before": {
+                content: `"-"`,
+                lineHeight: "10px",
+                display: "block",
+                color: "transparent",
+              },
+            }}
+          >
             {doctorsList.map((item, index) => (
               <TableRow
                 onClick={() => handleClick(item)}
@@ -200,19 +103,25 @@ const DoctorsTable = ({ doctorsList }) => {
                   ))}
                 </TableDataCell>
                 <TableDataCell>
-                  <Switch checked={item.status === 'ACTIVE'} />
+                  <Switch
+                    checked={item.status === "ACTIVE"}
+                    onClick={(e) => e.stopPropagation()}
+                  />
                 </TableDataCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <DoctorsInfoModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
+      {selectedDoctorData && (
+        <DoctorsInfoModal
+          isModalOpen={isModalOpen}
+          setModalOpen={setModalOpen}
+          doctorData={selectedDoctorData}
+        />
+      )}
     </div>
   );
 };
 
 export default DoctorsTable;
-
-
-
