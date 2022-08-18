@@ -1,5 +1,6 @@
 // modules
 import React, { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
 
 // components
 import BodyContentContainer from "../../../../components/Home/body/body-content-container/BodyContentContainer";
@@ -26,12 +27,16 @@ import { axiosWithContentBlob } from "../../../../api/axios";
 import useDebounce from "../../../../hooks/useDebounce";
 import useGetUserRole from "../../../../hooks/useGetUserRole";
 
+// constants
+import { ROLES } from "../../../../utils/consts/constants";
+
 // styles
 import classes from "./patients.module.css";
-import { ROLES } from "../../../../utils/consts/constants";
 
 const Patients = () => {
   const [searchText, setSearchText] = useState("");
+
+  const navigate = useNavigate();
 
   const role = useGetUserRole();
   const isAdmin = role === ROLES.ADMIN || role === ROLES.SUPERADMIN;
@@ -68,6 +73,11 @@ const Patients = () => {
     }
   };
 
+  const handleAddPatientClick = () => {
+    console.log("Add patient");
+    navigate('register');
+  }
+
   useEffect(() => {
     if (searchText.length > 0) {
       searchPatients(debouncedValue);
@@ -80,16 +90,16 @@ const Patients = () => {
         <BodyTitle title={`Список пациенток`} />
         <BodyOptionsContainer>
           <UserSearch value={searchText} onChange={handleSearchChange} />
-          <div className={classes.options_right}>
+          <div className={isAdmin ? classes.options_right_admin : classes.options_right}>
             {isAdmin && (
               <>
                 <DownloadButton
                   text={`Скачать список`}
                   onClick={handleDownloadPatientsList}
                 />
-                <AddPatientButton text={`Добавить пользователя`} />
               </>
             )}
+            <AddPatientButton onClick={handleAddPatientClick} text={`Добавить пользователя`} />
           </div>
         </BodyOptionsContainer>
       </BodyHeaderContainer>

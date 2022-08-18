@@ -6,6 +6,7 @@ export default class AuthService {
   }
 
   static async sentResetEmail(email) {
+    console.log("sending email: ", email);
     return $api.put("/v1/user/send_reset_code", { email });
   }
 

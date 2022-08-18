@@ -1,19 +1,34 @@
+// modules
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// components
 import { Box } from "@mui/system";
 import { InputLabel } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useForm, Controller, useFormState } from "react-hook-form";
 import { setUser } from "../../store/features/auth/authSlice";
-import AuthService from "../../services/AuthService";
-import { loginValidation } from "./validation";
 import TextFieldComponent from "../useful/TextFieldComponent";
 import AuthButton from "../useful/AuthButton";
+
+// utils
+import { axiosInstance } from "../../api/axios";
+
+// constants
+import { SEND_RESET_CODE_URL } from "../../utils/consts/apiConsts";
+
+// utils
+import { loginValidation } from "./validation";
+
+// styles
 import classes from "./auth.module.css";
 
 function PassRecEmail() {
-  const { control, handleSubmit } = useForm();
-  const { errors,  } = useFormState({ control });
+  const { control, handleSubmit } = useForm({
+    mode: "onBlur",
+    shouldFocusError: true,
+  });
+  const { errors } = useFormState({ control });
   const [isLoading, setLoading] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   const dispatch = useDispatch();
@@ -22,13 +37,18 @@ function PassRecEmail() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await AuthService.sentResetEmail(data.email);
-      console.log(response);
+      const response = await axiosInstance.put(SEND_RESET_CODE_URL, {
+        email: data.email,
+      });
+
+      const email = response.data.email;
+      console.log(email);
       setLoading(false);
-      dispatch(setUser({ email: data.email }));
+      dispatch(setUser({ email }));
+      localStorage.setItem("userEmail", email);
       navigate("code");
     } catch (e) {
-      console.log("ERROR", e.response.data);
+      console.log("ERROR", e);
       setErrorMessageVisible(true);
       setLoading(false);
       setTimeout(() => {

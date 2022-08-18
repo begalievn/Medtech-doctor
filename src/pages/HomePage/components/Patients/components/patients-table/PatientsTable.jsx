@@ -81,7 +81,7 @@ const PatientsTable = ({patientsList = []}) => {
                 <TableDataCell>{item.fio}</TableDataCell>
                 <TableDataCell>{item.phoneNumber}</TableDataCell>
                 <TableDataCell>{item.email}</TableDataCell>
-                <TableDataCell>{item.currentWeekOfPregnancy}</TableDataCell>
+                <TableDataCell>{`${item.currentWeekOfPregnancy} неделя`}</TableDataCell>
                 <TableDataCell>{item.residenceAddress}</TableDataCell>
                 <TableDataCell>
                   {

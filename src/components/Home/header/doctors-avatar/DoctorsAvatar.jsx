@@ -2,9 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// hooks
-import useGetUserRole from "../../../../hooks/useGetUserRole";
-
 // rtk-queries
 import { useGetUserByIdQuery } from "../../../../store/features/user/userApi";
 
@@ -24,13 +21,9 @@ const DoctorsAvatar = () => {
   const { data: userData, isLoading: userDataLoading } =
     useGetUserByIdQuery(userId);
 
-
-  const role = useGetUserRole();
-
   const handleClick = () => {
     navigate("profile");
   };
-
 
   return (
     <div className={classes.container} onClick={handleClick}>

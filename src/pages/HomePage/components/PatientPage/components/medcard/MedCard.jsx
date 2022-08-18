@@ -8,8 +8,15 @@ import EditSaveButton from "../edit-save-button/EditSaveButton";
 // rtk-queries
 import {
   useGetPatientMedCardInfoByIdQuery,
-  useUpdatePatientMedCardMutation
+  useUpdatePatientMedCardMutation,
 } from "../../../../../../store/features/patients/patientsApi";
+import { useLazySearchDoctorsQuery } from "../../../../../../store/features/doctors/doctorsQuery";
+
+// constants
+import { medCardInitialState } from "../../../../../../utils/consts/constants";
+
+// utils
+import { axiosWithToken } from "../../../../../../api/axios";
 
 // assets
 import {
@@ -18,29 +25,34 @@ import {
   closedArrow,
 } from "../../../../../../assets/icons/icons";
 
-// constants
-import { medCardInitialState } from "../../../../../../utils/consts/constants";
-
 // styles
 import classes from "./medCard.module.scss";
-import {axiosWithToken} from "../../../../../../api/axios";
-import {useLazySearchDoctorsQuery} from "../../../../../../store/features/doctors/doctorsQuery";
+import DownloadButton from "../../../../../../components/Home/body/download-button/DownloadButton";
 
-const MedCard = ({medCard, refetch, patientId}) => {
+const MedCard = ({ medCard, refetch, patientId }) => {
+  const [activeTabs, setActiveTabs] = useState(["1"]);
+  const [medCardValues, setMedCardValues] = useState(
+    medCard || medCardInitialState
+  );
+  const [editable, setEditable] = useState(false);
 
   // const [ searchDoctors, { data: searchDoctorsData } ] = useLazySearchDoctorsQuery();
   // searchDoctors(medCard?.doctor.split(" ").slice(0, 1).join(""));
   // console.log("doctorsEmail: ", searchDoctorsData);
 
-  const [activeTabs, setActiveTabs] = useState(["1"]);
-  const [medCardValues, setMedCardValues] = useState(medCard || medCardInitialState);
-  const [editable, setEditable] = useState(false);
+  console.log("patientId: ", patientId);
 
-  const [ updatePatientMedCard, {isLoading: updateMedCardLoading} ] = useUpdatePatientMedCardMutation();
+  const isRegister = !patientId;
 
-  console.log("typeResultAppointments", medCard?.typeResultAppointments);
-  console.log("doctor: ", medCard?.doctor);
-  console.log("medCard: ", medCard);
+  console.log("register", isRegister);
+
+  const [updatePatientMedCard, { isLoading: updateMedCardLoading }] =
+    useUpdatePatientMedCardMutation();
+
+  // console.log("typeResultAppointments", medCard?.typeResultAppointments);
+  // console.log("doctor: ", medCard?.doctor);
+  // console.log("medCard: ", medCard);
+
   // Handles edit button click
   const handleEditButtonClick = () => {
     setEditable(true);
@@ -50,10 +62,17 @@ const MedCard = ({medCard, refetch, patientId}) => {
   // Handles save button click
   const handleSaveButtonClick = async () => {
     // console.log("2 ", JSON.parse(JSON.stringify({...medCardValues, patientId: 40, doctor: "shulamitaasanova3@gmail.com"})));
-    const body = {...medCardValues, patientId, doctor: "shulamitaasanova3@gmail.com"};
+    const body = {
+      ...medCardValues,
+      patientId,
+      doctor: "shulamitaasanova3@gmail.com",
+    };
     console.log("3 ", body);
     try {
-      const response = await axiosWithToken.put('/patient/update-med-card', body);
+      const response = await axiosWithToken.put(
+        "/patient/update-med-card",
+        body
+      );
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -89,12 +108,12 @@ const MedCard = ({medCard, refetch, patientId}) => {
     <div className={classes.container}>
       <div className={classes.header}>
         <div>
-          <div>
-            <button className={classes.download_button}>
-              <span>Скачать мед-карту</span>
-              <img src={downloadIcon} alt="" />
-            </button>
-          </div>
+          {isRegister ? (
+            <div className={classes.download_button}>
+              <DownloadButton text={"Скачать мед-карту"} />
+            </div>
+          ) : null}
+
           <div>
             {editable ? (
               <EditSaveButton
@@ -111,7 +130,9 @@ const MedCard = ({medCard, refetch, patientId}) => {
         </div>
       </div>
       <div className={classes.content}>
-        <h2>МЕДИЦИНСКАЯ ДОКУМЕНТАЦИЯ</h2>
+        <h2>
+          {isRegister ? "Регистрация пациента" : "МЕДИЦИНСКАЯ ДОКУМЕНТАЦИЯ"}
+        </h2>
         <div className={classes.title_codes}>
           <div className={`${classes.row_div}`}>
             <div className={classes.codes}>
@@ -142,6 +163,7 @@ const MedCard = ({medCard, refetch, patientId}) => {
 
         <div className={classes.medcard_number}>
           <MedCardTextField label={"Номер мед карты"} placeholder={"000000"} />
+          <MedCardTextField label={"Гинеколог"} placeholder={"Выбрать гинеколога"} />
         </div>
 
         <div
@@ -423,7 +445,7 @@ const MedCard = ({medCard, refetch, patientId}) => {
               label={"Предполагаемая дата родов"}
               onChange={handleInputChange}
               value={medCardValues.estimatedDateOfBirth}
-              name={'estimatedDateOfBirth'}
+              name={"estimatedDateOfBirth"}
             />
             <MedCardTextField
               disabled={!editable}

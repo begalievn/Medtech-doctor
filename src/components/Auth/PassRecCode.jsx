@@ -1,41 +1,49 @@
-import React, { useState } from "react";
-import { Box } from "@mui/system";
-import { InputLabel } from "@mui/material";
-import IconTextField from "../useful/IconTextField";
+// modules
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {Controller, useForm, useFormState} from "react-hook-form";
+
+// utils
+import {axiosInstance} from "../../api/axios";
+
+// components
+import {Box} from "@mui/system";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useNavigate } from "react-router-dom";
-
-import classes from "./auth.module.css";
+import {InputLabel} from "@mui/material";
+import IconTextField from "../useful/IconTextField";
 import AuthButton from "../useful/AuthButton";
-import { useSelector } from "react-redux";
-import { Controller, useForm, useFormState } from "react-hook-form";
-import AuthService from "../../services/AuthService";
+
+// constants
+import {CHECK_RESET_CODE_URL} from "../../utils/consts/apiConsts";
+
+// styles
+import classes from "./auth.module.css";
 
 function PassRecCode() {
-  const { control, handleSubmit } = useForm();
-  const { errors } = useFormState({ control });
+  const {control, handleSubmit} = useForm();
+  const {errors} = useFormState({control});
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
 
-  const authUser = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
+
+  const email = localStorage.getItem("userEmail");
 
   const onSubmit = async (data) => {
     setLoading(true);
-    console.log(authUser.email, data.code);
     try {
-      const response = await AuthService.checkResetCode(
-        authUser.email,
-        data.code
+      const response = await axiosInstance.put(CHECK_RESET_CODE_URL, {
+          email,
+          "text": data.code
+        }
       );
-      console.log("RESPONSE", response.data.text);
       localStorage.setItem("token", response.data.text);
       setLoading(false);
       navigate("/forgot-password/new-password");
     } catch (e) {
-      console.log("ERROR", e.response.data);
+      console.log("ERROR", e.response);
       setLoading(false);
       setErrorMessageVisible(true);
       setTimeout(() => {
@@ -52,13 +60,13 @@ function PassRecCode() {
             <div className={classes.title}>
               <h4 className={classes.title_h4}>Восстановление пароля</h4>
             </div>
-            <Box sx={{ marginBottom: "40px" }}>
+            <Box sx={{marginBottom: "40px"}}>
               <p className={classes.email_sent_to}>
                 Новый пароль был отправлен на вашу почту
               </p>
-              <p className={classes.email_sent_to_email}>{authUser.email}</p>
+              <p className={classes.email_sent_to_email}>{email}</p>
             </Box>
-            <Box sx={{ marginBottom: "30px" }}>
+            <Box sx={{marginBottom: "30px"}}>
               <InputLabel
                 sx={{
                   marginLeft: "8px",
@@ -72,7 +80,7 @@ function PassRecCode() {
               <Controller
                 name="code"
                 control={control}
-                render={({ field }) => (
+                render={({field}) => (
                   <IconTextField
                     {...field}
                     fullWidth
@@ -100,7 +108,7 @@ function PassRecCode() {
                 )}
               />
               <div
-                style={{ marginTop: "10px" }}
+                style={{marginTop: "10px"}}
                 className={
                   errorMessageVisible
                     ? classes.error_message
@@ -112,7 +120,7 @@ function PassRecCode() {
             </Box>
           </div>
           <div className={classes.submit_button}>
-            <AuthButton text={isLoading ? "Загрузка..." : "Продолжить"} />
+            <AuthButton text={isLoading ? "Загрузка..." : "Продолжить"}/>
           </div>
         </form>
       </div>

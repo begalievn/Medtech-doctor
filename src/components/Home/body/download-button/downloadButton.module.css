@@ -1,12 +1,12 @@
 .button {
-  width: 176px;
+  min-width: 176px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-style: none;
   border: 1px solid #5cc78d;
   border-radius: 4px;
+  padding: 10px;
   background-color: white;
 }
 
@@ -15,7 +15,6 @@
 }
 
 .button p {
-  font-family: 'SF Pro Display';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;

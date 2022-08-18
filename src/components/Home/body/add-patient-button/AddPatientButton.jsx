@@ -4,9 +4,9 @@ import React from 'react';
 // styles
 import classes from './addPatientButton.module.scss'
 
-const AddPatientButton = ({text}) => {
+const AddPatientButton = ({text, onClick}) => {
   return (
-    <button className={classes.button}>
+    <button onClick={onClick} className={classes.button}>
       {text}
     </button>
   );

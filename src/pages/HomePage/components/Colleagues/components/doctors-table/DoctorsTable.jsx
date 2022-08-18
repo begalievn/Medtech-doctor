@@ -66,7 +66,7 @@ const DoctorsTable = ({ doctorsList }) => {
               <th>Номер телефона</th>
               <th>Электронная почта</th>
               <th>Пациенты</th>
-              <th>График работы</th>
+              {/*<th>График работы</th>*/}
               <th>Статус</th>
             </TableRow>
           </TableHead>
@@ -96,12 +96,12 @@ const DoctorsTable = ({ doctorsList }) => {
                 <TableDataCell>{item.fio}</TableDataCell>
                 <TableDataCell>{item.phoneNumber}</TableDataCell>
                 <TableDataCell>{item.email}</TableDataCell>
-                <TableDataCell>{item.countOfPatients} пациентов</TableDataCell>
-                <TableDataCell>
-                  {doctorsWorkingDays.map((item, index) => (
-                    <span key={index}>{`${item} `}</span>
-                  ))}
-                </TableDataCell>
+                <TableDataCell>{item.countOfPatients} пациента</TableDataCell>
+                {/*<TableDataCell>*/}
+                {/*  {doctorsWorkingDays.map((item, index) => (*/}
+                {/*    <span key={index}>{`${item} `}</span>*/}
+                {/*  ))}*/}
+                {/*</TableDataCell>*/}
                 <TableDataCell>
                   <Switch
                     checked={item.status === "ACTIVE"}

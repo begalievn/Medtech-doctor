@@ -1,21 +1,33 @@
+// modules
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+// components
 import { InputLabel, Box } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconTextField from "../useful/IconTextField";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import classes from "./auth.module.css";
 import TextFieldComponent from "../useful/TextFieldComponent";
 import AuthButton from "../useful/AuthButton";
+
+// utils
+import {axiosInstance} from "../../api/axios";
+
+// constants
 import { LOGIN_REGEX, PWD_REGEX } from "../../utils/consts/homeConsts";
-import axios from "../../api/axios";
 import { LOGIN_URL } from "../../utils/consts/apiConsts";
-import { useDispatch } from "react-redux";
+
+// actions
 import {
   setAccessToken,
   setRefreshToken,
   setUserData,
 } from "../../store/features/auth/authSlice";
+
+// styles
+import classes from "./auth.module.css";
+
 
 function Login() {
 
@@ -57,16 +69,10 @@ function Login() {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         LOGIN_URL,
-        JSON.stringify({ email: login, password: pwd }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        { email: login, password: pwd },
       );
-
       dispatch(setUserData(response?.data));
       dispatch(setAccessToken(response?.data.accessToken));
       dispatch(setRefreshToken(response?.data.refreshToken));
@@ -128,6 +134,8 @@ function Login() {
                 onChange={(e) => setLogin(e.target.value)}
                 id
               />
+
+              <p>{errMsg}</p>
 
               <InputLabel
                 sx={{

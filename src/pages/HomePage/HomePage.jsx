@@ -1,6 +1,6 @@
 // modules
 import React from "react";
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // components
 import Schedule from "./components/Schedule/Schedule";
@@ -14,9 +14,8 @@ import DoctorsAvatar from "../../components/Home/header/doctors-avatar/DoctorsAv
 import NavLogout from "../../components/Home/header/nav-logout/NavLogout";
 import ErrorPage from "../ErrorPage/ErrorPage";
 
-
 // rtk-queries
-import { useGetDoctorsQuery} from "../../store/features/doctors/doctorsQuery";
+import { useGetDoctorsQuery } from "../../store/features/doctors/doctorsQuery";
 
 // assets
 import { logoWhite, doctorsAva } from "../../assets/images/images";
@@ -26,21 +25,21 @@ import { logoutIcon } from "../../assets/icons/icons";
 import useGetUserRole from "../../hooks/useGetUserRole";
 
 // constants
-import {navOptions, navOptionsAdmin} from "../../utils/consts/homeConsts";
-import {ROLES} from "../../utils/consts/constants";
-
+import { navOptions, navOptionsAdmin } from "../../utils/consts/homeConsts";
+import { ROLES } from "../../utils/consts/constants";
 
 // styles
 import classes from "./homePage.module.css";
 import Content from "./components/Content/Content";
+import PatientRegister from "./components/PatientRegister/PatientRegister";
 
 const HomePage = () => {
-
   // const { data: doctors, isLoading: doctorsLoading } = useGetDoctorsQuery("");
   // console.log(doctors);
 
   // Role of User
   const role = useGetUserRole();
+  const isAdmin = role === ROLES.ADMIN || role === ROLES.SUPERADMIN;
 
   return (
     <div className={classes.home}>
@@ -55,17 +54,8 @@ const HomePage = () => {
           <nav className={classes.navContainer}>
             <div className={classes.nav}>
               <div className={classes.nav__options}>
-                {
-                  role === ROLES.DOCTOR ? navOptions.map((option, index) => (
-                    <NavOptionButton
-                      key={index}
-                      path={option.path}
-                      icon={option.icon}
-                      text={option.text}
-                    />
-                  ))
-                    :
-                    navOptionsAdmin.map((option, index) => (
+                {role === ROLES.DOCTOR
+                  ? navOptions.map((option, index) => (
                       <NavOptionButton
                         key={index}
                         path={option.path}
@@ -73,12 +63,19 @@ const HomePage = () => {
                         text={option.text}
                       />
                     ))
-                }
+                  : navOptionsAdmin.map((option, index) => (
+                      <NavOptionButton
+                        key={index}
+                        path={option.path}
+                        icon={option.icon}
+                        text={option.text}
+                      />
+                    ))}
               </div>
 
               {/* Doctor */}
               <div className={classes.nav_user}>
-                <DoctorsAvatar />
+                {isAdmin ? null : <DoctorsAvatar />}
                 <div className={classes.nav_log}>
                   <NavLogout />
                 </div>
@@ -95,6 +92,7 @@ const HomePage = () => {
           <Route path="/profile" element={<DoctorsPage />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/patients/:patientId/*" element={<PatientPage />} />
+          <Route path="/patients/register" element={<PatientRegister />} />
           <Route path="/content" element={<Content />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
