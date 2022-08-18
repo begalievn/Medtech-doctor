@@ -1,56 +1,47 @@
-import { Box } from "@mui/system";
+// modules
 import React, { useState } from "react";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { InputLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+// components
+import { Box } from "@mui/system";
 import IconTextField from "../useful/IconTextField";
-
-import classes from "./auth.module.css";
 import AuthButton from "../useful/AuthButton";
 import { Controller, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
+// utils
+import {axiosInstance} from "../../api/axios";
+
+// constants
+import {UPDATE_PASSWORD_URL} from "../../utils/consts/apiConsts";
+
+// styles
+import classes from "./auth.module.css";
 
 function PassRecNewPassword() {
   const { control, handleSubmit } = useForm();
-  const authUser = useSelector((state) => state.auth.user);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-  // const [confirmPassVisible, setConfirmPassVisible] = useState(false);
   const navigate = useNavigate();
 
-  console.log(localStorage.getItem("token"));
+  const email = localStorage.getItem("userEmail");
 
   const onSubmit = async (data) => {
-    console.log(data);
-    console.log("authUser", authUser);
-    let dataToSend = {
-      email: authUser.email,
-      text: data.password.toString(),
-    };
-    console.log(dataToSend);
     try {
       const token = localStorage.getItem("token");
-      console.log({ ...dataToSend });
-      const response = await axios.put(
-        "https://medtech-neobisx.herokuapp.com/api/v1/user/update_password",
-        { ...dataToSend },
+      const response = await axiosInstance.put(
+        UPDATE_PASSWORD_URL,
+        { email, text: data.password },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // const response = await AuthService.updatePassword(
-      //   authUser.email,
-      //   data.password.toString(),
-      //   token
-      // );
       console.log(response);
-      navigate("/main");
+      navigate("/login");
     } catch (e) {
       console.log("ERROR", e.response.data);
     }
-    // console.log("Submit button clicked");
   };
 
   return (

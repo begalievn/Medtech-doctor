@@ -3,10 +3,9 @@ import { BASE_URL } from "../utils/consts/apiConsts";
 
 const accessToken = localStorage.getItem('accessToken');
 
-export default axios.create({
+export const axiosInstance =  axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
-
 });
 
 export const axiosPrivate = axios.create({

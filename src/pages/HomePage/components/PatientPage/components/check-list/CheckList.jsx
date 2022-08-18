@@ -9,7 +9,6 @@ import {
 } from "../../../../../../store/features/patients/patientsApi";
 
 // components
-import { Switch } from "@mui/material";
 import CheckListTable from "../check-list-table/CheckListTable";
 import EditSaveButton from "../edit-save-button/EditSaveButton";
 import Loader from "../../../../../../components/useful/loader/Loader";
@@ -72,7 +71,7 @@ const CheckList = ({ checkListId }) => {
   return (
     <div className={classes.container}>
       <div className={classes.header}>
-        <h2>Чеклист</h2>
+        <h2>Чек-лист</h2>
         <div>
           <div>
             <EditSaveButton

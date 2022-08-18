@@ -13,6 +13,13 @@
   max-width: 500px;
   min-width: 420px;
   display: flex;
+  justify-content: flex-end;
+}
+
+.options_right_admin {
+  max-width: 500px;
+  min-width: 420px;
+  display: flex;
   justify-content: space-between;
 }
 
