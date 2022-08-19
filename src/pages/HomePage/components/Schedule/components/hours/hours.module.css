@@ -1,0 +1,24 @@
+.hours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hourItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: 3px;
+  font-size: 16px;
+  width: 60px;
+  height: 20px;
+  padding: 15px 35px;
+  border: 1px solid #5cc78d;
+  color: #5cc78d;
+}
+.active {
+  background-color: #5cc78d;
+  color: white;
+}
