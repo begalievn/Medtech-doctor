@@ -47,7 +47,7 @@ function Schedule() {
   const { data: doctorsList, isLoading: doctorsListLoading } =
     useGetAllDoctorsQuery("");
 
-  const [searchSchedulesByDoctor, { data: searchedScheduleList = [] }] =
+  const [searchSchedulesByDoctor, { data: searchedScheduleList = [], isLoading: searchedScheduleListLoading }] =
     useLazySearchSchedulesByDoctorNameQuery();
 
   const debouncedValue = useDebounce(searchedDoctor, 400);
@@ -121,7 +121,7 @@ function Schedule() {
           </div>
         </div>
         <div className={classes.schedule_table}>
-          {searchedDoctor.length > 0 ? (
+          {searchedDoctor.length > 0 && !searchedScheduleListLoading  ? (
             <ScheduleTable
               scheduleData={searchedScheduleList}
               setOpenAppointmentModal={setOpenAppointmentModal}
