@@ -41,7 +41,7 @@
 
 .forgot_password {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .forgot_password p {
@@ -83,7 +83,6 @@
 }
 
 .error_message_invisible {
-  /*display: none;*/
   visibility: hidden;
 }
 

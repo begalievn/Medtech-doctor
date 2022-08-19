@@ -16,13 +16,14 @@ import AuthButton from "../useful/AuthButton";
 
 // constants
 import {CHECK_RESET_CODE_URL} from "../../utils/consts/apiConsts";
+import {codeValidation} from "./validation";
 
 // styles
 import classes from "./auth.module.css";
 
 function PassRecCode() {
-  const {control, handleSubmit} = useForm();
-  const {errors} = useFormState({control});
+  const {control, handleSubmit} = useForm({mode: "onChange"});
+  const {errors, isDirty, isValid} = useFormState({control});
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
@@ -80,6 +81,7 @@ function PassRecCode() {
               <Controller
                 name="code"
                 control={control}
+                rules={codeValidation}
                 render={({field}) => (
                   <IconTextField
                     {...field}
@@ -120,7 +122,7 @@ function PassRecCode() {
             </Box>
           </div>
           <div className={classes.submit_button}>
-            <AuthButton text={isLoading ? "Загрузка..." : "Продолжить"}/>
+            <AuthButton disabled={!isValid || !isDirty} text={isLoading ? "Загрузка..." : "Продолжить"}/>
           </div>
         </form>
       </div>

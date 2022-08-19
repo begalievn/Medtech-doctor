@@ -10,9 +10,12 @@ import {
 // assets
 import { whiteDownArrow } from '../../../../assets/icons/icons';
 
+// constants
+import {ROLES} from "../../../../utils/consts/constants";
+
 // styles
 import classes from './addUserButton.module.css';
-import {ROLES} from "../../../../utils/consts/constants";
+import './style.scss';
 
 const inputLabelStyles = {
   fontFamily: 'SF Pro Display',

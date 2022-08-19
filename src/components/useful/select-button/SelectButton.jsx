@@ -9,18 +9,15 @@ import downArrow from "../../../assets/icons/down-arrow.svg";
 
 import classes from "./selectButton.module.css";
 
-const SelectButton = ({ text }) => {
-  const [name, setName] = useState("");
-
-  const handleChange = (event) => {
-    setName(event.target.value);
-  };
+const SelectButton = ({ text, doctorList, value, onChange }) => {
 
   const formStyles = {
     width: "200px",
     height: "44px",
     display: "flex",
     alignItems: "center",
+    '& legend': { display: 'none' },
+    '& fieldset': { top: 0 },
   };
 
   const inputLabelStyles = {
@@ -45,12 +42,8 @@ const SelectButton = ({ text }) => {
   };
 
   return (
-    // <button className={classes.button}>
-    //   <p>{text}</p>
-    //   <img src={downArrow} alt="" />
-    // </button>
     <FormControl sx={formStyles}>
-      {name === "" ? (
+      {value === "" ? (
         <InputLabel style={inputLabelStyles} id="demo-simple-select-label">
           {text}
         </InputLabel>
@@ -59,15 +52,20 @@ const SelectButton = ({ text }) => {
         sx={selectStyles}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={name}
-        onChange={handleChange}
+        value={value}
+        defaultValue={''}
+        displayEmpty={true}
+        onChange={onChange}
         IconComponent={() => (
           <img style={{ marginRight: "15px" }} src={downArrow} alt="icon" />
         )}
       >
-        <MenuItem value={10}>Ташболот И.Р</MenuItem>
-        <MenuItem value={20}>Ташболот И.Р</MenuItem>
-        <MenuItem value={30}>Ташболот И.Р</MenuItem>
+        <MenuItem sx={{display: "none"}} value={''}>{text}</MenuItem>
+        {
+          doctorList.map((item, index) => (
+            <MenuItem key={index} value={item?.doctorId}>{item?.fio}</MenuItem>
+          ))
+        }
       </Select>
     </FormControl>
   );

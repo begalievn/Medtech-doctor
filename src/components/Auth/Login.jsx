@@ -12,7 +12,7 @@ import TextFieldComponent from "../useful/TextFieldComponent";
 import AuthButton from "../useful/AuthButton";
 
 // utils
-import {axiosInstance} from "../../api/axios";
+import { axiosInstance } from "../../api/axios";
 
 // constants
 import { LOGIN_REGEX, PWD_REGEX } from "../../utils/consts/homeConsts";
@@ -28,10 +28,7 @@ import {
 // styles
 import classes from "./auth.module.css";
 
-
 function Login() {
-
-
   const [login, setLogin] = useState("");
   const [validLogin, setValidLogin] = useState(false);
   const [pwd, setPwd] = useState("");
@@ -46,8 +43,6 @@ function Login() {
 
   const loginRef = useRef();
   const errRef = useRef();
-
-
 
   useEffect(() => {
     loginRef.current.focus();
@@ -69,10 +64,10 @@ function Login() {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await axiosInstance.post(
-        LOGIN_URL,
-        { email: login, password: pwd },
-      );
+      const response = await axiosInstance.post(LOGIN_URL, {
+        email: login,
+        password: pwd,
+      });
       dispatch(setUserData(response?.data));
       dispatch(setAccessToken(response?.data.accessToken));
       dispatch(setRefreshToken(response?.data.refreshToken));
@@ -98,11 +93,19 @@ function Login() {
       setPwd("");
     } catch (err) {
       setLoading(false);
+      setErrorMessageVisible(true);
+      setTimeout(() => {
+        setErrorMessageVisible(false);
+        setLogin("");
+        setPwd("");
+      }, 3000);
       if (!err?.response) {
         console.log("No Server response");
       } else {
         console.log("Login failed");
       }
+
+
     }
   };
 
@@ -118,7 +121,7 @@ function Login() {
               className={
                 errorMessageVisible
                   ? classes.error_message
-                  : classes.error_message_invisible
+                  : [classes.error_message, classes.error_message_invisible].join(" ")
               }
             >
               <p>Не верный Логин или Пароль</p>
@@ -175,7 +178,6 @@ function Login() {
           </div>
 
           <div className={classes.submit_button}>
-            {/* <p>Incorrect Fields</p> */}
             <AuthButton
               text={isLoading ? "Загрузка..." : "Войти"}
               disabled={!validLogin || !validPwd || isLoading}

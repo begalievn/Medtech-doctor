@@ -66,7 +66,7 @@ const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
             <>
               <div className={classes.close} onClick={handleClose}></div>
               <div className={classes.title}>
-                <h3>Страница пользователя</h3>
+                <h3>Страница доктора</h3>
               </div>
               <div className={classes.photo}>
                 <div className={classes.avatar}>
@@ -106,21 +106,6 @@ const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
               </div>
               <div className={classes.interview_time}>
                 <p className={classes.text}>Время интервью</p>
-                <div className={classes.time_row}>
-                  <div className={classes.time_block}>
-                    <span>С</span>
-                    <div className={classes.time}>
-                      <span>{"data"}</span>
-                    </div>
-                  </div>
-                  <div className={classes.time_block}>
-                    <span>До</span>
-                    <div className={classes.time}>
-                      <span>{"data"}</span>
-                    </div>
-                  </div>
-                </div>
-
                 <div className={classes.time_row}>
                   <div className={classes.time_block}>
                     <span>С</span>

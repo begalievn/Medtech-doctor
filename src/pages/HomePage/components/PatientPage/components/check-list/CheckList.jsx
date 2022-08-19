@@ -34,6 +34,8 @@ const CheckList = ({ checkListId }) => {
     refetch
   } = useGetAllCheckListsOfPatientByIdQuery(patientId);
 
+  console.log("checkListData: ", checkListsData);
+
   const handleEditSaveClick = () => {
     if (editable) {
       console.log("Save");
@@ -56,14 +58,17 @@ const CheckList = ({ checkListId }) => {
     setEditable((prev) => !prev);
   };
 
+
   useEffect(() => {
     if (checkListsData) {
       setCheckList(
         checkListsData.find(
           (element) => element.id === Number(checkListId || checkListIdParams)
-        )?.answerEntities
+        )?.answer
       );
-      console.log(checkListId);
+      console.log("+_+_+_+", checkListsData.find(
+        (element) => element.id === Number(checkListId || checkListIdParams)
+      ))
     }
   }, [checkListsLoading, checkListId, checkListIdParams, checkListsData]);
   console.log(checkList);

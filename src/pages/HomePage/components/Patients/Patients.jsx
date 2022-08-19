@@ -61,7 +61,6 @@ const Patients = () => {
         "/patient/excel/get-patients"
       );
       const url = URL.createObjectURL(new Blob([response.data]));
-
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", "patients-list.xlsx"); //or any other extension

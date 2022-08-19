@@ -50,15 +50,13 @@ const DoctorsTable = ({ doctorsList }) => {
           <TableHead sx={{ position: "relative" }}>
             <TableRow
               sx={{
-                // borderBottom: "1px solid black",
                 height: "50px",
                 position: "sticky",
                 top: "0",
                 left: "0",
                 zIndex: "10",
                 background: "white",
-                // boxShadow: "0px 1px 1px black"
-                borderBottom: "solid 1px black",
+                borderBottom: "solid 1px #3B393C",
               }}
             >
               <th>№</th>
@@ -70,7 +68,6 @@ const DoctorsTable = ({ doctorsList }) => {
               <th>Статус</th>
             </TableRow>
           </TableHead>
-          {/*<div style={{ width: "100%", height: "10px" }}></div>*/}
           <TableBody
             sx={{
               "&:before": {
@@ -88,6 +85,7 @@ const DoctorsTable = ({ doctorsList }) => {
                   background: index % 2 !== 0 ? "" : "#F8F8F8",
                   "&:hover": {
                     cursor: "pointer",
+                    background: "#BDF5D7",
                   },
                 }}
                 key={index}

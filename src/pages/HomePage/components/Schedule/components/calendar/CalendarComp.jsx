@@ -1,58 +1,55 @@
-import React, { useState } from "react";
+// modules
+import React, { useEffect, useState } from "react";
+import moment from "moment";
 import Calendar from "react-calendar";
+
+// modules
+import Hours from "../hours/Hours";
+
+// utils
+import { ScheduleService } from "../../../../../../services/ScheduleService";
+
+// styles
 import "react-calendar/dist/Calendar.css";
 import "./Calendar.css";
-
 import classes from "./calendarComp.module.css";
 
-function CalendarComp() {
-  // Array to store month string values
-  const allMonthValues = [
-    "Январь",
-    "Февраль",
-    "Март",
-    "Апрель",
-    "Май",
-    "Июнь",
-    "Июль",
-    "Aвгуст",
-    "Сентябрь",
-    "Октябрь",
-    "Ноябрь",
-    "Декабрь",
-  ];
+const days = [
+  { date: "2022-08-20", status: "WHITE" },
+  { date: "2022-08-10", status: "WHITE" },
+  { date: "2022-08-12", status: "WHITE" },
+];
+
+
+
+
+const CalendarComp = ({newData, setNewData}) => {
+
 
   // State for date selected by user
   const [selectedDate, setSelectedDate] = useState();
 
-  // State for text above calendar
-  const [calendarText, setCalendarText] = useState(`No Date is selected`);
-
   // Function to update selected date and calendar text
   const handleDateChange = (value) => {
     setSelectedDate(value);
-    setCalendarText(`The selected Date is ${value.toDateString()}`);
-    console.log(value);
-  };
-
-  // Function to handle selected Year change
-  const handleYearChange = (value) => {
-    const yearValue = value.getFullYear();
-    setCalendarText(`${yearValue} Year  is selected`);
-  };
-
-  // Function to handle selected Month change
-  const handleMonthChange = (value) => {
-    const monthValue = allMonthValues[value.getMonth()];
-    setCalendarText(`${monthValue} Month  is selected`);
+    setNewData(value);
+    console.log(value.getFullYear());
   };
 
   return (
     <div className={classes.calendar_container}>
       <Calendar
+        tileClassName={({ date }) => {
+          const newDate = moment(date).format().split("T")[0];
+          const condition = days.some(
+            (item) => item.date === newDate && item.status
+          );
+          if (condition) {
+            return classes.booked;
+          }
+        }}
+
         className={classes.calendar}
-        onClickMonth={handleMonthChange}
-        onClickYear={handleYearChange}
         onChange={handleDateChange}
         value={selectedDate}
       />

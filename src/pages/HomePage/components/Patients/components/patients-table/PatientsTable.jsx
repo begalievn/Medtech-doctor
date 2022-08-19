@@ -49,10 +49,14 @@ const PatientsTable = ({patientsList = []}) => {
           <TableHead >
             <TableRow
               sx={{
-                width: "90%",
-                borderBottom: "1px solid #3B393C",
                 height: "50px",
-                marginBottom: "20px",
+                position: "sticky",
+                top: "0",
+                left: "0",
+                zIndex: "10",
+                background: "white",
+                // boxShadow: "0px 1px 1px black"
+                borderBottom: "solid 1px #3B393C",
               }}
             >
               <th>№</th>
@@ -72,6 +76,7 @@ const PatientsTable = ({patientsList = []}) => {
                   border: "none",
                   "&:hover": {
                     cursor: "pointer",
+                    background: "#BDF5D7",
                   },
                 }}
                 key={index}

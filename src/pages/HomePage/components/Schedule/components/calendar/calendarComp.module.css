@@ -4,8 +4,8 @@
   justify-content: center;
   flex-direction: column;
   width: 393px;
-  height: 374px;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  /*height: 374px;*/
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .calendar {
@@ -15,3 +15,18 @@
   border-style: none;
   font-family: Roboto;
 }
+/*.fullWork {*/
+/*  background-color: blue;*/
+/*  color: red !important;*/
+/*}*/
+.booked,
+.booked:hover {
+  background-color: #5cc78d !important;
+  color: white !important;
+  border-radius: 4px !important;
+}
+
+/*.work {*/
+/*  background-color: blue;*/
+/*  color: red !important;*/
+/*}*/

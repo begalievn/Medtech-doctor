@@ -35,23 +35,14 @@ const boxStyles = {
   p: 4,
 }
 
-const ContentModal = ({contentModalVisible, setContentModalVisible, data}) => {
-  const [ updateContent, { isLoading: isUpdating } ] = useUpdateContentMutation();
-  const [ uploadImageContentById, { isLoading: isImageUploading }] = useUploadImageContentByIdMutation();
-  // Fetching all data to change uploaded image, because didn't find another way to change image
-  const {
-    data: content,
-    isLoading: contentLoading,
-    refetch,
-    error: contentError,
-  } = useGetAllContentQuery("");
-  console.log("data", data);
-
+const ContentModal = ({contentModalVisible, setContentModalVisible, data, refetch}) => {
   const [activeContent, setActiveContent] = useState(0);
   const [ contentTextValues, setContentTextValues ] = useState(data);
   const [activeImageOfContent, setActiveImageOfContent] = useState(data[activeContent]?.imageUrl);
   const [uploadedImage, setUploadedImage] = useState();
 
+  const [ updateContent, { isLoading: isUpdating } ] = useUpdateContentMutation();
+  // const [ uploadImageContentById, { isLoading: isImageUploading }] = useUploadImageContentByIdMutation();
 
   const handleClose = () => {
     setContentModalVisible(false);

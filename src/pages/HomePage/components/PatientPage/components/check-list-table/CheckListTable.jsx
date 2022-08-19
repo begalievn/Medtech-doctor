@@ -22,6 +22,8 @@ import classes from "./checkListTable.module.scss";
 
 const CheckListTable = ({ checkList, setCheckList, editable }) => {
 
+  console.log("checklistTable: ", checkList);
+
   const handelTextValueChange = (e) => {
     const { name, value } = e.target;
     const [key, answerId] = name.split(" ");
