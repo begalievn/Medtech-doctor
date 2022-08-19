@@ -1,5 +1,5 @@
 // modules
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // components
 import MedCardTextField from "../../../../../../components/Home/body/medcard-text-field/MedCardTextField";
@@ -7,51 +7,52 @@ import EditSaveButton from "../edit-save-button/EditSaveButton";
 
 // rtk-queries
 import {
-  useGetPatientMedCardInfoByIdQuery,
   useUpdatePatientMedCardMutation,
 } from "../../../../../../store/features/patients/patientsApi";
-import { useLazySearchDoctorsQuery } from "../../../../../../store/features/doctors/doctorsQuery";
+import {
+  useGetDoctorsFullNameEmailQuery,
+} from "../../../../../../store/features/doctors/doctorsQuery";
 
 // constants
-import { medCardInitialState } from "../../../../../../utils/consts/constants";
+import {
+  inputTypes,
+} from "../../../../../../utils/consts/constants";
+import DownloadButton from "../../../../../../components/Home/body/download-button/DownloadButton";
 
 // utils
-import { axiosWithToken } from "../../../../../../api/axios";
+import {
+  axiosWithContentBlob,
+  axiosWithToken,
+} from "../../../../../../api/axios";
 
 // assets
-import {
-  downloadIcon,
-  openArrow,
-  closedArrow,
-} from "../../../../../../assets/icons/icons";
+import { openArrow, closedArrow } from "../../../../../../assets/icons/icons";
 
 // styles
 import classes from "./medCard.module.scss";
-import DownloadButton from "../../../../../../components/Home/body/download-button/DownloadButton";
 
 const MedCard = ({ medCard, refetch, patientId }) => {
   const [activeTabs, setActiveTabs] = useState(["1"]);
-  const [medCardValues, setMedCardValues] = useState(
-    medCard || medCardInitialState
-  );
+  const [medCardValues, setMedCardValues] = useState(medCard);
   const [editable, setEditable] = useState(false);
+  const [emailOfDoctor, setEmailOfDoctor] = useState("");
 
-  // const [ searchDoctors, { data: searchDoctorsData } ] = useLazySearchDoctorsQuery();
-  // searchDoctors(medCard?.doctor.split(" ").slice(0, 1).join(""));
-  // console.log("doctorsEmail: ", searchDoctorsData);
-
-  console.log("patientId: ", patientId);
+  console.log("medCardValues: ", medCardValues);
 
   const isRegister = !patientId;
 
-  console.log("register", isRegister);
+  if (!patientId) {
+    patientId = localStorage.getItem("patientId");
+  }
+
+  const { data: doctorsNameEmail, isLoading: doctorsNameEmailLoading } =
+    useGetDoctorsFullNameEmailQuery("");
 
   const [updatePatientMedCard, { isLoading: updateMedCardLoading }] =
     useUpdatePatientMedCardMutation();
 
-  // console.log("typeResultAppointments", medCard?.typeResultAppointments);
-  // console.log("doctor: ", medCard?.doctor);
-  // console.log("medCard: ", medCard);
+  // To check if a selected tab is active
+  const isActive = (id) => activeTabs.includes(id);
 
   // Handles edit button click
   const handleEditButtonClick = () => {
@@ -61,13 +62,11 @@ const MedCard = ({ medCard, refetch, patientId }) => {
 
   // Handles save button click
   const handleSaveButtonClick = async () => {
-    // console.log("2 ", JSON.parse(JSON.stringify({...medCardValues, patientId: 40, doctor: "shulamitaasanova3@gmail.com"})));
     const body = {
       ...medCardValues,
-      patientId,
-      doctor: "shulamitaasanova3@gmail.com",
+      doctor: emailOfDoctor,
+      patientId: Number(patientId),
     };
-    console.log("3 ", body);
     try {
       const response = await axiosWithToken.put(
         "/patient/update-med-card",
@@ -77,9 +76,13 @@ const MedCard = ({ medCard, refetch, patientId }) => {
     } catch (err) {
       console.log(err);
     }
-
     refetch();
     setEditable(false);
+  };
+
+  const handleCreateButtonClick = async () => {
+    console.log("Create a patient");
+    console.log("Create medCardValues: ", medCardValues);
   };
 
   // Handles opening and closing of tabs
@@ -91,31 +94,66 @@ const MedCard = ({ medCard, refetch, patientId }) => {
     }
   };
 
-  // To check if a selected tab is active
-  const isActive = (id) => activeTabs.includes(id);
-
   // Handles med-card inputs changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
+    console.log({ value, name });
     setMedCardValues({
       ...medCardValues,
       [name]: value,
     });
   };
 
+  const handleDownloadPatientMedcard = async () => {
+    try {
+      const response = await axiosWithContentBlob("/doctor/excel/get-doctors");
+      const url = URL.createObjectURL(new Blob([response.data]));
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "doctors-list.xlsx"); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (isRegister) {
+      setEditable(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (doctorsNameEmail) {
+      // console.log("DOCTOR:", medCardValues.doctor);
+      const result = doctorsNameEmail.filter(
+        (item) =>
+          item.fullName.split(" ")[0] === medCardValues.doctor.split(" ")[0]
+      )[0].email;
+      setEmailOfDoctor(result);
+    }
+  }, [doctorsNameEmailLoading, doctorsNameEmail]);
+
   return (
     <div className={classes.container}>
       <div className={classes.header}>
         <div>
-          {isRegister ? (
+          {!isRegister ? (
             <div className={classes.download_button}>
               <DownloadButton text={"Скачать мед-карту"} />
             </div>
           ) : null}
 
           <div>
-            {editable ? (
+            {isRegister ? (
+              <EditSaveButton
+                text={"Создать"}
+                onClick={handleCreateButtonClick}
+              />
+            ) : editable ? (
               <EditSaveButton
                 text={"Сохранить"}
                 onClick={handleSaveButtonClick}
@@ -160,12 +198,98 @@ const MedCard = ({ medCard, refetch, patientId }) => {
         <h3 className={classes.header_2}>
           Индивидуальная карта беременной родительницы
         </h3>
-
-        <div className={classes.medcard_number}>
-          <MedCardTextField label={"Номер мед карты"} placeholder={"000000"} />
-          <MedCardTextField label={"Гинеколог"} placeholder={"Выбрать гинеколога"} />
+        <div className={classes.fields}>
+          <MedCardTextField
+            disabled={!editable}
+            label={"Номер мед карты"}
+            placeholder={"000000"}
+          />
+          {isRegister ? (
+            doctorsNameEmailLoading ? null : (
+              <MedCardTextField
+                doctorsNameEmail={doctorsNameEmail}
+                label={"Гинеколог"}
+                placeholder={"Выбери гинеколога"}
+                inputType={inputTypes.SELECT}
+                value={medCardValues?.doctor}
+                onChange={handleInputChange}
+                name={"doctor"}
+              />
+            )
+          ) : null}
         </div>
-
+        <div className={classes.patient_info}>
+          <div className={classes.title} onClick={() => handleTitleClick("1")}>
+            <h3>Данные о пациенте</h3>
+            <img src={isActive("1") ? openArrow : closedArrow} alt="" />
+          </div>
+          <div className={isActive("1") ? classes.fields : classes.invisible}>
+            <MedCardTextField
+              disabled={!editable}
+              label={"Фамилия"}
+              value={medCardValues?.lastName}
+              name={"lastName"}
+              onChange={handleInputChange}
+            />
+            <MedCardTextField
+              disabled={!editable}
+              label={"Имя"}
+              value={medCardValues?.firstName}
+              name={"firstName"}
+              onChange={handleInputChange}
+            />
+            <MedCardTextField
+              disabled={!editable}
+              label={"Отчество"}
+              placeholder={"Отчество"}
+              onChange={handleInputChange}
+              value={medCardValues?.middleName}
+              name={"middleName"}
+            />
+            <MedCardTextField
+              disabled={!editable}
+              label={"Число, месяц, год рождения"}
+              onChange={handleInputChange}
+              value={medCardValues?.birthday}
+              name={"birthday"}
+            />
+            <MedCardTextField
+              disabled={!editable}
+              label={"Территория страхования"}
+              onChange={handleInputChange}
+              value={medCardValues.middleName}
+              name={"middleName"}
+            />
+            <MedCardTextField
+              disabled={!editable}
+              label={"Номер удостоверения соц. защиты"}
+              onChange={handleInputChange}
+              value={medCardValues.insuranceNumber}
+              name={"insuranceNumber"}
+            />
+            <MedCardTextField
+              disabled={!editable}
+              label={"Гражданство"}
+              onChange={handleInputChange}
+              value={medCardValues.citizenship}
+              name={"citizenship"}
+            />
+            <MedCardTextField
+              disabled={!editable}
+              label={"Категория пациента"}
+              onChange={handleInputChange}
+              value={medCardValues.patientCategory}
+              name={"patientCategory"}
+            />
+            <MedCardTextField
+              disabled={!editable}
+              label={"Постоянное место жительства"}
+              onChange={handleInputChange}
+              value={medCardValues.patientAddress}
+              name={"patientAddress"}
+            />
+          </div>
+        </div>
         <div
           className={
             isActive("1")
@@ -173,11 +297,11 @@ const MedCard = ({ medCard, refetch, patientId }) => {
               : classes.blood_analyse
           }
         >
-          <div className={classes.title} onClick={() => handleTitleClick("1")}>
+          <div className={classes.title} onClick={() => handleTitleClick("2")}>
             <h3>Анализ крови</h3>
-            <img src={isActive("1") ? openArrow : closedArrow} alt="" />
+            <img src={isActive("2") ? openArrow : closedArrow} alt="" />
           </div>
-          <div className={isActive("1") ? classes.fields : classes.invisible}>
+          <div className={isActive("2") ? classes.fields : classes.invisible}>
             <MedCardTextField
               disabled={!editable}
               label={"Группа крови"}
@@ -248,77 +372,6 @@ const MedCard = ({ medCard, refetch, patientId }) => {
               value={medCardValues.bloodHivPartner}
               name={"bloodHivPartner"}
               onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div className={classes.patient_info}>
-          <div className={classes.title} onClick={() => handleTitleClick("2")}>
-            <h3>Данные о пациенте</h3>
-            <img src={isActive("2") ? openArrow : closedArrow} alt="" />
-          </div>
-          <div className={isActive("2") ? classes.fields : classes.invisible}>
-            <MedCardTextField
-              disabled={!editable}
-              label={"Фамилия"}
-              value={medCardValues.lastName}
-              name={"lastName"}
-              onChange={handleInputChange}
-            />
-            <MedCardTextField
-              disabled={!editable}
-              label={"Имя"}
-              value={medCardValues.firstName}
-              name={"firstName"}
-              onChange={handleInputChange}
-            />
-            <MedCardTextField
-              disabled={!editable}
-              label={"Отчество"}
-              onChange={handleInputChange}
-              value={medCardValues.middleName}
-              name={"middleName"}
-            />
-            <MedCardTextField
-              disabled={!editable}
-              label={"Число, месяц, год рождения"}
-              onChange={handleInputChange}
-              value={medCardValues.birthday}
-              name={"birthday"}
-            />
-            <MedCardTextField
-              disabled={!editable}
-              label={"Территория страхования"}
-              onChange={handleInputChange}
-              value={medCardValues.middleName}
-              name={"middleName"}
-            />
-            <MedCardTextField
-              disabled={!editable}
-              label={"Номер удостоверения соц. защиты"}
-              onChange={handleInputChange}
-              value={medCardValues.insuranceNumber}
-              name={"insuranceNumber"}
-            />
-            <MedCardTextField
-              disabled={!editable}
-              label={"Гражданство"}
-              onChange={handleInputChange}
-              value={medCardValues.citizenship}
-              name={"citizenship"}
-            />
-            <MedCardTextField
-              disabled={!editable}
-              label={"Категория пациента"}
-              onChange={handleInputChange}
-              value={medCardValues.patientCategory}
-              name={"patientCategory"}
-            />
-            <MedCardTextField
-              disabled={!editable}
-              label={"Постоянное место жительства"}
-              onChange={handleInputChange}
-              value={medCardValues.patientAddress}
-              name={"patientAddress"}
             />
           </div>
         </div>

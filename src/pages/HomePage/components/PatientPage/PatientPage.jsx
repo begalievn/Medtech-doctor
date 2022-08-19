@@ -23,6 +23,7 @@ const PatientPage = () => {
   const patientId = localStorage.getItem("patientId");
   const [checkListId, setCheckListId] = useState();
 
+
   const {
     data: medCard,
     isLoading: medCardLoading,

@@ -21,7 +21,7 @@ const Content = () => {
   const {
     data: content,
     isLoading: contentLoading,
-    error: contentError,
+    refetch: contentRefetch,
   } = useGetAllContentQuery("");
 
   const { data: contacts, isLoading: contactsLoading, error } = useGetAllContactsQuery("");
@@ -46,7 +46,7 @@ const Content = () => {
         </div>
       </BodyHeaderContainer>
       <div>
-        {contentLoading ? <Loader /> : <ContentBody content={content} />}
+        {contentLoading ? <Loader /> : <ContentBody contentRefetch={contentRefetch} content={content} />}
       </div>
       <div>
         {

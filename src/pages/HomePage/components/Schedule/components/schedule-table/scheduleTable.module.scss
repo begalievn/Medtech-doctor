@@ -5,6 +5,28 @@
   height: 644px;
   position: relative;
   overflow: scroll;
+
+  th {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #3B393C;
+    text-align: start;
+    padding-left: 10px;
+  }
+
+  th:nth-child(1) {
+    width: 70px;
+  }
+
+  th:nth-child(2) {
+    width: 180px;
+  }
+
+  th:nth-child(3) {
+    width: 180px;
+  }
 }
 
 .container_bg_layer {
@@ -22,20 +44,18 @@
   border-collapse: collapse;
 }
 
-.container th {
-  text-align: center;
-  border-bottom: solid 1px black;
-  padding: 10px 5px;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
-
-  color: #4c464b;
-}
-
 .option_button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+
+  img {
+    width: 25px;
+    height: auto;
+  }
 }
 
 .three_dots {

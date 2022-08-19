@@ -13,12 +13,11 @@ import classes from './contentBody.module.scss';
 
 
 
-const ContentBody = ({ content }) => {
+const ContentBody = ({ content, contentRefetch }) => {
   const [contentModalVisible, setContentModalVisible] = useState(false);
   const [selectedWeek, setSelectedWeek] = useState([]);
 
   const result = useMemo(() => collectDataFromContent(content), [content]);
-  console.log("week", selectedWeek);
 
   const handleContentClick = (data) => {
     setContentModalVisible(true);
@@ -39,7 +38,11 @@ const ContentBody = ({ content }) => {
         }
         {
           contentModalVisible &&
-          <ContentModal contentModalVisible={true} setContentModalVisible={setContentModalVisible} data={selectedWeek} />
+          <ContentModal
+            refetch={contentRefetch}
+            contentModalVisible={true}
+            setContentModalVisible={setContentModalVisible}
+            data={selectedWeek} />
         }
       </div>
     </>

@@ -1,0 +1,17 @@
+.MuiTableRow-root {
+  padding-left: 10px;
+}
+
+.MuiTableRow-root:nth-child:hover {
+  cursor: pointer;
+}
+
+.MuiTableCell-root {
+  text-align: start;
+  padding-left: 0;
+}
+
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium {
+  text-align: start;
+  padding: 10px;
+}

@@ -37,6 +37,12 @@ export const doctorsAPI = createApi({
         },
       }),
     }),
+    getDoctorsFullNameEmail: builder.query({
+      query: () => ({
+        url: `/doctor/get-full-name-email`,
+        headers: authWithToken,
+      })
+    }),
     searchDoctors: builder.query({
       query: (username) => ({
         url: `/doctor/get-all-by-parameter/${username}`,
@@ -51,5 +57,6 @@ export const {
   useGetDoctorsQuery,
   useGetDoctorsImageQuery,
   useGetAllDoctorsQuery,
+  useGetDoctorsFullNameEmailQuery,
   useLazySearchDoctorsQuery,
 } = doctorsAPI;

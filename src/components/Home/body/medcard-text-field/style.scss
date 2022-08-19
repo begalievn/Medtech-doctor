@@ -1,0 +1,21 @@
+.med_card_text_field {
+  .MuiInputBase-root.MuiOutlinedInput-root.MuiSelect-root {
+    background: #F7F3F7;
+    border-style: none;
+
+    .MuiList-root.MuiMenu-list {
+      width: 280px!important;
+    }
+  }
+
+
+
+  .css-6hp17o-MuiList-root-MuiMenu-list {
+    width: 280px;
+  }
+
+  ul {
+    width: 280px!important;
+    background: green;
+  }
+}

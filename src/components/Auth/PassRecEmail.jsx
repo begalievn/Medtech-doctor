@@ -25,10 +25,10 @@ import classes from "./auth.module.css";
 
 function PassRecEmail() {
   const { control, handleSubmit } = useForm({
-    mode: "onBlur",
+    mode: "onChange",
     shouldFocusError: true,
   });
-  const { errors } = useFormState({ control });
+  const { errors, isDirty, isValid } = useFormState({ control });
   const [isLoading, setLoading] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   const dispatch = useDispatch();
@@ -42,7 +42,6 @@ function PassRecEmail() {
       });
 
       const email = response.data.email;
-      console.log(email);
       setLoading(false);
       dispatch(setUser({ email }));
       localStorage.setItem("userEmail", email);
@@ -96,7 +95,7 @@ function PassRecEmail() {
             </div>
           </div>
           <div className={classes.submit_button}>
-            <AuthButton text={isLoading ? "Загрузка..." : "Отправить"} />
+            <AuthButton disabled={ !isValid || !isDirty } text={isLoading ? "Загрузка..." : "Отправить"} />
           </div>
         </form>
       </div>
