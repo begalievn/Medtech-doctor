@@ -4,8 +4,8 @@
   justify-content: center;
   flex-direction: column;
   width: 393px;
-  height: 374px;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  /*height: 374px;*/
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .calendar {
@@ -14,4 +14,51 @@
   margin: 0 auto;
   border-style: none;
   font-family: Roboto;
+}
+/*.fullWork {*/
+/*  background-color: blue;*/
+/*  color: red !important;*/
+/*}*/
+.booked,
+.booked:hover {
+  background-color: #5cc78d !important;
+  color: white !important;
+  border-radius: 4px !important;
+}
+
+/*.work {*/
+/*  background-color: blue;*/
+/*  color: red !important;*/
+/*}*/
+.calendar_hoursBlock {
+  align-self: start;
+  padding: 15px;
+}
+.calendar_header {
+  font-family: inherit;
+  margin-bottom: 20px;
+}
+.calendar_header h3 {
+  margin-bottom: 10px;
+}
+.calendar_header p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+.calendar_header p::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.calendar_header p:nth-child(2)::before {
+  border: 2px solid #5cc78d;
+}
+.calendar_header p:last-child::before {
+  background-color: #5cc78d;
+  border: 2px solid #5cc78d;
 }
