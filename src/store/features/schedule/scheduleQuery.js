@@ -22,6 +22,24 @@ export const scheduleApi = createApi({
         headers: authWithToken,
       }),
       providesTags: ["Schedule"],
+    }),
+    getAllSchedulesByDoctorIdYearMonth: builder.query({
+      query: ({doctorId, month, year}) => ({
+        url: `/schedule/get-all-by-doctor-year-month/${doctorId}/${year}/${month}`,
+        headers: authWithToken,
+      })
+    }),
+    getResultByDoctorDateTime: builder.query({
+      query: ({doctorId, localDate, localTime}) => ({
+        url: `/schedule/get-by-doctor-date-time/${doctorId}/${localDate}/${localTime}`,
+        headers: authWithToken,
+      })
+    }),
+    getDoctorScheduleByDate: builder.query({
+      query: ({date, doctorId}) => ({
+        url: `/schedule/get-by-doctor-date/${doctorId}/${date}`,
+        headers: authWithToken,
+      })
     })
   }),
 });
@@ -29,4 +47,7 @@ export const scheduleApi = createApi({
 export const {
   useGetAllScheduleForTodayQuery,
   useLazySearchSchedulesByDoctorNameQuery,
+  useLazyGetAllSchedulesByDoctorIdYearMonthQuery,
+  useLazyGetResultByDoctorDateTimeQuery,
+  useLazyGetDoctorScheduleByDateQuery,
 } = scheduleApi;
