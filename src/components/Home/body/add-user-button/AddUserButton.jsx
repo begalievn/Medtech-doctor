@@ -35,7 +35,10 @@ const selectStyles = {
   background: '#5cc78d',
   borderRadius: '4px',
   borderStyle: 'none',
+  fontSize: '18px',
+  fontWeight: '600',
   cursor: 'pointer',
+  color: 'white',
   '& legend': { display: 'none' },
   '& fieldset': { top: 0 },
 };

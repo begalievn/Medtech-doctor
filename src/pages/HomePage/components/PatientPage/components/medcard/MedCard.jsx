@@ -1,12 +1,16 @@
 // modules
 import React, { useEffect, useState } from "react";
+import {useLocation} from "react-router-dom";
 
 // components
 import MedCardTextField from "../../../../../../components/Home/body/medcard-text-field/MedCardTextField";
 import EditSaveButton from "../edit-save-button/EditSaveButton";
 
 // rtk-queries
-import { useUpdatePatientMedCardMutation } from "../../../../../../store/features/patients/patientsApi";
+import {
+  useCreatePatientMutation,
+  useUpdatePatientMedCardMutation
+} from "../../../../../../store/features/patients/patientsApi";
 import { useGetDoctorsFullNameEmailQuery } from "../../../../../../store/features/doctors/doctorsQuery";
 
 // constants
@@ -36,10 +40,12 @@ const MedCard = ({ medCard, refetch, patientId }) => {
   const [editable, setEditable] = useState(false);
   const [emailOfDoctor, setEmailOfDoctor] = useState("");
 
-  console.log("medCardValues: ", medCardValues);
+  const location = useLocation();
 
-  console.log("patientId:", patientId);
-  const isRegister = !patientId;
+
+
+  const isRegister = location.pathname.includes("register");
+  console.log({isRegister});
 
   if (!patientId) {
     patientId = localStorage.getItem("patientId");
@@ -50,6 +56,8 @@ const MedCard = ({ medCard, refetch, patientId }) => {
 
   const [updatePatientMedCard, { isLoading: updateMedCardLoading }] =
     useUpdatePatientMedCardMutation();
+
+  const [createPatient, { isLoading: createPatientLoading}] = useCreatePatientMutation();
 
   // To check if a selected tab is active
   const isActive = (id) => activeTabs.includes(id);
@@ -72,7 +80,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
         "/patient/update-med-card",
         body
       );
-      console.log(response);
+      console.log("RESPONSE:", response);
     } catch (err) {
       console.log(err);
     }
@@ -81,9 +89,12 @@ const MedCard = ({ medCard, refetch, patientId }) => {
   };
 
   const handleCreateButtonClick = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+    createPatient(medCardValues);
     console.log("Create a patient");
+    console.log("Doctor Email: ", emailOfDoctor);
     console.log("Create medCardValues: ", medCardValues);
+
   };
 
   // Handles opening and closing of tabs
@@ -98,16 +109,17 @@ const MedCard = ({ medCard, refetch, patientId }) => {
   // Handles med-card inputs changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log({ value, name });
     setMedCardValues({
       ...medCardValues,
       [name]: value,
     });
   };
 
+  // console.log("medCardValues: ", medCardValues);
+
   const handleDownloadPatientMedcard = async () => {
     try {
-      const response = await axiosWithContentBlob("/doctor/excel/get-doctors");
+      const response = await axiosWithContentBlob(`/patient/excel/med-card/${patientId}`);
       const url = URL.createObjectURL(new Blob([response.data]));
 
       const link = document.createElement("a");
@@ -134,8 +146,10 @@ const MedCard = ({ medCard, refetch, patientId }) => {
         const result = doctorsNameEmail.filter(
           (item) =>
             item?.fullName.split(" ")[0] === medCardValues?.doctor.split(" ")[0]
-        )[0].email;
-        setEmailOfDoctor(result);
+        );
+        console.log(result[0]?.email);
+        const doctorEmail = result[0]?.email
+        setEmailOfDoctor(doctorEmail);
       }
     }
   }, [doctorsNameEmailLoading, doctorsNameEmail]);
@@ -146,7 +160,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
         <div>
           {!isRegister ? (
             <div className={classes.download_button}>
-              <DownloadButton text={"Скачать мед-карту"} />
+              <DownloadButton onClick={handleDownloadPatientMedcard} text={"Скачать мед-карту"} />
             </div>
           ) : null}
           <div>
@@ -160,7 +174,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
             ) : editable ? (
               <EditSaveButton
                 type={"submit"}
-                form={"med-card"}
+                // form={"med-card"}
                 text={"Сохранить"}
                 onClick={handleSaveButtonClick}
               />
@@ -184,7 +198,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
               <div className={classes.codes}>
                 <div>
                   <h4>Код ЛПО: </h4>
-                  <span>{"data"}</span>
+                  <span>{"0001"}</span>
                 </div>
                 <p>Форма №111-У</p>
               </div>
@@ -193,7 +207,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
               <div className={classes.codes}>
                 <div>
                   <h4>Код ГСВ: </h4>
-                  <span>{"data"}</span>
+                  <span>{"0001"}</span>
                 </div>
                 <p>
                   Утверждена Приказом Минздрава Кыргызской Республики №134 от 25
@@ -222,6 +236,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
                   value={medCardValues?.doctor}
                   onChange={handleInputChange}
                   name={"doctor"}
+                  required={"required"}
                 />
               )
             ) : null}
@@ -236,7 +251,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
             </div>
             <div className={isActive("1") ? classes.fields : classes.invisible}>
               <MedCardTextField
-                required
+                required={"required"}
                 disabled={!editable}
                 label={"Фамилия"}
                 value={medCardValues?.lastName}
@@ -249,7 +264,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
                 value={medCardValues?.firstName}
                 name={"firstName"}
                 onChange={handleInputChange}
-                required
+                required={"required"}
               />
               <MedCardTextField
                 disabled={!editable}
@@ -258,6 +273,7 @@ const MedCard = ({ medCard, refetch, patientId }) => {
                 onChange={handleInputChange}
                 value={medCardValues?.middleName}
                 name={"middleName"}
+                required={"required"}
               />
               <MedCardTextField
                 disabled={!editable}
@@ -265,7 +281,8 @@ const MedCard = ({ medCard, refetch, patientId }) => {
                 value={medCardValues?.email}
                 name={"email"}
                 onChange={handleInputChange}
-                required
+                required={"required"}
+
               />
               <MedCardTextField
                 type={"date"}
@@ -274,6 +291,13 @@ const MedCard = ({ medCard, refetch, patientId }) => {
                 onChange={handleInputChange}
                 value={medCardValues?.birthday}
                 name={"birthday"}
+              />
+              <MedCardTextField
+                disabled={!editable}
+                label={"Телефон"}
+                onChange={handleInputChange}
+                value={medCardValues?.phoneNumber}
+                name={"phoneNumber"}
               />
               <MedCardTextField
                 disabled={!editable}
@@ -422,13 +446,6 @@ const MedCard = ({ medCard, refetch, patientId }) => {
                 onChange={handleInputChange}
                 value={medCardValues?.position}
                 name={"position"}
-              />
-              <MedCardTextField
-                disabled={!editable}
-                label={"Телефон"}
-                onChange={handleInputChange}
-                value={medCardValues?.phoneNumber}
-                name={"phoneNumber"}
               />
               <MedCardTextField
                 disabled={!editable}

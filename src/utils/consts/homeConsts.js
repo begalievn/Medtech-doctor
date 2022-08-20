@@ -52,3 +52,14 @@ export const navOptionsAdmin = [
 
 export const LOGIN_REGEX = /\S+@\S+\.\S+/;
 export const PWD_REGEX = /^.{6,}$/;
+
+
+export const daysOfWeek = {
+  MONDAY: 'Пн',
+  TUESDAY: 'Вт',
+  WEDNESDAY: 'Ср',
+  THURSDAY: 'Чт',
+  FRIDAY: 'Пт',
+  SATURDAY: 'Сб',
+  SUNDAY: 'Вс'
+}

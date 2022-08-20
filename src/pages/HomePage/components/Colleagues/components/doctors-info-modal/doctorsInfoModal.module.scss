@@ -85,6 +85,11 @@
   }
 
   .days {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 50px);
+    column-gap: 10px;
+
     .day {
       width: 50px;
       height: 50px;
@@ -94,6 +99,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
+
+
 
       span {
         font-style: normal;
@@ -102,6 +110,14 @@
         line-height: 13px;
         letter-spacing: -0.205297px;
         color: #4C464B;
+        user-select: none;
+      }
+    }
+    .active {
+      background: #5CC78D;
+
+      span {
+        color: white;
       }
     }
   }

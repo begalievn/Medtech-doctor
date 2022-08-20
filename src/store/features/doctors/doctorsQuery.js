@@ -49,6 +49,13 @@ export const doctorsAPI = createApi({
         headers: authWithToken,
       }),
       providesTags: ["Doctor"],
+    }),
+    getDoctorProfile: builder.query({
+      query: (doctorId) => ({
+        url: `/doctor/get-profile/${doctorId}`,
+        headers: authWithToken,
+      }),
+      providesTags: ["Doctor"],
     })
   }),
 });
@@ -59,4 +66,5 @@ export const {
   useGetAllDoctorsQuery,
   useGetDoctorsFullNameEmailQuery,
   useLazySearchDoctorsQuery,
+  useGetDoctorProfileQuery,
 } = doctorsAPI;
