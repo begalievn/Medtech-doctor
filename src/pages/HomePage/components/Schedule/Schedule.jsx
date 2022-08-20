@@ -19,7 +19,10 @@ import {
   useLazyGetResultByDoctorDateTimeQuery,
   useLazySearchSchedulesByDoctorNameQuery,
 } from "../../../../store/features/schedule/scheduleQuery";
-import { useGetAllDoctorsQuery } from "../../../../store/features/doctors/doctorsQuery";
+import {
+  useGetAllDoctorsQuery,
+  useLazySearchDoctorsQuery,
+} from "../../../../store/features/doctors/doctorsQuery";
 
 // hooks
 import useDebounce from "../../../../hooks/useDebounce";
@@ -30,14 +33,18 @@ import { calendarBackground } from "../../../../assets/images/images";
 // styles
 import classes from "./schedule.module.css";
 import Hours from "./components/hours/Hours";
+import { getYearMonthDay } from "../../../../utils/helpers/getYearMonthDay";
 
 function Schedule() {
   const [openAppointmentModal, setOpenAppointmentModal] = useState(false);
-  const [openMakeAppointmentModal, setOpenMakeAppointmentModal] = useState(false);
+  const [openMakeAppointmentModal, setOpenMakeAppointmentModal] =
+    useState(false);
   const [appointmentModalData, setAppointmentModalData] = useState({});
   const [doctorId, setDoctorId] = useState();
+  const [doctorIdForAppointment, setDoctorIdForAppointment] = useState();
   const [searchedDoctor, setSearchedDoctor] = useState("");
-  const [newDate, setNewDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [timeForAppointment, setTimeForAppointment] = useState();
 
 
 
@@ -47,19 +54,26 @@ function Schedule() {
   const { data: doctorsList, isLoading: doctorsListLoading } =
     useGetAllDoctorsQuery("");
 
-  const [searchSchedulesByDoctor, { data: searchedScheduleList = [], isLoading: searchedScheduleListLoading }] =
-    useLazySearchSchedulesByDoctorNameQuery();
+  const [
+    searchSchedulesByDoctor,
+    { data: searchedScheduleList = [], isLoading: searchedScheduleListLoading },
+  ] = useLazySearchSchedulesByDoctorNameQuery();
+
+  const [searchDoctors, { data: searchDoctorsResult }] =
+    useLazySearchDoctorsQuery();
 
   const debouncedValue = useDebounce(searchedDoctor, 400);
 
-  const [getAllSchedulesByDoctorIdYearMonth, { data : allSchedulesByDoctorIdYearMonth}] = useLazyGetAllSchedulesByDoctorIdYearMonthQuery();
+  const [
+    getAllSchedulesByDoctorIdYearMonth,
+    { data: allSchedulesByDoctorIdYearMonth },
+  ] = useLazyGetAllSchedulesByDoctorIdYearMonthQuery();
 
-  const [getResultByDoctorDateTime, { data: resultByDoctorDateTime }] = useLazyGetResultByDoctorDateTimeQuery();
+  const [getResultByDoctorDateTime, { data: resultByDoctorDateTime }] =
+    useLazyGetResultByDoctorDateTimeQuery();
 
-  const [getDoctorScheduleByDate, {data: doctorScheduleByDate}] = useLazyGetDoctorScheduleByDateQuery();
-
-  console.log("doctorScheduleByDate: ", doctorScheduleByDate);
-
+  const [getDoctorScheduleByDate, { data: doctorScheduleByDate }] =
+    useLazyGetDoctorScheduleByDateQuery();
 
   const handleDoctorSelect = (e) => {
     const { value } = e.target;
@@ -72,30 +86,47 @@ function Schedule() {
   };
 
   useEffect(() => {
-    if(doctorId) {
-      const date = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? "0" + newDate.getMonth() : newDate.getMonth()}-${newDate.getDay() < 10 ? "0" + newDate.getDay() : newDate.getDay()}`;
-      // const date = '2022-08-28';
-      getDoctorScheduleByDate({date, doctorId});
+    if (doctorId) {
+      const date = getYearMonthDay(selectedDate);
+      getDoctorScheduleByDate({ date, doctorId });
     }
-  }, [doctorId, newDate])
+  }, [doctorId, selectedDate]);
 
   useEffect(() => {
-    if(doctorId) {
-      const localDate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? "0" + newDate.getMonth() : newDate.getMonth()}-${newDate.getDay() < 10 ? "0" + newDate.getDay() : newDate.getDay()}`;
-      const localTime = '09:00';
-      // const localDate = '2022-08-28';
-      // const localTime = '09:00';
-      getResultByDoctorDateTime({doctorId, localDate, localTime});
+    if (doctorId) {
+      const localDate = getYearMonthDay(selectedDate);
+
+      console.log("++++", localDate);
+
+      // const localDate = getYearMonthDay(selectedDate);
+      const localTime = "09:00";
+      getResultByDoctorDateTime({ doctorId, localDate, localTime });
     }
-  }, [doctorId])
+  }, [doctorId]);
 
   useEffect(() => {
-    if(doctorId) {
-      const year = newDate.getFullYear();
-      const month = newDate.getMonth();
-      getAllSchedulesByDoctorIdYearMonth({ doctorId, year, month });
+    if (doctorId) {
+      const year = selectedDate.getFullYear();
+      const month = selectedDate.getMonth() + 1;
+      getAllSchedulesByDoctorIdYearMonth({
+        doctorId,
+        year,
+        month,
+      });
     }
-  }, [doctorId])
+  }, [doctorId, selectedDate]);
+
+  useEffect(() => {
+    if (searchedDoctor.length > 0) {
+      searchDoctors(debouncedValue);
+    }
+  }, [debouncedValue]);
+
+  useEffect(() => {
+    if (searchDoctorsResult) {
+      setDoctorIdForAppointment(searchDoctorsResult[0]?.doctorId);
+    }
+  }, [searchDoctorsResult]);
 
   useEffect(() => {
     if (searchedDoctor.length > 0) {
@@ -121,7 +152,7 @@ function Schedule() {
           </div>
         </div>
         <div className={classes.schedule_table}>
-          {searchedDoctor.length > 0 && !searchedScheduleListLoading  ? (
+          {searchedDoctor.length > 0 ? (
             <ScheduleTable
               scheduleData={searchedScheduleList}
               setOpenAppointmentModal={setOpenAppointmentModal}
@@ -140,7 +171,11 @@ function Schedule() {
       </div>
       <div className={classes.calendar_section}>
         <div className={classes.calendar_container}>
-          <CalendarComp newData={newDate} setNewData={setNewDate} />
+          <CalendarComp
+            scheduledDays={allSchedulesByDoctorIdYearMonth}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
         </div>
         <div className={classes.calendar_hoursBlock}>
           <div className={classes.calendar_header}>
@@ -148,32 +183,39 @@ function Schedule() {
             <p>Свободное время</p>
             <p>Занятое время</p>
           </div>
-          <Hours />
+          {doctorScheduleByDate && (
+            <Hours
+              setOpenModal={setOpenMakeAppointmentModal}
+              data={doctorScheduleByDate}
+              setTime={setTimeForAppointment}
+            />
+          )}
         </div>
-        <div className={classes.calendar_image_container}>
-          <p>Выберите врача</p>
-          <img src={calendarBackground} alt="" />
-        </div>
+        {doctorId ? null : (
+          <div className={classes.calendar_image_container}>
+            <p>Выберите врача</p>
+            <img src={calendarBackground} alt="" />
+          </div>
+        )}
       </div>
-      <ModalAppointment
-        appointmentModalData={appointmentModalData}
-        openAppointmentModal={openAppointmentModal}
-        setOpenAppointmentModal={setOpenAppointmentModal}
-      />
+      {openAppointmentModal ? (
+        <ModalAppointment
+          doctorId={doctorIdForAppointment}
+          appointmentModalData={appointmentModalData}
+          openAppointmentModal={openAppointmentModal}
+          setOpenAppointmentModal={setOpenAppointmentModal}
+        />
+      ) : null}
+
       <MakeAppointmentModal
-        openMakeAppointmentModal={openMakeAppointmentModal}
-        setOpenMakeAppointmentModal={setOpenMakeAppointmentModal}
+        doctorId={doctorId}
+        timeForAppointment={timeForAppointment}
+        selectedDate={selectedDate}
+        openModal={openMakeAppointmentModal}
+        setOpenModal={setOpenMakeAppointmentModal}
       />
     </div>
   );
 }
 
 export default Schedule;
-
-
-{/*<div className={classes.time_option}>*/}
-{/*  <TimeScheduleButton*/}
-{/*    onClick={handleMakeAppointmentClick}*/}
-{/*    text="Записать на прием"*/}
-{/*  />*/}
-{/*</div>*/}

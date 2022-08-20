@@ -78,6 +78,7 @@ const MedCardTextField = ({
             IconComponent={() => (
               <img style={{ marginRight: "15px" }} src={downArrow} alt="icon" />
             )}
+            {...props}
           >
             {doctorsNameEmail.map((doctor, index) => (
               <MenuItem key={index} value={doctor.email}>

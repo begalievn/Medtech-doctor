@@ -19,8 +19,7 @@ import { scheduleTableBackground } from "../../../../../../assets/images/images"
 
 // styles
 import classes from "./scheduleTable.module.scss";
-import './style.scss';
-
+import "./style.scss";
 
 const ScheduleTable = ({
   setOpenAppointmentModal,
@@ -30,17 +29,17 @@ const ScheduleTable = ({
   const handleAppointmentClick = (data) => {
     setOpenAppointmentModal(true);
     setAppointmentModalData(data);
-    console.log(data);
-    console.log("Hello, World!");
   };
 
   return (
     <div className={classes.container}>
-      <div className={classes.container_bg_layer}>
-        {/*<img src={scheduleTableBackground} alt="" />*/}
-      </div>
       <TableContainer>
-        <Table>
+        <Table
+          sx={{
+            height: "max-content",
+            position: "relative"
+          }}
+        >
           <TableHead>
             <TableRow
               className={classes.table_headers}
@@ -63,7 +62,16 @@ const ScheduleTable = ({
               <th></th>
             </TableRow>
           </TableHead>
-          <TableBody sx={{ "&:before": {content: `"-"`, lineHeight: "10px", display: 'block', color: 'transparent'}}}>
+          <TableBody
+            sx={{
+              "&:before": {
+                content: `"-"`,
+                lineHeight: "10px",
+                display: "block",
+                color: "transparent",
+              },
+            }}
+          >
             {scheduleData.map((item, index) => (
               <TableRow
                 key={index}
@@ -86,13 +94,16 @@ const ScheduleTable = ({
                     className={classes.option_button}
                     onClick={() => handleAppointmentClick(item)}
                   >
-                    <img
-                      src={infoIcon}
-                    />
+                    <img src={infoIcon} />
                   </div>
                 </TableDataCell>
               </TableRow>
             ))}
+            {scheduleData.length === 0 ? (
+              <div className={classes.container_bg_layer}>
+                <img src={scheduleTableBackground} alt="" />
+              </div>
+            ) : null}
           </TableBody>
         </Table>
       </TableContainer>
@@ -101,7 +112,6 @@ const ScheduleTable = ({
 };
 
 export default ScheduleTable;
-
 
 // const data = [
 //   {
@@ -126,5 +136,3 @@ export default ScheduleTable;
 //     time: "11:30",
 //   },
 // ];
-
-

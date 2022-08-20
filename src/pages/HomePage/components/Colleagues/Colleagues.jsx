@@ -26,9 +26,11 @@ import useDebounce from "../../../../hooks/useDebounce";
 // constants
 import { ROLES } from "../../../../utils/consts/constants";
 
+// utils
+import { axiosWithContentBlob } from "../../../../api/axios";
+
 // styles
 import classes from "./colleagues.module.scss";
-import { axiosWithContentBlob } from "../../../../api/axios";
 
 const Colleagues = () => {
   const [searchText, setSearchText] = useState("");

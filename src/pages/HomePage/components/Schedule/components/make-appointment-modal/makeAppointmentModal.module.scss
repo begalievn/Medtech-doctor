@@ -17,6 +17,7 @@
   }
 
   .date_time {
+    margin-bottom: 10px;
     p {
       font-family: 'Inter', serif;
       font-style: normal;
@@ -49,6 +50,11 @@
       font-size: 16px;
       line-height: 100%;
       color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #A8A8A8;
     }
   }
 
@@ -59,12 +65,13 @@
       background: #F7F3F7;
       border-style: none;
       padding-left: 12.5px;
+      margin-bottom: 5px;
 
       font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
+      font-weight: 500;
+      font-size: 17px;
       line-height: 19px;
-      color: #A8A8A8;
+      color: #3B393C;
 
 
     }
@@ -74,6 +81,28 @@
       font-size: 16px;
       line-height: 19px;
       color: #A8A8A8;
+    }
+  }
+
+  .search_values {
+    width: 100%;
+    background: #F7F3F7;
+    border-style: none;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    overflow: hidden;
+
+    .search_item {
+      width: 100%;
+      height: 50px;
+      padding-left: 12.5px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .search_item:hover {
+      background: #bdf5d7;
     }
   }
 }

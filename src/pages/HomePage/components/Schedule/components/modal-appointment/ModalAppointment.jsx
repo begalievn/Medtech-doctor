@@ -1,6 +1,14 @@
+// modules
 import React from "react";
-import { Modal, Box } from "@mui/material";
 
+// components
+import { Modal, Box } from "@mui/material";
+import Loader from "../../../../../../components/useful/loader/Loader";
+
+// rtk-queries
+import { useGetResultByDoctorDateTimeQuery } from "../../../../../../store/features/schedule/scheduleQuery";
+
+// styles
 import classes from "./modalAppointment.module.css";
 
 const style = {
@@ -21,10 +29,23 @@ const style = {
 };
 
 const ModalAppointment = ({
+  doctorId,
   openAppointmentModal,
   setOpenAppointmentModal,
   appointmentModalData,
 }) => {
+  console.log("appointmentModalData: ", appointmentModalData);
+  const data = {
+    doctorId,
+    localDate: appointmentModalData?.date.split(".").reverse().join("-"),
+    localTime: appointmentModalData?.time,
+  };
+
+  const { data: result, isLoading: resultLoading } =
+    useGetResultByDoctorDateTimeQuery(data);
+
+  console.log(result);
+
   const handleClose = () => {
     setOpenAppointmentModal(false);
   };
@@ -39,46 +60,52 @@ const ModalAppointment = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div className={classes.close} onClick={handleClose}></div>
-          <div className={classes.title}>
-            <p>Причины встречи</p>
-            <h4>{"Плановый осмотр пациентки"}</h4>
-          </div>
-          <div className={classes.content}>
-            <div className={classes.content_row}>
-              <span className={classes.row_name}>{"Врач"}</span>
-              <span className={classes.row_data}>
-                {appointmentModalData.doctorNameSurname}
-              </span>
-            </div>
-            <div className={classes.content_row}>
-              <span className={classes.row_name}>{"Номер телефона"}</span>
-              <span className={classes.row_data}>
-                {appointmentModalData?.phoneNumber || "нет"}
-              </span>
-            </div>
-            <div className={classes.content_row}>
-              <span className={classes.row_name}>{"Пациент"}</span>
-              <span className={classes.row_data}>
-                {appointmentModalData.patientNameSurname}
-              </span>
-            </div>
-            <div className={classes.content_row}>
-              <span className={classes.row_name}>{"Номер телефона"}</span>
-              <span className={classes.row_data}>
-                {appointmentModalData?.patientNumber || "нет"}
-              </span>
-            </div>
-            <div className={classes.content_row}>
-              <span className={classes.row_name}>
-                {"Дата и время посещения"}
-              </span>
-              <span className={classes.row_data}>
-                <span>{appointmentModalData.date}</span>
-                <span>{appointmentModalData.time}</span>
-              </span>
-            </div>
-          </div>
+          {resultLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <div className={classes.close} onClick={handleClose}></div>
+              <div className={classes.title}>
+                <p>Причины встречи</p>
+                <h4>{"Плановый осмотр пациентки"}</h4>
+              </div>
+              <div className={classes.content}>
+                <div className={classes.content_row}>
+                  <span className={classes.row_name}>{"Врач"}</span>
+                  <span className={classes.row_data}>
+                    {result?.doctorName}
+                  </span>
+                </div>
+                <div className={classes.content_row}>
+                  <span className={classes.row_name}>{"Номер телефона"}</span>
+                  <span className={classes.row_data}>
+                    {result?.doctorPhoneNumber}
+                  </span>
+                </div>
+                <div className={classes.content_row}>
+                  <span className={classes.row_name}>{"Пациент"}</span>
+                  <span className={classes.row_data}>
+                    {result?.patientName}
+                  </span>
+                </div>
+                <div className={classes.content_row}>
+                  <span className={classes.row_name}>{"Номер телефона"}</span>
+                  <span className={classes.row_data}>
+                    {result?.patientPhoneNumber}
+                  </span>
+                </div>
+                <div className={classes.content_row}>
+                  <span className={classes.row_name}>
+                    {"Дата и время посещения"}
+                  </span>
+                  <span className={classes.row_data}>
+                    <span>{result?.date}</span>
+                    <span>{result?.time}</span>
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
         </Box>
       </Modal>
     </div>

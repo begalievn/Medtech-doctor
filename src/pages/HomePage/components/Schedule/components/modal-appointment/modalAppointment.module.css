@@ -11,7 +11,10 @@
     /* identical to box height */
     /* Серый */
     color: #A8A8A8;
+}
 
+.title h4 {
+    color: #5CC78D;
 }
 
 .content {}

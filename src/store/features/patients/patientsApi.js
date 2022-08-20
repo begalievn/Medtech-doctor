@@ -69,6 +69,24 @@ export const patientsApi = createApi({
         body: body
       }),
       providesTags: ["CheckList"]
+    }),
+    createPatient: builder.mutation({
+      query: (body) => ({
+        url: "/patient/create",
+        method: "POST",
+        headers: authWithToken,
+        body: body,
+      }),
+      providesTags: ["Patient"]
+    }),
+    createCheckList: builder.mutation({
+      query: (body) => ({
+        url: `/checklist/create`,
+        method: "POST",
+        headers: authWithToken,
+        body: body,
+      }),
+      providesTags: ["CheckList"]
     })
   }),
 });
@@ -81,5 +99,7 @@ export const {
   useGetPatientMedCardInfoByIdQuery,
   useUpdatePatientMedCardMutation,
   useLazySearchPatientsQuery,
-  useUpdateCheckListAnswersMutation
+  useUpdateCheckListAnswersMutation,
+  useCreatePatientMutation,
+  useCreateCheckListMutation
 } = patientsApi;

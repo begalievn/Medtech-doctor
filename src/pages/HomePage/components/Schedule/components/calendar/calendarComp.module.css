@@ -3,30 +3,23 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 393px;
-  /*height: 374px;*/
+  width: 100%;
+  max-width: 380px;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .calendar {
-  width: 90%;
+  width: 95%;
   height: 100%;
   margin: 0 auto;
   border-style: none;
-  font-family: Roboto;
-}
-/*.fullWork {*/
-/*  background-color: blue;*/
-/*  color: red !important;*/
-/*}*/
-.booked,
-.booked:hover {
-  background-color: #5cc78d !important;
-  color: white !important;
-  border-radius: 4px !important;
 }
 
-/*.work {*/
-/*  background-color: blue;*/
-/*  color: red !important;*/
-/*}*/
+.booked,
+.booked:hover {
+  background-color: white !important;
+  color: #5cc78d !important;
+  border-radius: 4px !important;
+  border: solid 1px #5cc78d !important;
+}
+
