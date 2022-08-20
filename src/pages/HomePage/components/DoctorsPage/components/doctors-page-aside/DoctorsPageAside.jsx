@@ -35,13 +35,13 @@ const DoctorsPageAside = ({ doctorData }) => {
           <EditButtonV2 text={"Редактировать"} />
       </div>
       <div className={classes.avatar}>
-        <AvatarPhotoV2 image={avatarPlaceholder} />
+        <AvatarPhotoV2 image={doctorData?.imageUrl || avatarPlaceholder} />
       </div>
       <div className={classes.doctors_info}>
         <TextFieldV2 label={"Фамилия"} text={doctorData.lastName} />
         <TextFieldV2 label={"Имя"} text={doctorData.firstName} />
         <TextFieldV2 label={"Отчество"} text={doctorData.middleName} />
-        <TextFieldV2 label={"Количество пациенток"} text={0} />
+        <TextFieldV2 label={"Количество пациенток"} text={doctorData.numberOfPatients} />
         <TextFieldV2 label={"Email"} text={doctorData.email} />
         <TextFieldV2 label={"Номер телефона"} text={doctorData.phoneNumber} />
       </div>
@@ -64,28 +64,13 @@ const DoctorsPageAside = ({ doctorData }) => {
           <div className={classes.time_block}>
             <span>С</span>
             <div className={classes.time}>
-              <span>{"data"}</span>
+              <span>{"09:00"}</span>
             </div>
           </div>
           <div className={classes.time_block}>
             <span>До</span>
             <div className={classes.time}>
-              <span>{"data"}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className={classes.time_row}>
-          <div className={classes.time_block}>
-            <span>С</span>
-            <div className={classes.time}>
-              <span>{"data"}</span>
-            </div>
-          </div>
-          <div className={classes.time_block}>
-            <span>До</span>
-            <div className={classes.time}>
-              <span>{"data"}</span>
+              <span>{"13:00"}</span>
             </div>
           </div>
         </div>

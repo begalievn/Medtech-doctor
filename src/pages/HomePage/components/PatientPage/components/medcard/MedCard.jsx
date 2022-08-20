@@ -269,7 +269,6 @@ const MedCard = ({ medCard, refetch, patientId }) => {
               <MedCardTextField
                 disabled={!editable}
                 label={"Отчество"}
-                placeholder={"Отчество"}
                 onChange={handleInputChange}
                 value={medCardValues?.middleName}
                 name={"middleName"}

@@ -56,6 +56,7 @@ const CheckList = ({ checkListId }) => {
       console.log("Edit");
     }
     setEditable((prev) => !prev);
+    refetch();
   };
 
 

@@ -41,9 +41,9 @@ const TableV2 = ({ tableHead, data }) => {
                 }}
               >
                 <TableDataCell>{makeNumberWithZeros(index + 1)}</TableDataCell>
-                <TableDataCell>{item.patientNameSurname}</TableDataCell>
-                <TableDataCell>{item.patientPhoneNumber}</TableDataCell>
-                <TableDataCell>{item.patientEmail}</TableDataCell>
+                <TableDataCell>{item.fullName}</TableDataCell>
+                <TableDataCell>{item.phoneNumber}</TableDataCell>
+                <TableDataCell>{item.email}</TableDataCell>
               </TableRow>
             ))}
           </TableBody>

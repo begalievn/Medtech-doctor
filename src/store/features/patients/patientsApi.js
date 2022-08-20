@@ -87,6 +87,13 @@ export const patientsApi = createApi({
         body: body,
       }),
       providesTags: ["CheckList"]
+    }),
+    getPatientsByDoctorId: builder.query({
+      query: (doctorId) => ({
+        url: `/patient/get-all-by-doctor/${doctorId}`,
+        headers: authWithToken,
+      }),
+      providesTags: ["Patient"]
     })
   }),
 });
@@ -101,5 +108,6 @@ export const {
   useLazySearchPatientsQuery,
   useUpdateCheckListAnswersMutation,
   useCreatePatientMutation,
-  useCreateCheckListMutation
+  useCreateCheckListMutation,
+  useGetPatientsByDoctorIdQuery,
 } = patientsApi;
