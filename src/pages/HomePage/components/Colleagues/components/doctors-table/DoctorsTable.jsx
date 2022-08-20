@@ -20,9 +20,8 @@ import "./styles.scss";
 
 const doctorsWorkingDays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
 
-const DoctorsTable = ({ doctorsList }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedDoctorData, setSelectedDoctorData] = useState();
+const DoctorsTable = ({ doctorsList, setModalOpen, setSelectedDoctorData }) => {
+
 
   const handleClick = (data) => {
     setModalOpen(true);
@@ -91,10 +90,10 @@ const DoctorsTable = ({ doctorsList }) => {
                 key={index}
               >
                 <TableDataCell>{makeNumberWithZeros(index + 1)}</TableDataCell>
-                <TableDataCell>{item.fio}</TableDataCell>
-                <TableDataCell>{item.phoneNumber}</TableDataCell>
-                <TableDataCell>{item.email}</TableDataCell>
-                <TableDataCell>{item.countOfPatients} пациента</TableDataCell>
+                <TableDataCell>{item?.fio}</TableDataCell>
+                <TableDataCell>{item?.phoneNumber}</TableDataCell>
+                <TableDataCell>{item?.email}</TableDataCell>
+                <TableDataCell>{item?.countOfPatients} пациента</TableDataCell>
                 {/*<TableDataCell>*/}
                 {/*  {doctorsWorkingDays.map((item, index) => (*/}
                 {/*    <span key={index}>{`${item} `}</span>*/}
@@ -111,13 +110,6 @@ const DoctorsTable = ({ doctorsList }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      {selectedDoctorData && (
-        <DoctorsInfoModal
-          isModalOpen={isModalOpen}
-          setModalOpen={setModalOpen}
-          doctorData={selectedDoctorData}
-        />
-      )}
     </div>
   );
 };

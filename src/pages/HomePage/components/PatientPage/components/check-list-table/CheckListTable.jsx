@@ -56,7 +56,7 @@ const CheckListTable = ({ checkList, setCheckList, editable }) => {
           </TableHead>
           <TableBody>
             {
-              checkList.slice().sort((a, b) => a.id - b.id).map((item) => (
+              checkList.map((item) => (
                 <TableRow key={item?.id} sx={{ marginBottom: "10px" }}>
                   <CheckListDataCell first={true}>{makeNumberWithZeros(item?.id)}</CheckListDataCell>
                   <CheckListDataCell><span className={classes.question_text}>{item?.question}</span></CheckListDataCell>

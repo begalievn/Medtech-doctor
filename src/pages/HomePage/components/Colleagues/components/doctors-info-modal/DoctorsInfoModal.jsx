@@ -15,6 +15,8 @@ import { avatarPlaceholder } from "../../../../../../assets/images/images";
 
 // styles
 import classes from "./doctorsInfoModal.module.scss";
+import {useGetDoctorProfileQuery} from "../../../../../../store/features/doctors/doctorsQuery";
+import {daysOfWeek} from "../../../../../../utils/consts/homeConsts";
 
 const style = {
   width: "700px",
@@ -35,16 +37,31 @@ const style = {
 
 const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
   const [doctorInfo, setDoctorInfo] = useState({});
+  const [schedule, setSchedule] = useState({});
+  const [workingDays, setWorkingDays] = useState([]);
+  const [hours, setHours] = useState({});
 
-  const { data: users, isLoading: usersLoading } = useGetAllUsersQuery("");
+  const { data: doctorProfile, isLoading: doctorProfileLoading } = useGetDoctorProfileQuery(doctorData.doctorId);
+
+  console.log("Doctor Profile", doctorProfile);
+
+  console.log("schedule", doctorInfo.schedule);
+
+  const handleWeekDayClick = (e) => {
+    e.stopPropagation();
+    console.log(e.target.id)
+    const hoursObj = doctorProfile.schedule[e.target.id];
+    setHours(hoursObj);
+  }
 
   useEffect(() => {
-    setDoctorInfo(users);
-    if (users) {
-      setDoctorInfo(users.filter((item) => item.email === doctorData.email)[0]);
+    if(doctorProfile) {
+      setDoctorInfo(doctorProfile);
+      setSchedule(doctorProfile.schedule);
+      const workDaysArr = Object.keys(doctorProfile.schedule).filter((item) => doctorProfile.schedule[item].from !== "00:00")
+      setWorkingDays(workDaysArr);
     }
-  }, [usersLoading, isModalOpen]);
-
+  }, [doctorProfile, doctorProfileLoading])
 
   const handleClose = () => {
     setModalOpen(false);
@@ -60,7 +77,7 @@ const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {usersLoading ? (
+          {(doctorProfileLoading && doctorInfo) ? (
             <Loader />
           ) : (
             <>
@@ -70,7 +87,7 @@ const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
               </div>
               <div className={classes.photo}>
                 <div className={classes.avatar}>
-                  <img src={avatarPlaceholder} alt="doctors ava" />
+                  <img src={doctorInfo?.imageUrl || avatarPlaceholder} alt="doctors ava" />
                 </div>
               </div>
               <div className={classes.doctor_info}>
@@ -82,7 +99,7 @@ const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
                   <InfoTextField label={"Отчество"} text={doctorInfo?.middleName} />
                   <InfoTextField
                     label={"Количество пациентов"}
-                    text={`${"data"} пациентов`}
+                    text={`${doctorInfo?.numberOfPatients} пациента`}
                   />
                 </div>
                 <div className={classes.row}>
@@ -99,9 +116,13 @@ const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
               <div className={classes.working_days}>
                 <p className={classes.text}>Рабочие дни недели</p>
                 <div className={classes.days}>
-                  <div className={classes.day}>
-                    <span>Пн</span>
-                  </div>
+                  {
+                    Object.keys(schedule).map((item, index) => (
+                      <div className={workingDays.includes(item) ? [classes.day, classes.active].join(" ") : classes.day}  id={item} onClick={handleWeekDayClick}>
+                        <span id={item}>{daysOfWeek[item]}</span>
+                      </div>
+                    ))
+                  }
                 </div>
               </div>
               <div className={classes.interview_time}>
@@ -110,13 +131,13 @@ const DoctorsInfoModal = ({ isModalOpen, setModalOpen, doctorData }) => {
                   <div className={classes.time_block}>
                     <span>С</span>
                     <div className={classes.time}>
-                      <span>{"data"}</span>
+                      <span>{hours?.from}</span>
                     </div>
                   </div>
                   <div className={classes.time_block}>
                     <span>До</span>
                     <div className={classes.time}>
-                      <span>{"data"}</span>
+                      <span>{hours?.till}</span>
                     </div>
                   </div>
                 </div>

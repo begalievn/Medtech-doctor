@@ -31,9 +31,12 @@ import { axiosWithContentBlob } from "../../../../api/axios";
 
 // styles
 import classes from "./colleagues.module.scss";
+import DoctorsInfoModal from "./components/doctors-info-modal/DoctorsInfoModal";
 
 const Colleagues = () => {
   const [searchText, setSearchText] = useState("");
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedDoctorData, setSelectedDoctorData] = useState();
 
   const { data: doctorsList, isLoading: doctorsListLoading } =
     useGetAllDoctorsQuery("");
@@ -101,13 +104,20 @@ const Colleagues = () => {
       <div className={classes.space_between}></div>
       <BodyContentContainer>
         {searchText ? (
-          <DoctorsTable doctorsList={searchData} />
+          <DoctorsTable setModalOpen={setModalOpen} setSelectedDoctorData={setSelectedDoctorData} doctorsList={searchData} />
         ) : doctorsListLoading ? (
           <Loader />
         ) : (
-          <DoctorsTable doctorsList={doctorsList} />
+          <DoctorsTable setModalOpen={setModalOpen} setSelectedDoctorData={setSelectedDoctorData} doctorsList={doctorsList} />
         )}
       </BodyContentContainer>
+      {
+        isModalOpen &&  <DoctorsInfoModal
+          isModalOpen={isModalOpen}
+          setModalOpen={setModalOpen}
+          doctorData={selectedDoctorData}
+        />
+      }
     </PageContainer>
   );
 };
