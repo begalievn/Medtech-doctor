@@ -38,7 +38,7 @@ function PassRecNewPassword() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(response);
-      navigate("/login");
+      navigate("/");
     } catch (e) {
       console.log("ERROR", e.response.data);
     }

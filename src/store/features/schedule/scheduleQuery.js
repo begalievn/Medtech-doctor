@@ -40,7 +40,7 @@ export const scheduleApi = createApi({
         url: `/schedule/get-by-doctor-date/${doctorId}/${date}`,
         headers: authWithToken,
       })
-    })
+    }),
   }),
 });
 
@@ -49,5 +49,6 @@ export const {
   useLazySearchSchedulesByDoctorNameQuery,
   useLazyGetAllSchedulesByDoctorIdYearMonthQuery,
   useLazyGetResultByDoctorDateTimeQuery,
+  useGetResultByDoctorDateTimeQuery,
   useLazyGetDoctorScheduleByDateQuery,
 } = scheduleApi;

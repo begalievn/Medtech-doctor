@@ -59,7 +59,7 @@
   line-height: 15px;
 }
 .react-calendar__navigation button {
-  min-width: 44px;
+  min-width: 50px;
   height: 100%;
   background: none;
 }
