@@ -152,7 +152,7 @@ function Schedule() {
           </div>
         </div>
         <div className={classes.schedule_table}>
-          {searchedDoctor.length > 0 ? (
+          {(searchedDoctor.length > 0) ? (
             <ScheduleTable
               scheduleData={searchedScheduleList}
               setOpenAppointmentModal={setOpenAppointmentModal}

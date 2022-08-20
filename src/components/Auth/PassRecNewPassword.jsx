@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import IconTextField from "../useful/IconTextField";
 import AuthButton from "../useful/AuthButton";
-import { Controller, useForm } from "react-hook-form";
+import {Controller, useForm, useFormState} from "react-hook-form";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
@@ -19,9 +19,11 @@ import {UPDATE_PASSWORD_URL} from "../../utils/consts/apiConsts";
 
 // styles
 import classes from "./auth.module.css";
+import {codeValidation} from "./validation";
 
 function PassRecNewPassword() {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm({ mode: "onChange",});
+  const { errors, isDirty, isValid } = useFormState({ control });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
@@ -59,6 +61,7 @@ function PassRecNewPassword() {
               <Controller
                 name="password"
                 control={control}
+                rules={codeValidation}
                 render={({ field }) => (
                   <IconTextField
                     {...field}
@@ -94,6 +97,7 @@ function PassRecNewPassword() {
               <Controller
                 name="password2"
                 control={control}
+                rules={codeValidation}
                 render={({ field }) => (
                   <IconTextField
                     {...field}
@@ -124,7 +128,7 @@ function PassRecNewPassword() {
             </Box>
           </div>
           <div className={classes.submit_button}>
-            <AuthButton text={"Войти"} />
+            <AuthButton disabled={ !isValid || !isDirty } text={"Войти"} />
           </div>
         </form>
       </div>
